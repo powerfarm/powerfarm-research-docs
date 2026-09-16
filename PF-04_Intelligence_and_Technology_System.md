@@ -2,121 +2,310 @@
 
 Intelligence and Technology System
 
-Durable technical model for intelligence, software, evidence, verification, and replaceability
+Durable technical doctrine for intelligence, software representation, code, verification, and replaceability
 
 | **DOCUMENT**  | PF-04             |
 |---------------|-------------------|
 | **STATUS**    | **CANONICAL**     |
-| **VERSION**   | 1.0               |
-| **EFFECTIVE** | 15 September 2026 |
+| **VERSION**   | 1.1               |
+| **EFFECTIVE** | 16 September 2026 |
 
-| **OWNS**         | The durable technical architecture principles Powerfarm uses to select intelligence, structure software work, preserve evidence, verify outcomes, and remain replaceable.     |
-|------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **DOES NOT OWN** | A frozen technology stack, vendor list, repository map, infrastructure diagram, security implementation manual, or product roadmap. Those are standard instances when needed. |
+| **OWNS**         | The durable technical doctrine Powerfarm uses to structure software and intelligent work, choose representations, govern production languages and code, preserve evidence, verify outcomes, and remain replaceable. |
+|------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **DOES NOT OWN** | A frozen technology stack, vendor list, repository map, infrastructure diagram, detailed security implementation manual, product roadmap, or language-specific profile. Those are standard instances when needed.        |
 
 > **Normative language**
 >
 > MUST means required unless this canon is changed. SHOULD means the default and a material deviation needs a reason. MAY means optional.
 
-# 1. Architecture principle
+# 1. Representation Doctrine
 
-Powerfarm's technical system is designed around capabilities and evidence, not permanent products. Models, providers, tools, runtimes, storage systems, protocols, and interfaces are replaceable implementation choices.
+Powerfarm is technology-replaceable, not architecture-agnostic.
+
+Models, providers, runtimes, databases, programming languages, orchestration products, storage systems, protocols, and vendors are replaceable. The institution nevertheless maintains a strong doctrine about how intent, semantics, executable structure, evidence, and code should be represented.
 
 > **System objective**
 >
-> Maximize verified useful outcome and decision value under explicit constraints such as quality, cost, time, privacy, risk, human effort, availability, and auditability.
+> Maximize verified useful outcome and decision value under explicit constraints such as quality, cost, time, privacy, risk, human effort, availability, auditability, and replaceability.
 
-# 2. The durable system model
+## 1.1 Representation order
 
-Powerfarm uses three conceptual layers that may be implemented by many different technologies:
+Powerfarm SHOULD express durable semantics at the highest faithful machine-inspectable level available.
 
-| **Layer**           | **Question**                                                            | **Durable responsibility**                                                                                                         |
-|---------------------|-------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------|
-| Intelligence Fabric | What intelligence should do each part of the work?                      | Decomposition, routing, model/tool selection, budget, escalation, parallelism, and cognitive verification.                         |
-| Software Fabric     | How should intelligent systems understand, change, and verify software? | Context, representations, contracts, repositories, tools, change planning, tests, runtime feedback, and software interfaces.       |
-| Evidence Fabric     | What must be preserved so Powerfarm can learn from what happened?       | Runs, configurations, artifacts, measurements, failures, costs, verification, claims, confidence, methods, decisions, and history. |
+The preferred representation order is:
 
-The layers are conceptual boundaries, not a requirement to build three proprietary platforms. A commodity product MAY implement part or all of a layer.
+```text
+intent
+  ↓
+existing international standard
+  ↓
+Powerfarm contract
+  ↓
+graph / declarative representation
+  ↓
+schema / data
+  ↓
+traditional source code
+  ↓
+machine / world effects
+```
 
-# 3. Intelligence Fabric
+This order is a preference, not a prohibition. A lower representation is correct when a higher one would reduce correctness, clarity, capability, interoperability, performance, or verifiability.
 
-Intelligence is an allocatable capability. A task is not automatically assigned to the nominally strongest model. The preferred configuration depends on the outcome and the constraints.
+Powerfarm SHOULD express semantics in standards, contracts, graphs, schemas, and other machine-inspectable declarative representations whenever they can faithfully represent the problem. Traditional source code SHOULD be reserved for the irreducible executable substrate and for cases where declarative representation would reduce correctness, clarity, or capability.
 
-## 3.1 Execution Route
+Traditional code therefore remains essential for runtimes, compilers and resolvers, protocol adapters, drivers, storage engines, verification primitives, security boundaries, performance-sensitive implementation, and integration with external systems.
 
-An Execution Route is the operational configuration of intelligence used for a unit of work. It MAY include model, version, provider, gateway, runtime, quantization, hardware, context, prompt contract, tools, reasoning mode, output contract, retry policy, verifier, and expected cost.
+The objective is not to eliminate source code. It is to avoid burying institutional semantics in procedural implementation when those semantics can exist explicitly at a higher level.
 
-Two calls to the same model can be different Execution Routes if material surrounding conditions differ.
+## 1.2 Software is more than text
 
-## 3.2 Cognitive Plan
+Powerfarm software MAY include source code, contracts, graphs, schemas, capabilities, requirements, tests, runtime evidence, architecture, business rules, ownership, provenance, history, and immutable referenced content.
 
-A Cognitive Plan describes how a problem is decomposed and which Execution Routes are used for each part. It MAY include subtasks, dependencies, parallelism, escalation criteria, verifiers, budget, time limit, and termination conditions.
+Agent-facing and human-facing interfaces SHOULD share domain logic where possible rather than duplicate it.
 
-Decomposition and intelligence allocation are one joint optimization problem. The best plan can change with budget, privacy, quality target, time, or risk.
+Important domain capabilities SHOULD expose clear contracts, permissions, inputs, outputs, side effects, and verification paths.
 
-# 4. Routing and escalation
+## 1.3 Continuity graph semantics
 
-- Powerfarm SHOULD prefer the least expensive route that reliably meets the required outcome, not the cheapest route in isolation.
+The executable structure interpreted by Continuity MUST have graph semantics.
 
-- Local intelligence MAY trade time for lower marginal monetary cost, privacy, volume, or persistent background work.
+This requirement does not mandate a graph database and does not authorize a proprietary Powerfarm graph language when an established standard can represent the problem.
 
-- Cloud intelligence MAY be preferred for frontier capability, context, elasticity, specialized services, or superior economics.
+A Continuity executable graph contains, at minimum where relevant:
 
-- A simple cheap-to-strong escalation pattern MAY be used when evidence supports it, but is not a universal default.
+```text
+ExecutableGraph
+│
+├── nodes
+│   ├── predicates
+│   ├── capabilities
+│   ├── effects
+│   └── verification
+│
+├── edges
+│   ├── dependency
+│   ├── causality
+│   ├── control
+│   └── evidence
+│
+└── references
+    ├── contracts
+    ├── Registry identities / capabilities
+    └── content-addressed objects
+```
 
-- Critical work MAY justify heterogeneous redundancy: different models, providers, deterministic verification, or human review.
+The physical representation MAY be JSON, YAML, protobuf, relational rows, content-addressed manifests, in-memory structures, or another suitable form. The durable requirement is that nodes, edges, dependencies, causal ordering, conditions, capabilities, effects, and verification remain explicit and inspectable.
 
-- Routing policies SHOULD be learned from evidence and updated when prices, capabilities, reliability, or constraints change.
+The conceptual pipeline is:
 
-# 5. Replaceability and external leverage
+```text
+human / intelligent system
+        ↓
+Executable Graph
+        ↓
+validate
+        ↓
+resolve contracts + capabilities + referenced content
+        ↓
+compile
+        ↓
+immutable ExecutionBundle
+        ↓
+durable execution
+        ↓
+effects + verification
+```
 
-No provider, model, protocol, database, agent harness, benchmark runner, or orchestration framework is a protected dependency. Interfaces and data SHOULD be designed so superior external technology can be evaluated and adopted without institutional trauma.
+Powerfarm SHOULD use established workflow and interface standards before inventing another graph DSL.
 
-Abstraction is not automatically valuable. Powerfarm SHOULD abstract only where change is plausible and the abstraction cost is lower than the lock-in or migration cost it prevents.
+## 1.4 Immutable content plane
 
-# 6. Software Fabric
+The Content Store described by PF-03 is Powerfarm's immutable content plane.
 
-Powerfarm treats software as more than text files while retaining source code and conventional repositories when they remain useful. Intelligent systems MAY benefit from semantic context including symbols, dependencies, contracts, types, requirements, tests, runtime evidence, architecture, business rules, ownership, provenance, and history.
+Content-addressed objects MAY be addressed, preserved, transported, composed, cached, resolved remotely, loaded lazily, and independently verified without changing their content identity.
 
-- The best software representation is an empirical question, not a doctrine.
+A small content reference SHOULD be sufficient to identify a durable immutable value when the surrounding contract or schema supplies the required meaning. A minimal reference may contain:
 
-- Git MAY remain the primary compatibility and history layer even when agents use richer cognitive representations.
+```text
+digest
+media type
+size
+```
 
-- Agent-facing and human-facing interfaces SHOULD share domain logic where possible rather than duplicate it.
+Only the digest establishes material identity. Other fields describe the value or assist resolution.
 
-- Important domain capabilities SHOULD expose clear contracts, permissions, inputs, outputs, side effects, and verification paths.
+Objects MAY reference other content-addressed objects, allowing immutable manifests and object graphs to represent source trees, datasets, prompts, schemas, evidence sets, execution inputs, capability definitions, and compound artifacts without copying all underlying bytes into every consumer.
 
-- Context systems SHOULD maximize decision-relevant semantic density, not simply context length.
+Knowing a digest does not itself grant permission to resolve the object. Content identity is not a capability. Identity, contracts, grants, and Registry recognition remain responsible for meaning and authority.
 
-# 7. Change as a verifiable transaction
+## 1.5 Context is a working set, not a warehouse
 
-For material software work, the conceptual unit is an intentional and verifiable change, not merely a textual diff. The preferred reasoning chain is:
+Active model context is temporary reasoning state, not canonical storage.
 
-> **Semantic change chain**
+Intelligent systems SHOULD reason over durable references and resolve material on demand rather than requiring all potentially relevant material to be embedded in active context.
+
+Context systems SHOULD maximize decision-relevant semantic density rather than raw context length.
+
+A preferred pattern is:
+
+```text
+task
++
+small semantic manifest
++
+content references
+        ↓
+inspect structure
+        ↓
+resolve only what reasoning requires
+        ↓
+produce new immutable objects
+        ↓
+verify
+        ↓
+Registry recognition when institutionally relevant
+```
+
+Powerfarm SHOULD prefer references over replication and loading over inlining for large, stable, or reusable immutable content when doing so improves context efficiency, composability, verification, transport, or caching.
+
+The existence of a content-addressed object does not imply institutional promotion. Intelligent systems and experiments MAY produce many immutable objects; only objects with institutional significance need become Registry-recognized artifact versions.
+
+# 2. Language and Toolchain Policy
+
+Language follows layer and responsibility. Powerfarm intentionally keeps the production language set small.
+
+The general layering policy is:
+
+| **Layer** | **Preferred representation or language property** |
+|---|---|
+| Semantic | International standards, contracts, graphs, schemas, declarative structures |
+| Compilation | Strongly typed conventional implementation language |
+| Runtime / systems | Strongly typed conventional implementation language appropriate to the boundary |
+| Research | Language optimized for experimentation, analysis, and evidence generation |
+| Interface | Language native to the target environment when materially advantageous |
+
+Introducing another production language requires a material reason tied to capability, safety, interoperability, performance, target environment, maintainability, or research value. Polyglot complexity is a cost and MUST NOT arise merely from preference.
+
+## 2.1 Language Profiles
+
+Every production language used by Powerfarm MUST have an adopted Language Profile.
+
+A Language Profile is a small operational standard, not a new canonical document. It MUST identify at least:
+
+- the adopted language version or version policy;
+- authoritative external style and API guidance where available;
+- formatter;
+- linter;
+- static analysis;
+- compiler or type-check settings;
+- required test or build checks;
+- material exceptions.
+
+Powerfarm follows authoritative language and ecosystem standards rather than inventing local alternatives when suitable standards exist.
+
+## 2.2 Technical language
+
+English MUST be the technical language of institutional production software, including identifiers, types, functions, APIs, schemas, comments, docstrings, commit messages, pull request titles, and technical repository documentation.
+
+Localized product content, user-facing copy, externally required terminology, and research material MAY use other languages where appropriate.
+
+## 2.3 Frontier practice
+
+Powerfarm code SHOULD represent current excellent practice, not merely code that compiles.
+
+"Frontier" does not mean immediate adoption of every new feature or technology. It means using the strongest mature practices currently available when they materially improve correctness, clarity, safety, composability, agent comprehension, verification, or replaceability.
+
+Examples MAY include current stable toolchains, strong type systems where appropriate, machine-checkable schemas, structured errors, deterministic formatting, static analysis, reproducible builds, explicit interfaces, invariant or property testing where valuable, disciplined concurrency, memory safety where material, structured observability, supply-chain verification, and machine-readable contracts.
+
+# 3. Code Editorial Standard
+
+> **Powerfarm Code Character**
 >
-> intent -\> requirements -\> impact -\> plan -\> mutation -\> verification -\> evidence -\> commit
+> Powerfarm code is durable technical literature that happens to execute.
 
-The exact implementation MAY vary. The durable requirement is that the intended outcome and its verification remain reconstructable in proportion to the consequence of the change.
+Powerfarm code MUST be legible to competent engineers and intelligent systems, conform to established modern practice for its language and domain, expose contracts and effects explicitly, and remain amenable to mechanical verification and replacement.
 
-# 8. Evidence Fabric
+Cleverness that reduces inspectability is a defect.
 
-The Evidence Fabric preserves what Powerfarm needs in order to learn across time. Raw evidence is append-oriented: corrections and interpretations may be added, but the underlying historical record is not silently rewritten.
+Boilerplate that can be represented declaratively without loss of clarity or capability is a design smell.
 
-- Runs and material environment identity.
+Hidden authority, hidden mutable state, and hidden side effects are architectural defects.
 
-- Inputs, outputs, traces, artifacts, failures, costs, and human interventions where relevant.
+The editorial baseline is deliberately small and strong:
 
-- Versioned methodology and benchmark identity.
+1. **Names carry domain meaning.** Generic names such as `Manager`, `Helper`, `Utils`, or `Processor` SHOULD NOT replace a real domain concept.
+2. **Public boundaries are typed and documented.** Inputs, outputs, constraints, authority, and compatibility expectations SHOULD be mechanically visible where practical.
+3. **Errors are part of the contract.** Material failure modes MUST be representable and SHOULD NOT collapse into decorative strings.
+4. **Side effects are explicit.** Code that changes external or durable state SHOULD make that effect inspectable and verifiable.
+5. **Global mutable state is exceptional.** Its use requires a material reason.
+6. **Modules have a coherent reason to change.** Boundaries SHOULD follow responsibility rather than accidental file organization.
+7. **Comments explain constraints and reasoning.** Comments SHOULD NOT narrate syntax that the code already states clearly.
+8. **Generated code is identified.** Generated material MUST have a known source and SHOULD NOT be manually maintained unless explicitly converted to authored code.
+9. **Machines enforce mechanical style.** Formatters, linters, compilers, static analysis, and tests own mechanical conformance. Reviewers concentrate on semantics, risk, evidence, and design.
+10. **Dead abstractions die.** Obsolete wrappers, compatibility fossils, and architecture preserved only by inertia SHOULD be removed when their removal is safe and economically justified.
 
-- Measurements and verification results.
+# 4. Change and Verification
 
-- Findings, claims, supporting and contradicting evidence, confidence, scope, and freshness.
+For material software work, the unit of change is an intentional and verifiable semantic change, not merely a textual diff.
 
-- Decisions, recommendations, supersession history, and retest triggers.
+The preferred chain is:
 
-Perfect reproducibility may be impossible for some external systems. Traceability remains required: Powerfarm SHOULD preserve enough evidence to understand what was tested, under what method, and why the result was believed.
+```text
+intent
+  ↓
+requirements / contracts
+  ↓
+impact
+  ↓
+plan / graph
+  ↓
+mutation
+  ↓
+verification
+  ↓
+evidence
+  ↓
+commit
+```
 
-# 9. Verification architecture
+The exact implementation MAY vary. The durable requirement is that intended outcome and verification remain reconstructable in proportion to consequence.
+
+## 4.1 Normal change path
+
+For durable production software, the normal path is:
+
+```text
+branch
+  ↓
+pull request
+  ↓
+automated verification
+  ↓
+review
+  ↓
+merge to protected main
+```
+
+Direct push to `main` SHOULD NOT occur for durable production software except under an explicit operational exception.
+
+Formatter, linter, type-check or compiler checks, and required tests MUST pass before merge unless an explicit temporary exception records why they cannot.
+
+Changes to public contracts or schemas MUST include compatibility analysis appropriate to their consequence.
+
+Changes to persistent state MUST include migration and rollback or recovery analysis appropriate to their consequence.
+
+A material change to production language, fundamental runtime, storage model, or representation model requires a durable architectural decision record or equivalent explicit decision evidence.
+
+Exceptions SHOULD be explicit, bounded, and temporary where possible.
+
+## 4.2 Agent-authored change
+
+Agent authorship does not reduce the verification bar.
+
+Material agent-authored changes SHOULD be verified by a mechanism sufficiently independent from the producer when correlated self-confirmation could materially hide defects. Independence MAY come from deterministic verification, a different model or provider, a separate execution route, an independent test system, or human review.
+
+## 4.3 Verification architecture
 
 Generation is not completion. Outputs are verified in proportion to consequence using the cheapest reliable mechanism available.
 
@@ -130,62 +319,86 @@ Generation is not completion. Outputs are verified in proportion to consequence 
 
 When correlated self-confirmation can materially mislead the decision, producer and verifier SHOULD differ by model, provider, method, deterministic mechanism, or human evaluator.
 
-# 10. Build thin
+## 4.4 Evidence Fabric
 
-Powerfarm does not build infrastructure because a system diagram has an empty box. A proprietary component must have a concrete reason tied to evidence quality, research throughput, decision capability, product differentiation, safety, reliability, or economics.
+The Evidence Fabric preserves what Powerfarm needs in order to learn across time. Raw evidence is append-oriented: corrections and interpretations may be added, but underlying historical evidence is not silently rewritten.
+
+Powerfarm SHOULD preserve, where material:
+
+- execution routes and environment identity;
+- inputs, outputs, traces, artifacts, failures, costs, and human interventions;
+- versioned methodology and benchmark identity;
+- measurements and verification results;
+- findings, claims, supporting and contradicting evidence, confidence, scope, and freshness;
+- decisions, recommendations, supersession history, and retest triggers.
+
+Perfect reproducibility may be impossible for external systems. Traceability remains required: Powerfarm SHOULD preserve enough evidence to understand what was tested, under what method, and why the result was believed.
+
+# 5. Technical Governance
+
+Powerfarm does not seek to minimize technical opinion. It seeks to concentrate technical opinion where it compounds.
+
+Semantics rise into standards, contracts, graphs, and schemas. Traditional code moves downward into the executable substrate. Code follows internationally recognized modern engineering practice. Machines enforce mechanical quality. Humans and intelligent systems reason about semantics.
+
+## 5.1 Replaceability and external leverage
+
+No provider, model, protocol, database, language, agent harness, benchmark runner, or orchestration framework is a protected dependency.
+
+Interfaces and data SHOULD be structured so superior external technology can be evaluated and adopted without institutional trauma.
+
+Abstraction is not automatically valuable. Powerfarm SHOULD abstract only where change is plausible and the abstraction cost is lower than the lock-in or migration cost it prevents.
+
+## 5.2 Build thin
+
+Powerfarm does not build infrastructure because a system diagram has an empty box.
+
+A proprietary component requires a concrete reason tied to evidence quality, research throughput, decision capability, product differentiation, safety, reliability, economics, or a semantic responsibility that available external technology cannot faithfully satisfy.
 
 Commodity infrastructure SHOULD be preferred where it satisfies the requirement. Internal components SHOULD have replacement triggers and SHOULD be removable when external technology becomes better.
 
-# 11. Security and data baseline
+## 5.3 Intelligence routing
+
+Intelligence is an allocatable capability. A task is not automatically assigned to the nominally strongest model.
+
+An Execution Route is the operational configuration of intelligence for a unit of work. It MAY include model, version, provider, gateway, runtime, quantization, hardware, context, prompt contract, tools, reasoning mode, output contract, retry policy, verifier, and expected cost.
+
+A Cognitive Plan describes decomposition and the Execution Routes used for each part. It MAY include subtasks, dependencies, parallelism, escalation criteria, verifiers, budget, time limit, and termination conditions.
+
+Powerfarm SHOULD prefer the least expensive route that reliably meets the required outcome, not the cheapest route in isolation. Routing policies SHOULD be learned from evidence and updated when prices, capabilities, reliability, or constraints change.
+
+## 5.4 Security and data baseline
 
 Detailed security and data governance standards are created only when operational need justifies them, but the following baseline is always active:
 
-- Credentials and secrets are not embedded in public artifacts or source by default.
+- credentials and secrets are not embedded in public artifacts or source by default;
+- access follows least privilege appropriate to the system and consequence;
+- client or confidential data is not reused, published, or added to public datasets without explicit authority;
+- sensitive data is minimized in prompts, traces, logs, and model calls where practical;
+- external services are evaluated for the data, trust, and availability boundary they create;
+- material security or data incidents create durable evidence and corrective action.
 
-- Access follows least privilege appropriate to the system and consequence.
-
-- Client or confidential data is not reused, published, or added to public datasets without explicit authority.
-
-- Sensitive data is minimized in prompts, traces, logs, and model calls where practical.
-
-- External services are evaluated for the data, trust, and availability boundary they create.
-
-- Material security or data incidents create a durable record and corrective action.
-
-# 12. Technology surveillance
+## 5.5 Technology surveillance
 
 Powerfarm does not need to chase every release. A new technology enters evaluation when there is a plausible reason it could change a decision that matters.
 
 Surveillance SHOULD track changes in capability, cost, context, reliability, tools, protocols, hardware, provider behavior, and benchmark relevance. The output is a candidate decision question, not a news feed.
 
-# 13. Technical measures
+Technical choices SHOULD be evaluated on relevant dimensions separately when trade-offs are real, including verified outcome quality, reliability, cost, time, throughput, human effort, privacy, security, auditability, replaceability, evidence generation, freshness, and maintenance burden.
 
-Technical choices SHOULD be judged using the dimensions that matter to the decision, kept separate when trade-offs are real:
+## 5.6 Current implementation is not canon
 
-- Verified outcome quality and reliability.
+The current stack, providers, repositories, hardware, database schemas, agent harnesses, and deployment topology are implementations, not institutional identity. They MAY change aggressively without changing this canon provided the durable architectural contracts remain satisfied.
 
-- Economic cost and cost per verified outcome.
-
-- Time and throughput.
-
-- Human effort and recovery burden.
-
-- Privacy, security, and auditability.
-
-- Replaceability and external leverage.
-
-- Evidence generation and knowledge accumulation.
-
-- Freshness relative to the current frontier.
-
-- Complexity and maintenance burden.
-
-# 14. Current implementation is not canon
-
-> **Important boundary**
->
-> The current stack, providers, repositories, hardware, database schemas, agent harnesses, and deployment topology are implementations, not institutional identity. When they need documentation, PF-06 standard document types are instantiated. They may change aggressively without changing this canon.
-
-# 15. Replacement rule
+## 5.7 Replacement rule
 
 When a candidate technology may materially dominate or invalidate an incumbent, Powerfarm identifies the affected decision, evaluates the candidate under relevant constraints, updates the preferred route when evidence is sufficient, and preserves the incumbent as historical state. Sunk cost does not grant a technology tenure.
+
+---
+
+## Operational mantra
+
+> **Powerfarm is technology-replaceable, not architecture-agnostic.**
+>
+> **Semantics rise. Code descends. Context is a working set, not a warehouse.**
+>
+> **Have few technical rules, and make them strong.**
