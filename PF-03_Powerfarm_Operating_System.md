@@ -7,7 +7,7 @@ How Powerfarm decides, allocates work, changes, and keeps the company coherent w
 | **DOCUMENT**  | PF-03             |
 |---------------|-------------------|
 | **STATUS**    | **CANONICAL**     |
-| **VERSION**   | 1.1               |
+| **VERSION**   | 1.2               |
 | **EFFECTIVE** | 16 September 2026 |
 
 | **OWNS**         | Decision ownership, work lifecycle, institutional operating architecture, durable system boundaries, build-vs-use, resource allocation, exceptions, institutional drift, documentation governance, and durable operating rules. |
@@ -163,7 +163,15 @@ verification
 
 Mutable operational state remains mutable. When an exact historical object must be preserved, it SHOULD be represented immutably and content-addressed.
 
+Content-addressed objects are also reusable immutable values. They MAY be referenced, transported, cached, resolved remotely, composed into manifests or object graphs, and loaded on demand without changing their content identity.
+
 Content identity does not imply institutional authority.
+
+### Context is a working set, not a warehouse
+
+Active model context is temporary reasoning state, not canonical storage. Intelligent systems SHOULD prefer durable references to large immutable content over repeatedly embedding or copying that content when references improve context efficiency, composability, verification, or distribution.
+
+A system MAY inspect a small manifest or semantic index first and resolve only the content required for the current reasoning step. Durable content remains outside the model context and can be loaded by reference when needed.
 
 ### Evidence is local, not omniscient
 
@@ -177,7 +185,7 @@ Where material, Powerfarm SHOULD be able to explain not only what it asserts but
 
 ## 3.4 Substrates
 
-Powerfarm separates human-readable source, preserved bytes, institutional recognition, and operational state.
+Powerfarm separates human-readable source, immutable content, institutional recognition, and operational state.
 
 ### GitHub or equivalent source control
 
@@ -189,13 +197,38 @@ It is the human-readable and editable source of software when a repository exist
 
 ### Content-addressed storage
 
-Content-addressed storage answers:
+The Content Store is Powerfarm's immutable content plane.
 
-> Given this digest, what were the exact bytes?
+It answers:
 
-It MAY preserve datasets, experiment outputs, software snapshots, builds, ExecutionBundles, evidence, receipts, capability definitions, and other immutable objects.
+> Given this digest, what are the exact bytes, independent of their current location?
 
-It guarantees byte identity, not semantic authority.
+It MAY preserve datasets, experiment outputs, software snapshots, builds, ExecutionBundles, evidence, receipts, capability definitions, prompts, manifests, source trees, and other immutable objects.
+
+Its role is not limited to archival preservation. Content-addressed objects MAY be:
+
+- referenced without copying their bytes into every consumer;
+- resolved from local or remote storage;
+- cached locally and independently re-verified by digest;
+- transported without changing identity;
+- loaded lazily by software or intelligent systems;
+- composed through references into immutable manifests and object graphs.
+
+Powerfarm SHOULD prefer stable content references over repeated embedding or replication of large immutable objects where doing so improves context efficiency, composability, transport, caching, or verification.
+
+Objects MAY reference other content-addressed objects. This allows compound immutable values such as software trees, evidence sets, execution inputs, datasets, and bundles to be represented without requiring every consumer to load every underlying byte eagerly.
+
+Content identity establishes exact bytes only. Meaning, institutional recognition, permissions, authority, and legitimate relationships remain responsibilities of Registry, contracts, grants, and Identity.
+
+The durable separation is:
+
+```text
+source control → human-readable source and change history
+content store  → exact immutable values, composition, and transport
+Registry       → institutional recognition and semantic identity
+local stores   → mutable application-owned operational state
+model context  → temporary reasoning working set
+```
 
 ### Application-owned operational storage
 
@@ -253,7 +286,7 @@ Software therefore has distinct institutional homes:
 
 ```text
 source control → human-readable source and history
-content store  → exact preserved bytes
+content store  → exact immutable values and referenced composition
 Registry       → institutionally recognized identity and version
 ```
 
@@ -538,7 +571,7 @@ software(t)
 └── evidence(t)
 ```
 
-Execution changes that trajectory through authorized transitions. Contracts define admissible relationships, content-addressed storage preserves exact historical objects, and Research studies how conditions affect outcomes.
+Execution changes that trajectory through authorized transitions. Contracts define admissible relationships, content-addressed storage preserves and carries exact immutable values, and Research studies how conditions affect outcomes.
 
 ## 3.16 Implementation order
 
@@ -768,9 +801,11 @@ No meeting, report, review, or recurring ritual is canonical by default. A caden
 
 12. Do not create a new durable subsystem merely because a new responsibility appears; first attempt to express it through the current model.
 
-13. Preserve exact bytes when history requires them, but do not confuse byte identity with authority.
+13. Preserve exact immutable content when history or composition requires it, but do not confuse byte identity with authority.
 
 14. Prefer provenance-bearing assertions over opaque status.
+
+15. Treat active model context as a temporary working set; prefer durable references and on-demand loading for large reusable immutable content where practical.
 
 ---
 
@@ -993,7 +1028,7 @@ The class becomes ready only when temporal and observational predicates converge
 ```text
 Research creates and learns.
 GitHub explains.
-Content Store preserves.
+Content Store preserves and carries immutable values.
 Registry recognizes.
 Identity authorizes.
 Antenna maintains observational evidence.
@@ -1009,9 +1044,17 @@ Search finds.
 
 ---
 
-# Revision note
+# Revision notes
 
-**Version 1.1, effective 16 September 2026**
+## Version 1.2, effective 16 September 2026
+
+- Clarified the Content Store as Powerfarm's immutable content plane rather than only an archival substrate.
+- Added content-addressed references, remote resolution, caching, transport, lazy loading, manifests, and immutable object composition to the architectural role of CAS.
+- Established active model context as a temporary reasoning working set rather than canonical storage.
+- Clarified that content identity remains distinct from semantic meaning, permissions, authority, and institutional recognition.
+- Updated the architectural mantra to reflect the Content Store's preservation and composition role.
+
+## Version 1.1, effective 16 September 2026
 
 - Integrated **Powerfarm Architecture Model v0.1** into PF-03 rather than creating an additional canonical document.
 - Clarified the boundary between PF-03 institutional operating architecture and PF-04 implementation-level technical design.
