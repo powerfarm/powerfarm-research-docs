@@ -142,7 +142,7 @@ repository_territories:
     meaning: active-or-candidate-v0-source
   historical:
     provider: github
-    organization: powercity
+    organization: powercitty
     meaning: superseded-repository-preservation
     transfer_disposition: ARCHIVE_THEN_MOVE
     active_registry_membership_after_transfer: false
