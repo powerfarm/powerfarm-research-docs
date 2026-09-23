@@ -157,7 +157,7 @@ Each LAB must converge to:
 
 Historical projects may be preserved outside the admitted Parks or archived. Presence outside a Park is not necessarily negative delta; disposition depends on ownership/history/protection.
 
-For Git repositories, working V0 designates **Powercity** as the historical-preservation organization for superseded Powerfarm repositories. Transfer to Powercity is an archival disposition, not destruction, and does not by itself confer active V0 Registry membership.
+For Git repositories, working V0 designates GitHub organization **`powercitty`** as the historical-preservation organization for superseded Powerfarm repositories. Transfer to Powercitty is an archival disposition, not destruction, and does not by itself confer active V0 Registry membership.
 
 ## V0 secret policy
 
