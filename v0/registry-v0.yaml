@@ -1,9 +1,10 @@
-version: powerfarm.registry-v0.draft-1
-status: proposed
+version: powerfarm.registry-v0.working-1
+status: working
 date: 2026-09-23
 recognition:
-  becomes_working_v0_when: merged_to_main
   authority: director_merge
+  pull_request: 5
+  working_v0_commit: 6438c55a20e82e922322d26561487f91761a6e3a
 principles:
   registry_is_recognition_not_operational_omniscience: true
   projections_are_not_authority: true
@@ -49,6 +50,12 @@ required:
       kind: store
       role: company-control-plane
       target: supabase
+      provider_binding:
+        project_ref: ekjlmclhqnsstfjzuabz
+        project_name: powerfarm.kernal
+        region: eu-west-1
+        observed_state: ACTIVE_HEALTHY
+        observed_at: 2026-09-23
       authoritative_for:
         - institutional-registry
         - grants-authority
@@ -123,17 +130,28 @@ required_contract_families:
 negative_delta_dispositions:
   - DELETE
   - ARCHIVE_THEN_DELETE
+  - ARCHIVE_THEN_MOVE
   - KEEP_OUTSIDE_REGISTRY
   - QUARANTINE_OR_DECIDE
   - REPLACE
+
+repository_territories:
+  active:
+    provider: github
+    organization: powerfarm
+    meaning: active-or-candidate-v0-source
+  historical:
+    provider: github
+    organization: powercity
+    meaning: superseded-repository-preservation
+    transfer_disposition: ARCHIVE_THEN_MOVE
+    active_registry_membership_after_transfer: false
 
 unresolved_before_adoption:
   - id: CK-LIVE-001
     requirement: enumerate live CloudKit records/assets/heads by environment/database/zone
   - id: LAB256-CENSUS-001
     requirement: reconcile LAB 256 census
-  - id: SUPABASE-LIVE-001
-    requirement: classify any existing Powerfarm Supabase resources
   - id: APP-PARK-CURRENT-001
     requirement: enumerate current admitted App Park residents
   - id: ENGINE-PARK-CURRENT-001
