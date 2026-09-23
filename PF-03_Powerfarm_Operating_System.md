@@ -7,8 +7,8 @@ How Powerfarm decides, allocates work, changes, and keeps the company coherent w
 | **DOCUMENT**  | PF-03             |
 |---------------|-------------------|
 | **STATUS**    | **CANONICAL**     |
-| **VERSION**   | 1.2               |
-| **EFFECTIVE** | 16 September 2026 |
+| **VERSION**   | 1.3               |
+| **EFFECTIVE** | 23 September 2026 |
 
 | **OWNS**         | Decision ownership, work lifecycle, institutional operating architecture, durable system boundaries, build-vs-use, resource allocation, exceptions, institutional drift, documentation governance, and durable operating rules. |
 |------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -232,19 +232,13 @@ model context  → temporary reasoning working set
 
 ### Application-owned operational storage
 
-SQLite is the default for application-local Powerfarm state unless another mechanism is materially justified.
+Operational state belongs to the application or service whose contract gives it authority over that state.
 
-Typical ownership is:
+The architectural rule is **ownership and declared authority, not a particular storage engine**.
 
-```text
-Antenna         → antenna.db
-Heartime        → heartime.db
-Coloured Places → coloured-places.db
-Workspace       → project/workspace databases
-other apps      → app-owned databases
-```
+SQLite, PostgreSQL, CloudKit, in-memory state, append-only journals, remote services, or another substrate MAY be used when their properties fit the application's contract, consequence, and operating environment.
 
-The architectural rule is ownership, not SQLite itself.
+Concrete V0 storage choices belong in versioned architecture/materialization specifications and App Contracts rather than in this canon. A change of storage provider or engine does not change Powerfarm's institutional architecture unless ownership, authority, contracts, or durable semantics change.
 
 ## 3.5 Registry
 
@@ -583,7 +577,7 @@ The first three specifications are:
 2. **Executability Contract v0**: temporal and observational predicates, policy, generation, trigger semantics, claim semantics, idempotency, expiration, cancellation, retries, effects, verification, and uncertainty.
 3. **Registry Core v0**: the smallest durable institutional model around entities, artifacts, artifact versions, contracts, and grants.
 
-Search, a full Heartime implementation, broader onboarding automation, Parks evolution, and legacy Supabase reduction SHOULD follow from evidence produced while implementing these specifications rather than from speculative subsystem growth.
+Search, a full Heartime implementation, broader onboarding automation, Parks evolution, Registry/Minivault substrates, and other concrete materialization choices SHOULD be specified in versioned architecture/materialization documents and revised from evidence rather than promoted into canon by implementation inertia.
 
 # 4. Work lifecycle
 
@@ -1045,6 +1039,13 @@ Search finds.
 ---
 
 # Revision notes
+
+## Version 1.3, effective 23 September 2026
+
+- Removed SQLite as a canonical default storage engine; preserved application ownership and declared authority as the durable rule.
+- Moved concrete Registry/Minivault/storage substrate choices to versioned materialization specifications rather than canon.
+- Reworded the implementation-order clause so provider/topology evolution does not masquerade as architectural change.
+- Preserved the existing architecture model, Registry semantics, App Contract model, execution doctrine, and Search/census boundaries.
 
 ## Version 1.2, effective 16 September 2026
 
