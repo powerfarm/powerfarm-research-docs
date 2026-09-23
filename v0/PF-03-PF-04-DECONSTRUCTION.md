@@ -1,6 +1,6 @@
 # PF-03 / PF-04 Deconstruction for V0
 
-**Status:** PROPOSED until merged to `main`  
+**Status:** WORKING V0, recognized at `6438c55a20e82e922322d26561487f91761a6e3a`  
 **Date:** 23 September 2026
 
 ## Why this exists
