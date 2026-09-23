@@ -7,8 +7,8 @@ Durable technical doctrine for intelligence, software representation, code, veri
 | **DOCUMENT**  | PF-04             |
 |---------------|-------------------|
 | **STATUS**    | **CANONICAL**     |
-| **VERSION**   | 1.1               |
-| **EFFECTIVE** | 16 September 2026 |
+| **VERSION**   | 1.2               |
+| **EFFECTIVE** | 23 September 2026 |
 
 | **OWNS**         | The durable technical doctrine Powerfarm uses to structure software and intelligent work, choose representations, govern production languages and code, preserve evidence, verify outcomes, and remain replaceable. |
 |------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -388,6 +388,8 @@ Technical choices SHOULD be evaluated on relevant dimensions separately when tra
 ## 5.6 Current implementation is not canon
 
 The current stack, providers, repositories, hardware, database schemas, agent harnesses, and deployment topology are implementations, not institutional identity. They MAY change aggressively without changing this canon provided the durable architectural contracts remain satisfied.
+
+Current V0 provider, storage, and topology decisions SHOULD therefore live in versioned architecture/materialization specifications, App Contracts, and decision records. Revising those instances does not revise this canon unless the change alters durable representation, authority, verification, replaceability, or other doctrine owned here.
 
 ## 5.7 Replacement rule
 

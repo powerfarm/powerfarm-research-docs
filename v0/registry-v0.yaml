@@ -1,0 +1,150 @@
+version: powerfarm.registry-v0.draft-1
+status: proposed
+date: 2026-09-23
+recognition:
+  becomes_working_v0_when: merged_to_main
+  authority: director_merge
+principles:
+  registry_is_recognition_not_operational_omniscience: true
+  projections_are_not_authority: true
+  storage_does_not_define_semantics: true
+  secret_values_in_public_git: forbidden
+  negative_delta_is_not_automatic_deletion: true
+
+required:
+  persons:
+    - id: pf.person.director
+      kind: person
+      role: director
+
+  machines:
+    - id: pf.lab-8gb
+      kind: machine
+      place: lab-8gb
+    - id: pf.lab-512
+      kind: machine
+      place: lab-512
+    - id: pf.lab-256
+      kind: machine
+      place: lab-256
+
+  systems:
+    - id: pf.identity
+      kind: system
+    - id: pf.continuity
+      kind: system
+    - id: pf.antenna
+      kind: system
+    - id: pf.heartime
+      kind: system
+    - id: pf.research
+      kind: system
+    - id: pf.minivault
+      kind: system
+    - id: pf.search
+      kind: system
+
+  infrastructure:
+    - id: pf.store.supabase.company
+      kind: store
+      role: company-control-plane
+      target: supabase
+      authoritative_for:
+        - institutional-registry
+        - grants-authority
+        - company-ops
+    - id: pf.store.cloudkit.projects
+      kind: store
+      role: project-vault-plane
+      target: iCloud.app.powerfarm
+      authoritative_for:
+        - adopted-project-vaults
+      locator_policy: container/environment/database/zone
+    - id: pf.search-source.supabase
+      kind: search-source
+      source: pf.store.supabase.company
+    - id: pf.search-source.cloudkit
+      kind: search-source
+      source: pf.store.cloudkit.projects
+    - id: pf.projection.airtable
+      kind: projection
+      source: pf.search
+      authoritative: false
+
+  host_runners:
+    - id: pf.host-runner.lab-8gb
+      kind: application
+      place: pf.lab-8gb
+    - id: pf.host-runner.lab-512
+      kind: application
+      place: pf.lab-512
+    - id: pf.host-runner.lab-256
+      kind: application
+      place: pf.lab-256
+
+  canonical_documents:
+    - id: pf.doc.PF-01
+      path: PF-01_Powerfarm_Charter.md
+    - id: pf.doc.PF-02
+      path: PF-02_Research_and_Evidence_Standard.md
+    - id: pf.doc.PF-03
+      path: PF-03_Powerfarm_Operating_System.md
+    - id: pf.doc.PF-04
+      path: PF-04_Intelligence_and_Technology_System.md
+    - id: pf.doc.PF-05
+      path: PF-05_Products_and_Business_System.md
+    - id: pf.doc.PF-06
+      path: PF-06_Standard_Documents_Catalog.md
+
+  v0_specifications:
+    - id: pf.spec.v0.storage-registry
+      path: v0/V0-01_MINIVAULT_STORAGE_AND_REGISTRY.md
+    - id: pf.spec.v0.parks-contracts
+      path: v0/V0-02_APP_PARK_ENGINE_PARK_AND_APP_CONTRACTS.md
+    - id: pf.spec.v0.namespace-authority-secrets
+      path: v0/V0-03_NAMESPACE_AUTHORITY_AND_SECRETS.md
+    - id: pf.spec.v0.current-registry
+      path: v0/V0-04_CURRENT_REGISTRY_SITUATION.md
+    - id: pf.spec.v0.ideal-registry
+      path: v0/V0-05_IDEAL_REGISTRY_V0.md
+    - id: pf.spec.v0.pf03-pf04-deconstruction
+      path: v0/PF-03-PF-04-DECONSTRUCTION.md
+
+required_contract_families:
+  - app-contract
+  - store-authority
+  - search-contract
+  - host-runner
+  - machine-placement
+  - secret-consumer
+  - execution-approval
+  - backup-custody
+
+negative_delta_dispositions:
+  - DELETE
+  - ARCHIVE_THEN_DELETE
+  - KEEP_OUTSIDE_REGISTRY
+  - QUARANTINE_OR_DECIDE
+  - REPLACE
+
+unresolved_before_adoption:
+  - id: CK-LIVE-001
+    requirement: enumerate live CloudKit records/assets/heads by environment/database/zone
+  - id: LAB256-CENSUS-001
+    requirement: reconcile LAB 256 census
+  - id: SUPABASE-LIVE-001
+    requirement: classify any existing Powerfarm Supabase resources
+  - id: APP-PARK-CURRENT-001
+    requirement: enumerate current admitted App Park residents
+  - id: ENGINE-PARK-CURRENT-001
+    requirement: enumerate current admitted Engine Park residents
+  - id: SECRET-REFS-001
+    requirement: enumerate stable secret references without values
+  - id: REPO-CURRENT-001
+    requirement: enumerate institutionally recognized GitHub repositories
+
+completion:
+  negative_delta: empty_or_explicitly_retained
+  positive_delta: empty
+  current_registry_equals_adopted_ideal: true
+  post_convergence_census_matches_topology: true
