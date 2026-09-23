@@ -129,7 +129,9 @@ The active Powerfarm GitHub organization currently exposes at least these observ
 
 Observation is not adoption. **REPO-CURRENT-001** remains open until each observed repository receives an explicit V0 disposition.
 
-A separate GitHub organization, **Powercity**, is designated by the Director as the historical-preservation destination for superseded repositories. Moving a repository from Powerfarm to Powercity means **archive/preserve outside the active Registry**, not deletion. The currently connected GitHub integration does not expose Powercity, so its live inventory remains external evidence until that organization is connected or otherwise inventoried.
+A separate GitHub organization, **`powercitty`**, is designated by the Director as the historical-preservation destination for superseded repositories. Moving a repository from Powerfarm to `powercitty` means **archive/preserve outside the active Registry**, not deletion.
+
+The GitHub App is installed on `powercitty`. A live provider census on 23 September 2026 observed **18 repositories with mixed public/private visibility**. The detailed repository-name inventory is retained in private LAB receipts rather than repeated in this public canon.
 
 ## Current fragmentation
 
