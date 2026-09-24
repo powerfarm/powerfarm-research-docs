@@ -82,9 +82,23 @@ Verified implementation facts:
 - content records use SHA-256 digest-based record names;
 - record vocabulary includes PFEntity, PFPrincipal, PFGrant, PFPlace, PFContract, PFArtifact, PFArtifactVersion, PFApplication, PFRecognition, PFBinding, PFSoftware, PFContent and PFHead.
 
-The later Apple transition plan proposed a Private custom zone, historically named `PowerfarmInstitution`, but that zone has **not yet been proven live** in this reconstruction.
+A read-only signed census was executed locally on LAB 256 against both CloudKit environments.
 
-Live CloudKit record population is an explicit current unknown because non-interactive `cktool` access cannot unlock the developer credential. This must be enumerated through an interactive Apple-authenticated session before C is frozen.
+**Production**
+
+- account status: available;
+- none of the 13 expected Powerfarm record types exist.
+
+**Development**
+
+- account status: available;
+- record types proven present: `PFPrincipal`, `PFGrant`, `PFContract`, `PFContent`, `PFHead`;
+- record types proven absent: `PFEntity`, `PFPlace`, `PFArtifact`, `PFArtifactVersion`, `PFApplication`, `PFRecognition`, `PFBinding`, `PFSoftware`;
+- the surviving Development record families cannot be generically enumerated by the historical `TRUEPREDICATE` code path because the required query index is absent.
+
+Therefore the earlier apparent zero counts are **not** treated as proof that Development is empty. Population of the five surviving record families remains to be recovered by deterministic record IDs / direct fetch before **CK-LIVE-001** is closed.
+
+The later Apple transition plan proposed a Private custom zone, historically named `PowerfarmInstitution`, but that zone has **not yet been proven live** in this reconstruction.
 
 ### 6. Supabase
 
