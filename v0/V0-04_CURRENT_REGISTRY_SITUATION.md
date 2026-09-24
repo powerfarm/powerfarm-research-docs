@@ -161,11 +161,28 @@ Observed active/candidate Powerfarm repositories include:
 - `powerfarm/powerfarm-cli`
 - `powerfarm/powerfarm-heartime`
 
-Observation is not adoption.
+The current repository classification is:
+
+**Active V0 source territory**
+
+- `powerfarm/.github` — organization metadata/configuration; retained outside software authority.
+- `powerfarm/powerfarm-research-docs` — canon and V0 target.
+- `powerfarm/powerfarm-specs` — operational contracts/specifications.
+- `powerfarm/powerfarm-identity` — active Identity source; its older Registry/ADK/workspace implementation details do not automatically survive the V0 migration.
+- `powerfarm/powerfarm-continuity` — active Continuity source; machine materialization must converge on the Google ADK/Host Runner/Park model.
+- `powerfarm/powerfarm-coloured-places` — required Continuity observability/urgent-fix app.
+- `powerfarm/powerfarm-antenna` — retained source for the PF-03 Antenna service responsibility; not automatically an admitted runtime.
+- `powerfarm/powerfarm-heartime` — retained source for the PF-03 Heartime service responsibility; not automatically an admitted runtime.
+
+**Historical-preservation disposition**
+
+- `powerfarm/powerfarm-process-manager` → `ARCHIVE_THEN_MOVE` to `powercitty`.
+- `powerfarm/powerfarm-platform` → `ARCHIVE_THEN_MOVE` to `powercitty`.
+- `powerfarm/powerfarm-cli` → `ARCHIVE_THEN_MOVE` to `powercitty`.
 
 GitHub organization `powercitty` is the historical-preservation territory for superseded repositories. A live census observed 18 repositories there with mixed visibility. Detailed names remain in private receipts.
 
-Moving a repo from `powerfarm` to `powercitty` is `ARCHIVE_THEN_MOVE`, not active V0 membership.
+Moving a repo from `powerfarm` to `powercitty` preserves source/history but ends active V0 Registry membership.
 
 ## Fragmentation to reconcile
 
@@ -184,21 +201,20 @@ execution receipts
 
 V0 reconciles these sources with provenance rather than declaring any one retrospectively complete.
 
-## Bounded unresolved gates before C freezes
+## C freeze readiness
 
-The former CloudKit, LAB 256, App Park and Engine Park gates are resolved/bounded by Director disposition and live observation.
+All previously bounded census gates are now resolved or explicitly bounded:
 
-Secret-reference census is also bounded without recording values:
+- CloudKit historical test state is disposable under Director decision; signed census evidence is sufficient.
+- LAB 256 is outside ecosystem expected population.
+- App Park and Engine Park residents have explicit keep/delete/add dispositions.
+- required secret references are bounded by name/consumer without values.
+- observed Powerfarm repositories have explicit active or historical-preservation disposition.
+- no live `powerfarm-registry` project is visible through the connected Supabase account; local migrations/source plus frozen institutional exports bound the recoverable migration evidence.
 
-- Coloured Places currently references Supabase URL/publishable key, OAuth client id/secret, Antenna token file, owner id and observation/base locators.
-- Manhattan exposes `MANHATTAN_HOST`.
-- the protected secret source already contains provider groups for `braintrust`, `google`, `supabase` and `apple`.
+**No open census category remains before C freeze.**
 
-Remaining gate:
-
-1. **REPO-CURRENT-001**: classify observed Powerfarm repositories as active V0 source, historical-preserved, or outside scope.
-
-`LEGACY-SUPABASE-001` is bounded: no live `powerfarm-registry` project is visible through the connected provider account; its local migration/source history and frozen institutional exports define the recoverable migration evidence.
+Director merge of this target can serve as the recognition point after which C is frozen and the negative delta becomes executable.
 
 There is no open-ended discovery clause. New facts must fit one of these gates or explicitly amend C.
 
