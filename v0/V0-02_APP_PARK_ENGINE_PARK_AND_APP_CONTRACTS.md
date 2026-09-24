@@ -130,9 +130,11 @@ Apple infrastructure is treated as a replaceable provisioning substrate. The exi
 
 Powerfarm MUST preserve or be able to recreate the Apple developer capability required for remote programmatic provisioning, including the developer account relationship, container identity, signing/provisioning material and required keys/certificates.
 
-Final provisioning MUST be operable programmatically without depending on LAB 256 being online.
+For **private CloudKit data**, the provisioning unit is a private-database custom record zone/namespace. Apple permits custom zones only in the owning user's private database, and server-to-server keys alone administer the public database. Therefore V0 private provisioning requires a **user-authenticated Apple provisioner** acting as the Director's iCloud owner identity on an always-on ecosystem LAB, or an equivalent user-authenticated CloudKit Web Services flow.
 
-CloudKit's final V0 role is the database substrate for admitted App Park applications and Engine Park engines when their contracts require it.
+The control request may originate remotely, but the authenticated Apple execution path MUST NOT depend on LAB 256.
+
+CloudKit's final V0 role is the database/namespace substrate for admitted App Park applications and Engine Park engines when their contracts require it.
 
 Continuity provisions those databases during onboarding according to the contract.
 
@@ -161,13 +163,13 @@ CloudKit identity does not replace Powerfarm identity.
 
 Historical Apple-first Registry/test records are negative delta with terminal disposition `DELETE`.
 
-Before deletion, Powerfarm enumerates their exact surviving population and migrates only anything still institutionally required. Frozen census/receipts preserve the history.
+The Director has classified that state as disposable test material. Exact record-by-record enumeration is no longer a cleanup gate. The signed census and existing receipts preserve sufficient evidence; the historical data/schema may be wiped and rebuilt while preserving/recreating the provider capability above.
 
-At convergence, CloudKit contains only contract-owned app/engine databases. No company Registry authority remains there.
+At convergence, CloudKit contains only contract-owned app/engine databases/namespaces. No company Registry authority remains there.
 
 ## Host Runner
 
-Each LAB has one deterministic Host Runner boundary for approved machine-changing work.
+Each ecosystem LAB has one deterministic Host Runner boundary for approved machine-changing work.
 
 The Host Runner:
 
