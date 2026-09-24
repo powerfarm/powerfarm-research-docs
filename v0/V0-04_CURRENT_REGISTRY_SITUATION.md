@@ -73,7 +73,7 @@ Signed census established:
 - **Development absent:** the other eight expected types.
 - generic historical `TRUEPREDICATE` enumeration fails because the required query index is absent.
 
-The exact surviving Development population is still unresolved. These records are old test material with terminal disposition `DELETE` after exact enumeration and migration of anything uniquely required.
+The surviving Development state is classified by the Director as disposable test material. Exact record-by-record enumeration no longer blocks cleanup. The signed census/receipts preserve the evidence boundary; historical CloudKit data/schema may be wiped and rebuilt while preserving the Apple developer/container capability.
 
 The previously proposed `PowerfarmInstitution` private zone is historical design input, not a proven V0 resource.
 
@@ -100,13 +100,23 @@ At first census it had:
 
 It is therefore treated as the clean V0 Identity destination whose schema/kernel is still to be built.
 
+The same live provider census currently exposes one additional project, `Google ADK mapping` (project ref `vbgzdqdlarulpfsyjrke`). Read-only inspection found no user tables, no Auth users, no Storage buckets, no user migrations, no Edge Functions and no development branches. It has no role in I and is negative delta with target disposition `DELETE` after recognition of this target and dependency verification.
+
 ### Legacy Supabase Identity/Registry source
 
-A separate historical Supabase project named `powerfarm-registry` contains prior OAuth/Registry-era material.
+A historical Supabase implementation named `powerfarm-registry` contains prior OAuth/Registry-era material.
 
 It is **not** the V0 destination and must not be modernized in place.
 
-Its exact contents have not yet been provider-censused for this V0 reconstruction. Required institutional truth must be identified, migrated into the V0 Identity destination, verified, and the legacy project then retired/disregarded as authority.
+The current connected Supabase account does not expose a live project by that name. The historical source is, however, preserved locally on LAB 8GB at `~/lab/powerfarm-registry` with migrations covering identities/identity links, artifacts/versions/relations, grants, approvals, OAuth clients, service definitions/contracts/events, runs, ADK runtime state, workspaces and gadget state.
+
+This bounds the migration problem:
+
+- Identity/Registry concepts and any still-required recognized facts are migration input;
+- old runs, ADK session/event/checkpoint/effect state, workspace/gadget drafts and other operational implementation state do not migrate merely because the old schema contained them;
+- the frozen Airtable export and local migration/source history provide the remaining reconstruction evidence if the old cloud project is no longer available.
+
+No live legacy Supabase authority is currently visible through the provider connection.
 
 ### Continuity survivor observations
 
@@ -115,12 +125,19 @@ Live inspection on 24 September 2026 established:
 - Manhattan daemon + agent are running on **both** ecosystem LABs and are protected survivors.
 - Coloured Places exists under LAB 8GB App Park with a built Next.js application and admission documentation, but no live Coloured Places process was observed.
 - Google ADK was not found installed on either ecosystem LAB.
-- LAB 8GB contains several current/historical App Park residents beyond Coloured Places, including `zelador-grid`, `work-graph`, `cockpit` and `zelador`.
+- LAB 8GB App Park contains `coloured-places`, `work-graph`, `zelador`, `zelador-grid`, plus `cockpit` as a symlink to an older UI.
 - LAB 512 App Park contains `zelador`.
-- Engine Park contains historical/current workflow-engine and Powerfarm trees that are not yet admitted by the simplified V0 target.
+- LAB 8GB Engine Park contains `powerfarm` and `workflow-engine`; LAB 512 Engine Park has no live resident.
 - `~/POWERFARM` currently contains receipts but no canonical Research workspace, making `~/POWERFARM/Research` a clean positive-delta target.
 
-These observations substantially bound APP-PARK-CURRENT-001 and ENGINE-PARK-CURRENT-001: unexplained Park residents are candidate negative delta until explicitly contracted.
+Director disposition resolves the Park census:
+
+- `coloured-places`: **KEEP / REPAIR / ADMIT**;
+- Manhattan on both LABs: **KEEP / PROTECT**;
+- LAB 8GB `work-graph`, `zelador`, `zelador-grid`, `cockpit`: **DELETE**;
+- LAB 512 `zelador`: **DELETE**;
+- LAB 8GB Engine Park `powerfarm` and `workflow-engine`: **DELETE**;
+- Google ADK: **positive delta**, to become the required Engine Park resident.
 
 ### Search / Airtable projection
 
@@ -169,12 +186,19 @@ V0 reconciles these sources with provenance rather than declaring any one retros
 
 ## Bounded unresolved gates before C freezes
 
-1. **CK-LIVE-001**: enumerate exact surviving CloudKit Development records/assets/heads.
-2. **APP-PARK-CURRENT-001**: distinguish admitted App Park residents from mere directories/processes.
-4. **ENGINE-PARK-CURRENT-001**: distinguish admitted Engine Park residents from installed runtimes/tools.
-5. **SECRET-REFS-001**: enumerate stable secret references/consumers without values.
-6. **REPO-CURRENT-001**: classify observed Powerfarm repos as V0 survivor, historical-preserved or outside scope.
-7. **LEGACY-SUPABASE-001**: census `powerfarm-registry`, identify required OAuth/Registry/Minivault truth, and produce the migration set.
+The former CloudKit, LAB 256, App Park and Engine Park gates are resolved/bounded by Director disposition and live observation.
+
+Secret-reference census is also bounded without recording values:
+
+- Coloured Places currently references Supabase URL/publishable key, OAuth client id/secret, Antenna token file, owner id and observation/base locators.
+- Manhattan exposes `MANHATTAN_HOST`.
+- the protected secret source already contains provider groups for `braintrust`, `google`, `supabase` and `apple`.
+
+Remaining gate:
+
+1. **REPO-CURRENT-001**: classify observed Powerfarm repositories as active V0 source, historical-preserved, or outside scope.
+
+`LEGACY-SUPABASE-001` is bounded: no live `powerfarm-registry` project is visible through the connected provider account; its local migration/source history and frozen institutional exports define the recoverable migration evidence.
 
 There is no open-ended discovery clause. New facts must fit one of these gates or explicitly amend C.
 
