@@ -53,7 +53,7 @@ These are semantic responsibilities. Their implementation may consist of several
 ### Infrastructure/control-plane entities
 
 - Powerfarm Supabase company plane, bound for working V0 to Supabase project ref `ekjlmclhqnsstfjzuabz` (provider-side name `powerfarm.kernal`, region `eu-west-1`). The provider project name is not the institutional identity; `pf.store.supabase.company` is.
-- CloudKit container `iCloud.app.powerfarm` as adopted Apple project-vault substrate.
+- CloudKit container `iCloud.app.powerfarm` as the Apple substrate for admitted Ecosystem App-owned databases only.
 - one Host Runner installation per LAB.
 - Powerfarm Search Supabase source.
 - Powerfarm Search CloudKit source.
@@ -93,7 +93,7 @@ Required logical stores are:
 1. company Registry store;
 2. company operational/job/receipt store;
 3. company adopted Minivault store where required;
-4. CloudKit project-vault store(s);
+4. CloudKit Ecosystem App-owned database store(s);
 5. immutable byte/content store(s);
 6. rebuildable Search/index/projector stores;
 7. local transactional/runtime stores only where an application contract requires them.
@@ -140,9 +140,18 @@ Required initial sources:
 
 Required initial human projection:
 
-- Airtable.
+- Airtable, rebuilt as the Powerfarm Search frontend after deletion of the current Registry materialization.
 
 Search does not own canonical state.
+
+## Forbidden legacy state at convergence
+
+Ideal Registry V0 explicitly excludes:
+
+- historical CloudKit Registry/test records from the Apple-first experiments;
+- the current Airtable Registry tables/records as an authoritative or dormant legacy copy.
+
+After verified migration/census, both are **deleted**. Remaining CloudKit data belongs only to admitted Ecosystem Apps; remaining Airtable data is Search/projection state.
 
 ## V0 Parks
 
@@ -189,5 +198,6 @@ In practical terms:
 - every admitted app/store has a contract and owner;
 - every material company byte has verified custody;
 - Search can explain its sources;
-- Airtable is rebuildable from Search;
+- Airtable is rebuilt from Search after the old Registry materialization is deleted;
+- old CloudKit Registry/test records are deleted;
 - both the architecture and materialization are recoverable from recognized source and evidence.
