@@ -1,203 +1,142 @@
 # V0-05 - Ideal Registry V0
 
-**Status:** WORKING V0 target I, recognized at `6438c55a20e82e922322d26561487f91761a6e3a`  
-**Purpose:** define the finite institutional state Powerfarm intends to recognize for V0.
+**Status:** WORKING target I  
+**Recognition baseline:** `6438c55a20e82e922322d26561487f91761a6e3a`
 
-Ideal Registry V0 is not a list of every byte, process, package or historical project. It is the finite set of identities, versions, contracts, grants, stores, placements and required relationships that make V0 coherent.
+**I** is the finite institutional state Powerfarm intends to recognize for V0. The exact machine-readable target is `registry-v0.yaml`.
 
-The machine-readable companion is `registry-v0.yaml`.
+Ideal Registry V0 is not an inventory of every byte, row, process or experiment. It is the skeleton required for Powerfarm to remain coherent while its apps, engines and research operate independently.
 
 ## Admission law
 
-An item belongs in Ideal Registry V0 only when it has a V0 institutional purpose.
+An item belongs in I only when it has an institutional purpose expressible as one or more of:
 
-Every required item must resolve to one or more of:
-
-- entity;
-- artifact;
-- artifact version;
-- contract;
-- grant;
-- declared store;
-- placement/topology relationship;
-- capability;
-- Search surface/source;
+- identity;
+- recognized artifact/repository version;
+- contract/template;
+- grant/authority relationship;
+- declared store and owner;
+- placement/capability;
+- Search source/projection;
 - documented temporary exception.
 
-Anything else may still exist in the world, but it is not part of Ideal Registry V0.
+Everything else may exist in the world without being part of Powerfarm.
 
-## V0 institution
+## Three-sector target
 
-### Human
+### Research: what we study
 
-- Director principal.
+V0 recognizes Powerfarm Research and the exact adopted versions of PF-01 through PF-06.
 
-### Machines
+Research may produce experiments, evidence, datasets, findings and software without registering every intermediate state.
+
+Institutionally valuable outputs may be promoted to Minivault and recognized through Identity.
+
+### Continuity: how we do it
+
+V0 Continuity materializes recognized contracts across:
 
 - `pf.lab-8gb`
 - `pf.lab-512`
 - `pf.lab-256`
+- Google ADK workflow execution;
+- App Park and Engine Park;
+- one Host Runner effect boundary per LAB;
+- onboarding, verification, receipts and recovery;
+- CloudKit provisioning for contract-owned app/engine databases.
 
-### Durable architectural systems
-
-- `pf.identity`
-- `pf.continuity`
-- `pf.antenna`
-- `pf.heartime`
-- `pf.research`
-- `pf.minivault`
-- `pf.search`
-
-These are semantic responsibilities. Their implementation may consist of several artifacts/services.
-
-### Infrastructure/control-plane entities
-
-- Powerfarm Supabase company plane, bound for working V0 to Supabase project ref `ekjlmclhqnsstfjzuabz` (provider-side name `powerfarm.kernal`, region `eu-west-1`). The provider project name is not the institutional identity; `pf.store.supabase.company` is.
-- CloudKit container `iCloud.app.powerfarm` as the Apple substrate for admitted Ecosystem App-owned databases only.
-- one Host Runner installation per LAB.
-- Powerfarm Search Supabase source.
-- Powerfarm Search CloudKit source.
-- Airtable Search projection.
-- adopted content/byte storage and backup replicas.
-- GitHub source-control repositories that V0 explicitly recognizes.
-
-### Research canon artifacts
-
-V0 recognizes exact versions of:
-
-- PF-01
-- PF-02
-- PF-03
-- PF-04
-- PF-05
-- PF-06
-
-The merge commit that adopts this V0 package becomes the initial recognized version reference for this architecture package.
-
-### Core V0 specifications
-
-The following are recognized architecture-spec artifacts once merged:
-
-- V0-01 Minivault, Storage and Registry
-- V0-02 App Park, Engine Park and App Contracts
-- V0-03 Namespace, Authority and Secrets
-- V0-04 Current Registry Situation
-- V0-05 Ideal Registry V0
-- PF-03/PF-04 deconstruction map
-- `registry-v0.yaml`
-
-## V0 stores
-
-Required logical stores are:
-
-1. company Registry store;
-2. company operational/job/receipt store;
-3. company adopted Minivault store where required;
-4. CloudKit Ecosystem App-owned database store(s);
-5. immutable byte/content store(s);
-6. rebuildable Search/index/projector stores;
-7. local transactional/runtime stores only where an application contract requires them.
-
-A store is admitted through an App Contract/Store declaration, not by filesystem discovery.
-
-## V0 contracts
-
-At minimum V0 must recognize:
-
-- App Contract for each admitted application;
-- Host Runner machine/application contract per LAB;
-- Search Contract for every searchable source;
-- store authority declarations;
-- machine/place relationships;
-- secret-consumer relationships;
-- execution/approval contract for destructive/system-changing jobs;
-- backup/custody contract for material company bytes;
-- research canon artifact/version relationships.
-
-A subordinate contract may remain embedded in a root App Contract when splitting it would add ceremony without reducing ambiguity.
-
-## V0 authority
-
-V0 must be able to answer mechanically:
-
-- who/what may read a protected store;
-- who/what may write or publish;
-- who may approve a destructive/system effect;
-- which application owns each mutable store;
-- which store is authoritative for each class of state;
-- which projections are non-authoritative.
-
-No grant may be inferred from network access, account possession, path ownership or Park placement.
-
-## V0 Search
-
-Powerfarm Search must federate recognized company and project sources.
-
-Required initial sources:
-
-- Supabase company source;
-- CloudKit project source.
-
-Required initial human projection:
-
-- Airtable, rebuilt as the Powerfarm Search frontend after deletion of the current Registry materialization.
-
-Search does not own canonical state.
-
-## Forbidden legacy state at convergence
-
-Ideal Registry V0 explicitly excludes:
-
-- historical CloudKit Registry/test records from the Apple-first experiments;
-- the current Airtable Registry tables/records as an authoritative or dormant legacy copy.
-
-After verified migration/census, both are **deleted**. Remaining CloudKit data belongs only to admitted Ecosystem Apps; remaining Airtable data is Search/projection state.
-
-## V0 Parks
-
-Each LAB must converge to:
-
-- protected human/system material;
-- one Powerfarm institutional root;
-- App Park containing only contract-admitted apps;
-- Engine Park containing only contract-admitted shared engines;
-- minimum required local dot-state/tool configuration;
-- one Host Runner.
-
-Historical projects may be preserved outside the admitted Parks or archived. Presence outside a Park is not necessarily negative delta; disposition depends on ownership/history/protection.
-
-For Git repositories, working V0 designates GitHub organization **`powercitty`** as the historical-preservation organization for superseded Powerfarm repositories. Transfer to Powercitty is an archival disposition, not destruction, and does not by itself confer active V0 Registry membership.
-
-## V0 secret policy
-
-The Registry contains secret references and metadata only.
-
-No live credential value belongs in:
-
-- this public repository;
-- Airtable;
-- Search indexes;
-- receipts;
-- ordinary CAS/content archives.
-
-## V0 completion condition
-
-V0 is converged when:
+Each LAB converges to:
 
 ```text
-C - I = empty except explicit non-destructive dispositions/deferred exceptions
+protected human/system material
+POWERFARM institutional root
+App Park
+Engine Park
+Host Runner
+```
+
+Only contract-admitted residents belong in the Parks.
+
+CloudKit final scope is **only** databases owned by admitted apps/engines and provisioned according to their contracts. Historical Registry/test state is absent.
+
+### Identity: who we are
+
+V0 Identity contains:
+
+- OAuth/principals/authorization;
+- Registry;
+- Minivault.
+
+Working V0 materializes Identity on Supabase project ref `ekjlmclhqnsstfjzuabz` (provider name `powerfarm.kernal`).
+
+The Registry records structural recognition, not daily operational life.
+
+Minivault preserves promoted institutional value, including durable software/repository objects, evidence, artifacts or other objects chosen to survive ordinary working state.
+
+Powerfarm-native repository semantics belong to Identity/Minivault; GitHub may act as source-control, collaboration, publication or projection without defining the native repository format.
+
+## Required institutional relationships
+
+I must be able to answer mechanically:
+
+- what exists and which version is recognized;
+- who/what owns it;
+- which contract/template governs it;
+- where an admitted app/engine is placed;
+- which mutable store it owns and what that store is authoritative for;
+- which grants permit protected actions;
+- which secret reference a consumer requires;
+- how it is onboarded, verified, retired and recovered;
+- where a promoted immutable object can be resolved and verified;
+- which Search sources/projections expose it.
+
+No authority may be inferred from physical presence, provider accounts or connectivity.
+
+## Search and projections
+
+Powerfarm Search is a rebuildable federated read model over recognized sources.
+
+Airtable is its human frontend/projection and never Registry authority.
+
+Search/projection loss must not erase canonical state.
+
+## Historical preservation and retirement
+
+At convergence:
+
+- historical CloudKit Registry/test records are deleted;
+- the old Airtable Registry materialization is deleted after verified migration and Airtable is rebuilt as Search;
+- required truth from legacy Supabase `powerfarm-registry` has been migrated and verified, and that project has no remaining V0 authority;
+- superseded GitHub repos may be preserved in `powercitty` through `ARCHIVE_THEN_MOVE`;
+- frozen exports, census evidence and migration receipts preserve history without requiring obsolete live systems to remain authoritative.
+
+## Canon and specifications
+
+V0 recognizes:
+
+- PF-01 through PF-06 at exact adopted versions;
+- V0-01 through V0-05;
+- `PF-03-PF-04-DECONSTRUCTION.md`;
+- `registry-v0.yaml`.
+
+Concrete provider schemas, paths and topology remain replaceable materialization details unless they change durable ownership, authority or semantics.
+
+## Completion condition
+
+V0 converges when:
+
+```text
+C - I = empty except explicit retained/deferred exceptions
 I - C = empty
 post-convergence census matches adopted topology
 Current Registry digest = adopted Ideal Registry V0 digest
 ```
 
-In practical terms:
+Practically:
 
-- every negative-delta observation has a disposition and completed receipt or explicit retained exception;
-- every positive-delta item has been built/materialized/registered and verified;
-- every admitted app/store has a contract and owner;
-- every material company byte has verified custody;
+- every negative-delta item has a completed disposition or explicit retained exception;
+- every positive-delta item is materialized, verified and recognized;
+- every admitted app/engine/store has an owner and governing contract;
 - Search can explain its sources;
-- Airtable is rebuilt from Search after the old Registry materialization is deleted;
-- old CloudKit Registry/test records are deleted;
-- both the architecture and materialization are recoverable from recognized source and evidence.
+- legacy authority has been migrated and retired;
+- the resulting institution can be reconstructed from recognized source, Minivault objects and evidence.
