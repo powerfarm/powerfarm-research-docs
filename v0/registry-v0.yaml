@@ -11,6 +11,11 @@ principles:
   storage_does_not_define_semantics: true
   secret_values_in_public_git: forbidden
   negative_delta_is_not_automatic_deletion: true
+  institutional_registry_authority: supabase
+  cloudkit_final_scope: ecosystem_app_owned_databases_only
+  airtable_final_scope: powerfarm_search_frontend_only
+  legacy_cloudkit_registry_test_state_terminal_disposition: DELETE
+  legacy_airtable_registry_state_terminal_disposition: DELETE
 
 required:
   persons:
@@ -62,10 +67,12 @@ required:
         - company-ops
     - id: pf.store.cloudkit.projects
       kind: store
-      role: project-vault-plane
+      role: ecosystem-app-database-substrate
       target: iCloud.app.powerfarm
       authoritative_for:
-        - adopted-project-vaults
+        - admitted-ecosystem-app-owned-databases
+      forbidden_final_state:
+        - legacy-powerfarm-registry-test-records
       locator_policy: container/environment/database/zone
     - id: pf.search-source.supabase
       kind: search-source
@@ -75,8 +82,12 @@ required:
       source: pf.store.cloudkit.projects
     - id: pf.projection.airtable
       kind: projection
+      role: powerfarm-search-frontend
       source: pf.search
       authoritative: false
+      forbidden_final_state:
+        - legacy-airtable-registry-tables
+        - legacy-airtable-registry-records
 
   host_runners:
     - id: pf.host-runner.lab-8gb
@@ -164,5 +175,7 @@ unresolved_before_adoption:
 completion:
   negative_delta: empty_or_explicitly_retained
   positive_delta: empty
+  legacy_cloudkit_registry_test_state: deleted
+  legacy_airtable_registry_state: deleted
   current_registry_equals_adopted_ideal: true
   post_convergence_census_matches_topology: true
