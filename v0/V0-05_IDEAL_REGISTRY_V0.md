@@ -38,14 +38,15 @@ V0 Continuity materializes recognized contracts across:
 
 - `pf.lab-8gb`
 - `pf.lab-512`
-- `pf.lab-256`
 - Google ADK workflow execution;
 - App Park and Engine Park;
 - one Host Runner effect boundary per LAB;
 - onboarding, verification, receipts and recovery;
 - CloudKit provisioning for contract-owned app/engine databases.
 
-Each LAB converges to:
+LAB 256 is explicitly outside the ecosystem expected population.
+
+Each ecosystem LAB converges to:
 
 ```text
 protected human/system material
@@ -56,6 +57,14 @@ Host Runner
 ```
 
 Only contract-admitted residents belong in the Parks.
+
+Required Continuity residents/capabilities include:
+
+- `pf.app.coloured-places` for ecosystem observability and urgent fixes;
+- permanent Manhattan process materialization on both ecosystem LABs;
+- Google ADK in Engine Park as the workflow/onboarding engine.
+
+Research has canonical filesystem root `~/POWERFARM/Research` for experiment work and uses Braintrust for Research observability/evaluation.
 
 CloudKit final scope is **only** databases owned by admitted apps/engines and provisioned according to their contracts. Historical Registry/test state is absent.
 
@@ -72,6 +81,8 @@ Working V0 materializes Identity on Supabase project ref `ekjlmclhqnsstfjzuabz` 
 The Registry records structural recognition, not daily operational life.
 
 Minivault preserves promoted institutional value, including durable software/repository objects, evidence, artifacts or other objects chosen to survive ordinary working state.
+
+V0 includes `pf.app.minivault-web`, a web interface for LLMs and humans to store/discover/retrieve Minivault objects while preserving Identity authority.
 
 Powerfarm-native repository semantics belong to Identity/Minivault; GitHub may act as source-control, collaboration, publication or projection without defining the native repository format.
 
