@@ -1,16 +1,36 @@
-version: powerfarm.registry-v0.working-1
+version: powerfarm.registry-v0.working-2
 status: working
-date: 2026-09-23
+date: 2026-09-24
+
 recognition:
   authority: director_merge
-  pull_request: 5
-  working_v0_commit: 6438c55a20e82e922322d26561487f91761a6e3a
+  baseline_pull_request: 5
+  baseline_commit: 6438c55a20e82e922322d26561487f91761a6e3a
+
+architecture:
+  research:
+    id: pf.research
+    question: what-we-study
+  continuity:
+    id: pf.continuity
+    question: how-we-do-it
+  identity:
+    id: pf.identity
+    question: who-we-are
+    functions:
+      - oauth-and-principals
+      - registry
+      - minivault
+
 principles:
-  registry_is_recognition_not_operational_omniscience: true
+  registry_is_structural_recognition_not_operational_omniscience: true
+  operational_state_belongs_to_its_owner: true
+  contracts_define_admissible_structure: true
+  valuable_results_may_be_promoted_to_minivault: true
   projections_are_not_authority: true
   storage_does_not_define_semantics: true
-  secret_values_in_public_git: forbidden
-  negative_delta_is_not_automatic_deletion: true
+  provider_identity_does_not_define_institutional_identity: true
+  secret_values_in_public_or_projected_state: forbidden
 
 required:
   persons:
@@ -21,34 +41,44 @@ required:
   machines:
     - id: pf.lab-8gb
       kind: machine
-      place: lab-8gb
     - id: pf.lab-512
       kind: machine
-      place: lab-512
     - id: pf.lab-256
       kind: machine
-      place: lab-256
 
-  systems:
-    - id: pf.identity
-      kind: system
-    - id: pf.continuity
-      kind: system
-    - id: pf.antenna
-      kind: system
-    - id: pf.heartime
-      kind: system
-    - id: pf.research
-      kind: system
-    - id: pf.minivault
-      kind: system
-    - id: pf.search
-      kind: system
+  continuity:
+    workflow_engine:
+      implementation: google-adk
+      role: onboarding-and-workflow-orchestration
 
-  infrastructure:
-    - id: pf.store.supabase.company
-      kind: store
-      role: company-control-plane
+    host_runners:
+      - id: pf.host-runner.lab-8gb
+        place: pf.lab-8gb
+      - id: pf.host-runner.lab-512
+        place: pf.lab-512
+      - id: pf.host-runner.lab-256
+        place: pf.lab-256
+
+    parks:
+      app_park:
+        admission: contract-required
+      engine_park:
+        admission: contract-required
+
+    cloudkit:
+      id: pf.store.cloudkit.apps
+      target: iCloud.app.powerfarm
+      role: contract-provisioned-app-and-engine-database-substrate
+      owner_scope: admitted-apps-and-engines
+      locator_policy: container/environment/database/zone
+      institutional_registry_authority: false
+      forbidden_final_state:
+        - legacy-powerfarm-registry-test-records
+
+  identity:
+    supabase:
+      id: pf.store.supabase.company
+      role: identity-substrate
       target: supabase
       provider_binding:
         project_ref: ekjlmclhqnsstfjzuabz
@@ -56,38 +86,40 @@ required:
         region: eu-west-1
         observed_state: ACTIVE_HEALTHY
         observed_at: 2026-09-23
-      authoritative_for:
+      intended_for:
+        - oauth-and-principals
         - institutional-registry
-        - grants-authority
-        - company-ops
-    - id: pf.store.cloudkit.projects
-      kind: store
-      role: project-vault-plane
-      target: iCloud.app.powerfarm
-      authoritative_for:
-        - adopted-project-vaults
-      locator_policy: container/environment/database/zone
-    - id: pf.search-source.supabase
-      kind: search-source
-      source: pf.store.supabase.company
-    - id: pf.search-source.cloudkit
-      kind: search-source
-      source: pf.store.cloudkit.projects
-    - id: pf.projection.airtable
-      kind: projection
-      source: pf.search
-      authoritative: false
+        - minivault
+        - identity-supporting-state
 
-  host_runners:
-    - id: pf.host-runner.lab-8gb
-      kind: application
-      place: pf.lab-8gb
-    - id: pf.host-runner.lab-512
-      kind: application
-      place: pf.lab-512
-    - id: pf.host-runner.lab-256
-      kind: application
-      place: pf.lab-256
+    repositories:
+      native_semantics_home: identity-minivault
+      github_role:
+        - source-control
+        - collaboration
+        - publication
+        - projection
+      github_defines_native_format: false
+
+  services:
+    - id: pf.antenna
+      kind: service
+    - id: pf.heartime
+      kind: service
+    - id: pf.search
+      kind: service
+
+  search:
+    authority: false
+    sources:
+      - id: pf.search-source.supabase
+        source: pf.store.supabase.company
+      - id: pf.search-source.cloudkit
+        source: pf.store.cloudkit.apps
+    human_projection:
+      id: pf.projection.airtable
+      role: powerfarm-search-frontend
+      authoritative: false
 
   canonical_documents:
     - id: pf.doc.PF-01
@@ -104,21 +136,16 @@ required:
       path: PF-06_Standard_Documents_Catalog.md
 
   v0_specifications:
-    - id: pf.spec.v0.storage-registry
-      path: v0/V0-01_MINIVAULT_STORAGE_AND_REGISTRY.md
-    - id: pf.spec.v0.parks-contracts
-      path: v0/V0-02_APP_PARK_ENGINE_PARK_AND_APP_CONTRACTS.md
-    - id: pf.spec.v0.namespace-authority-secrets
-      path: v0/V0-03_NAMESPACE_AUTHORITY_AND_SECRETS.md
-    - id: pf.spec.v0.current-registry
-      path: v0/V0-04_CURRENT_REGISTRY_SITUATION.md
-    - id: pf.spec.v0.ideal-registry
-      path: v0/V0-05_IDEAL_REGISTRY_V0.md
-    - id: pf.spec.v0.pf03-pf04-deconstruction
-      path: v0/PF-03-PF-04-DECONSTRUCTION.md
+    - path: v0/V0-01_MINIVAULT_STORAGE_AND_REGISTRY.md
+    - path: v0/V0-02_APP_PARK_ENGINE_PARK_AND_APP_CONTRACTS.md
+    - path: v0/V0-03_NAMESPACE_AUTHORITY_AND_SECRETS.md
+    - path: v0/V0-04_CURRENT_REGISTRY_SITUATION.md
+    - path: v0/V0-05_IDEAL_REGISTRY_V0.md
+    - path: v0/PF-03-PF-04-DECONSTRUCTION.md
 
 required_contract_families:
   - app-contract
+  - engine-capability
   - store-authority
   - search-contract
   - host-runner
@@ -126,6 +153,29 @@ required_contract_families:
   - secret-consumer
   - execution-approval
   - backup-custody
+
+legacy_sources:
+  - id: legacy.airtable.registry
+    kind: migration-source
+    terminal_disposition: DELETE
+    after: verified-migration-to-supabase-identity
+
+  - id: legacy.cloudkit.registry-tests
+    kind: test-state
+    terminal_disposition: DELETE
+    after: exact-census-and-required-migration
+
+  - id: legacy.supabase.powerfarm-registry
+    kind: migration-source
+    provider_name: powerfarm-registry
+    terminal_disposition: REPLACE
+    replacement: pf.store.supabase.company
+    final_authority: false
+    requires:
+      - read-only-census
+      - migrate-required-institutional-truth
+      - verify-migration
+      - retire-and-disregard-as-v0-authority
 
 negative_delta_dispositions:
   - DELETE
@@ -139,7 +189,7 @@ repository_territories:
   active:
     provider: github
     organization: powerfarm
-    meaning: active-or-candidate-v0-source
+    meaning: active-or-candidate-source-projection
   historical:
     provider: github
     organization: powercitty
@@ -149,9 +199,9 @@ repository_territories:
 
 unresolved_before_adoption:
   - id: CK-LIVE-001
-    requirement: enumerate live CloudKit records/assets/heads by environment/database/zone
+    requirement: enumerate exact surviving CloudKit Development records/assets/heads
   - id: LAB256-CENSUS-001
-    requirement: reconcile LAB 256 census
+    requirement: reconcile LAB 256 material census
   - id: APP-PARK-CURRENT-001
     requirement: enumerate current admitted App Park residents
   - id: ENGINE-PARK-CURRENT-001
@@ -159,10 +209,15 @@ unresolved_before_adoption:
   - id: SECRET-REFS-001
     requirement: enumerate stable secret references without values
   - id: REPO-CURRENT-001
-    requirement: enumerate institutionally recognized GitHub repositories
+    requirement: classify observed Powerfarm repositories
+  - id: LEGACY-SUPABASE-001
+    requirement: census powerfarm-registry and define required Identity migration set
 
 completion:
   negative_delta: empty_or_explicitly_retained
   positive_delta: empty
+  legacy_cloudkit_registry_test_state: deleted
+  legacy_airtable_registry_state: deleted
+  legacy_supabase_registry_authority: absent
   current_registry_equals_adopted_ideal: true
   post_convergence_census_matches_topology: true

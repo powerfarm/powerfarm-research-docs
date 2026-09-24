@@ -1,115 +1,50 @@
 # PF-03 / PF-04 Deconstruction for V0
 
-**Status:** WORKING V0, recognized at `6438c55a20e82e922322d26561487f91761a6e3a`  
-**Date:** 23 September 2026
+**Status:** WORKING V0  
+**Recognition baseline:** `6438c55a20e82e922322d26561487f91761a6e3a`
 
-## Why this exists
+## Purpose
 
-Powerfarm's architectural spirit has remained comparatively stable while its materialization changed repeatedly.
+This note records the boundary used when V0 separated durable canon from replaceable materialization.
 
-The purpose of this pass is therefore **not** to replace the architecture. It is to separate:
+It is intentionally short. PF-03 and PF-04 themselves are the authoritative homes for the doctrine; this file does not duplicate their contents.
 
-1. durable institutional/technical law that belongs in PF-03/PF-04; from
-2. current V0 substrate choices that belong in the `v0/` materialization specifications.
+PF-01, PF-02, PF-05 and PF-06 are unchanged by this pass.
 
-This allows implementations to change without creating the impression that Powerfarm's identity changes every time storage, cloud or LAB topology changes.
+## Boundary
 
-## Files intentionally untouched
+**PF-03 owns durable institutional architecture**, including the three sectors, explicit authority, contracts, Registry/Identity semantics, causal execution, application-owned state, Search/census boundaries and the rule that physical presence does not create institutional membership.
 
-This pass makes no content changes to:
+**PF-04 owns durable technical doctrine**, including representation, verification, language/toolchain policy, Evidence Fabric, replaceability, security baseline and build-thin discipline.
 
-- PF-01 Powerfarm Charter;
-- PF-02 Research and Evidence Standard;
-- PF-05 Products and Business System;
-- PF-06 Standard Documents Catalog.
+**V0 materialization specifications own current choices**, including:
 
-Their public, research and product/business doctrine remains as currently adopted.
+- providers and accounts;
+- database/storage engines;
+- LAB topology and Park residents;
+- concrete paths and locators;
+- current migrations/retirements;
+- implementation-specific onboarding and execution machinery.
 
-## PF-03: durable spine to preserve
+## Historical choices extracted from canon
 
-The following remain canonical architecture:
+Two earlier implementation-era choices were deliberately removed from durable canon:
 
-- Research / Continuity / Identity as durable sectors;
-- Registry as a service of institutional recognition, not omniscient operational truth;
-- **state is local, contracts are global**;
-- authority is explicit;
-- execution is causal;
-- preserved exact bytes may be immutable/content-addressed;
-- context is a working set, not a warehouse;
-- provenance accompanies important assertions;
-- source control, immutable content, Registry recognition and mutable operational state are distinct homes;
-- App Contract as root application contract;
-- declared state-store ownership and authority;
-- Declare -> Materialize -> Prove -> Recognize;
-- Antenna / Heartime / Continuity responsibility boundaries;
-- Search as federated read model/projection, not authority;
-- census as observation against expected population;
-- software as temporal trajectory;
-- architecture freeze / build-thin discipline.
+1. **SQLite as the default application-local store.**  
+   Durable rule: state belongs to its owning application under declared authority. SQLite remains allowed when a contract selects it.
 
-## PF-03: materialization to extract
+2. **"Legacy Supabase reduction" as implementation order.**  
+   Durable rule: materialization work belongs in versioned specifications and contracts, not permanent canon.
 
-### SQLite default
+App Park and Engine Park remain valid topology concepts, but their exact residents, paths and current implementation belong in V0-02 and the Registry target.
 
-Old canon said:
-
-> SQLite is the default for application-local Powerfarm state unless another mechanism is materially justified.
-
-That statement is a historical materialization choice. The durable rule is the sentence that already followed it:
-
-> The architectural rule is ownership, not SQLite itself.
-
-V0 therefore removes SQLite as a canonical default. SQLite remains permitted where an App Contract demonstrates that it fits local transactional/runtime state.
-
-Current choices such as Supabase, CloudKit and local stores live in `v0/V0-01_MINIVAULT_STORAGE_AND_REGISTRY.md`.
-
-### Legacy Supabase reduction
-
-PF-03's implementation-order text referred to "legacy Supabase reduction". That is an implementation-era phrase and does not belong in durable canon.
-
-The V0 wording instead points concrete materialization work to versioned V0 architecture specifications.
-
-### Parks
-
-App Park and Engine Park remain useful topology/materialization concepts, but their exact residents and paths belong in V0 topology/contracts rather than canonical doctrine.
-
-PF-03 keeps the law that physical presence does not create institutional membership.
-
-## PF-04: durable spine to preserve
-
-PF-04 is already substantially materialization-independent. Preserve:
-
-- semantics rise before implementation;
-- executable graph semantics without mandating a graph database/DSL;
-- immutable content references;
-- context as working set;
-- small deliberate production language set;
-- language profiles;
-- code editorial standard;
-- semantic change + verification chain;
-- independent verification where consequence justifies it;
-- Evidence Fabric;
-- replaceability and external leverage;
-- build thin;
-- evidence-driven intelligence routing;
-- security/data baseline;
-- technology surveillance;
-- **current implementation is not canon**;
-- replacement rule.
-
-## PF-04: V0 clarification
-
-The only V0 deconstruction needed now is to make explicit that current storage/provider/topology decisions are standard architecture/materialization instances under `v0/`.
-
-Changing those files does not change PF-04 unless representation, verification, authority, replaceability or other durable doctrine changes.
-
-## Deconstruction rule going forward
+## Test
 
 When reviewing PF-03/PF-04, ask:
 
-> Would this sentence still be true if Supabase, CloudKit, a LAB, a programming language or a provider were replaced?
+> Would this statement remain true if Supabase, CloudKit, Google ADK, a LAB, a programming language or another provider were replaced?
 
-- If **yes**, it may belong in canon.
-- If **no**, it probably belongs in a V0 materialization spec, App Contract, decision record, runbook or other standard instance.
+- **Yes:** it may belong in canon.
+- **No:** it belongs in a materialization spec, contract, decision record, runbook or other standard instance.
 
-This rule is intentionally biased toward a small stable canon and explicit replaceable materializations.
+The bias is deliberate: **small stable canon, explicit replaceable materialization.**

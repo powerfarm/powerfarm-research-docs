@@ -1,11 +1,12 @@
 # V0-03 - Namespace, Authority and Secrets
 
-**Status:** WORKING V0, recognized at `6438c55a20e82e922322d26561487f91761a6e3a`  
-**Scope:** identity, naming, authority and secret-reference rules for V0.
+**Status:** WORKING V0  
+**Recognition baseline:** `6438c55a20e82e922322d26561487f91761a6e3a`  
+**Scope:** stable names, authority, secret references and approvals.
 
-## Namespace
+## Stable identity
 
-Powerfarm institutional identities use stable semantic names. Names identify the thing; they do not encode a temporary filesystem path, provider account or database row id.
+Powerfarm names identify institutional things, not temporary provider objects, filesystem paths or database rows.
 
 Preferred forms include:
 
@@ -21,100 +22,82 @@ pf.secret.<name>
 pf.contract.<name>
 ```
 
-Existing stable PFIDs remain valid where already recognized. V0 should not rename an identity merely to make spelling prettier.
+Existing recognized PFIDs remain valid. V0 does not rename identities merely for cosmetic consistency.
+
+Provider identities are bindings to Powerfarm identities:
+
+```text
+Powerfarm principal / store / repo
+          ↓ binding
+Apple · GitHub · Supabase · machine credential · OAuth subject
+```
+
+Replacing a provider must not require redefining the institutional thing.
 
 ## Authority
 
 Physical possession is not authority.
 
-Authority is derived from recognized identities and explicit relationships, including:
+Powerfarm derives authority from recognized relationships such as:
 
 - principals;
 - grants;
 - contracts;
-- recognized artifact versions;
-- placement/topology declarations;
-- approval evidence where required.
+- recognized artifact/repository versions;
+- placement declarations;
+- explicit approval evidence where required.
 
-V0 adopts the rule:
+Human, machine, application and agent principals remain distinguishable.
 
-> grants are revocable, scoped authority; apps and agents do not infer permission from being able to reach a service.
+At minimum V0 expects:
 
-Human, machine, application and agent identities remain distinguishable.
-
-## Principals
-
-V0 expects at least these principal classes:
-
-- Director / human principal;
+- Director/human principal;
 - LAB machine principals;
 - Host Runner principals;
 - application/service principals;
-- agent principals where an agent can act institutionally.
+- agent principals where an agent may act institutionally.
 
-A provider identity such as Apple, GitHub, Supabase or an OAuth subject is a binding to a Powerfarm principal, not the principal itself.
+Grants are scoped and revocable. Network access, account possession, filesystem ownership or Park placement never implies permission.
 
 ## Secrets
 
-This public repository MUST NEVER contain live secret values.
+The Registry stores secret **references and metadata**, never live credential values.
 
-The Registry records only secret metadata/references, for example:
-
-```yaml
-id: pf.secret.supabase.service-role
-owner: pf.identity
-consumers:
-  - pf.app.host-runner
-provider: supabase
-location_ref: <non-secret locator>
-rotation: on-compromise-or-policy
-sensitivity: credential
-```
-
-The exact secret value belongs in an adopted secrets substrate or platform keychain, never in Git history, Airtable projection, Search indexes, receipts or content-addressed archives.
-
-## Secret lifecycle
-
-Each material secret should have:
+A material secret reference should identify:
 
 - stable secret id;
 - owner;
 - provider/system;
 - allowed consumers;
-- storage substrate;
-- creation/rotation policy;
+- storage substrate/location reference;
+- rotation policy;
 - revocation path;
 - last verification date;
 - replacement/migration state.
 
-The V0 cleanup delta may identify loose credentials by **name/location only**. Rotation precedes deletion when compromise or historical exposure is possible.
+Live secret values MUST NOT enter:
 
-## Current bootstrap note
+- public Git history;
+- Registry rows;
+- Airtable/Search projections;
+- receipts;
+- ordinary content-addressed archives.
 
-LAB 8GB currently has a protected local secret source organized under `~/.powerfarm/secrets`. This is bootstrap state, not the final V0 secrets architecture.
+The current protected local secret source under `~/.powerfarm/secrets` on LAB 8GB is bootstrap state, not a final V0 secrets architecture.
 
-Its presence is not a license to copy secret material into this repository or into the Registry.
-
-## Provider bindings
-
-Provider-specific identities remain bindings:
-
-- Apple/CloudKit account identity -> Powerfarm principal binding;
-- GitHub account/app identity -> Powerfarm principal binding;
-- Supabase Auth/service identity -> Powerfarm principal binding;
-- machine certificates/tokens -> machine/service principal binding.
-
-Changing provider credentials should not require renaming the institutional principal.
+Cleanup may record loose credentials by **name and location only**. Rotation precedes deletion when exposure is possible.
 
 ## Approval
 
-Destructive machine change, grant issuance, adoption of Ideal Registry V0 and other consequential effect changes require explicit authorization according to the adopted contract.
+Consequential effects require explicit authorization under the governing contract, including destructive machine change, grant issuance and adoption of Ideal Registry V0.
 
-Approvals bind to the exact proposed effect or immutable plan/version where practical. A materially changed plan requires new approval.
+Where practical, approval binds to the exact immutable plan/effect. A materially changed plan requires new approval.
 
-## V0 exit criteria
+## Exit criteria
 
-1. Every admitted app/machine/agent that can act has a principal or justified binding.
-2. Every material privilege is explainable through a grant/contract.
-3. No live secret value exists in public Git, Airtable, Search or content-addressed archives.
-4. Secret references are stable enough that implementation providers can be replaced without rewriting application identity.
+V0 authority is coherent when:
+
+1. every admitted actor has a principal or explicit provider binding;
+2. every material privilege is explainable through a grant/contract;
+3. secret references are stable and provider-replaceable;
+4. no live secret value exists in public Git, Registry, Airtable, Search, receipts or ordinary immutable archives.

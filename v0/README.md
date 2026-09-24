@@ -1,76 +1,77 @@
-# Powerfarm V0 target package
+# Powerfarm V0
 
 **Status:** WORKING V0  
-**Recognition:** Director merge of PR #5 into `main`, commit `6438c55a20e82e922322d26561487f91761a6e3a`.  
-**Date:** 23 September 2026
+**Recognition baseline:** Director merge of PR #5, commit `6438c55a20e82e922322d26561487f91761a6e3a`.  
+**Purpose:** make Powerfarm finite enough to clean, verify, and then build.
 
-This directory exists to make Powerfarm V0 finite before further consolidation work.
+The six Powerfarm research documents remain canon. This package turns that durable doctrine into a finite V0 materialization.
 
-The six existing Powerfarm research documents remain the governing canon. This package does not replace their durable doctrine. It makes the current V0 materialization explicit enough to compute the difference between what exists and what should exist.
+## Architecture in three questions
 
-## The finite model
+| Sector | Question | V0 responsibility |
+|---|---|---|
+| **Research** | **What we study** | Experiments, evidence, techniques, software produced by research, findings and conclusions. |
+| **Continuity** | **How we do it** | Materialization and execution: LABs, workflows, App Park, Engine Park, onboarding, verification and recovery. |
+| **Identity** | **Who we are** | OAuth/principals, Registry recognition and Minivault preservation. |
+
+Everything else is a service, contract, projection or replaceable substrate supporting those sectors.
+
+The Registry is Powerfarm's institutional skeleton. It records the identities, versions, contracts, grants, templates and relationships that define admissible Powerfarm structure. It does **not** mirror ordinary daily operational state.
+
+Daily work remains with the software that owns it. When that work produces durable institutional value, the valuable object may be promoted into Minivault and recognized by the Registry.
+
+## Finite cleanup model
 
 Let:
 
-- **C** = Current Registry Situation, reconstructed from the frozen Census and recognized live sources.
-- **I** = Ideal Registry V0, the finite set of entities, artifacts, contracts, grants, stores and placements Powerfarm intends to recognize for V0.
+- **C** = Current Registry Situation: what Powerfarm currently recognizes or relies on, reconstructed from census and evidence.
+- **I** = Ideal Registry V0: the finite state Powerfarm intends to recognize.
 
 Then:
 
-- **Negative Delta = C - I**: current recognized/materialized things that do not belong in V0.
-- **Positive Delta = I - C**: V0 requirements that are missing or not yet recognized.
-- A replacement may appear in both deltas: retire the old instance and build/recognize the new one.
+```text
+Negative Delta = C - I
+Positive Delta = I - C
+```
 
-A negative-delta item is not automatically deletion. Its disposition is one of:
+A replacement may appear in both.
+
+Allowed negative-delta dispositions are:
 
 - `DELETE`
 - `ARCHIVE_THEN_DELETE`
+- `ARCHIVE_THEN_MOVE`
 - `KEEP_OUTSIDE_REGISTRY`
 - `QUARANTINE_OR_DECIDE`
 - `REPLACE`
 
-## Files
+The Raw Census observes the world. It is evidence for C, not C itself.
 
-1. `V0-01_MINIVAULT_STORAGE_AND_REGISTRY.md`  
-   Minivault semantics; Supabase company/control plane; CloudKit LAB-adjacent project-vault plane; content storage; Search; Airtable projection.
+## Document ownership
 
-2. `V0-02_APP_PARK_ENGINE_PARK_AND_APP_CONTRACTS.md`  
-   V0 runtime shape on the LABs: App Parks, Engine Parks, Host Runner, placement and App Contract materialization.
+| File | Owns |
+|---|---|
+| `PF-03_Powerfarm_Operating_System.md` | Durable institutional architecture. |
+| `PF-04_Intelligence_and_Technology_System.md` | Durable technical and engineering doctrine. |
+| `V0-01_MINIVAULT_STORAGE_AND_REGISTRY.md` | Identity materialization: Registry, Minivault, Supabase, Search/Airtable and repository preservation. |
+| `V0-02_APP_PARK_ENGINE_PARK_AND_APP_CONTRACTS.md` | Continuity materialization: LABs, Google ADK workflows, Parks, onboarding and CloudKit provisioning. |
+| `V0-03_NAMESPACE_AUTHORITY_AND_SECRETS.md` | Names, principals, grants, secret references and approvals. |
+| `V0-04_CURRENT_REGISTRY_SITUATION.md` | C only: current evidence-backed recognition and bounded unknowns. |
+| `V0-05_IDEAL_REGISTRY_V0.md` | I only: the finite target and convergence condition. |
+| `registry-v0.yaml` | Machine-readable target, dispositions and unresolved gates. |
+| `PF-03-PF-04-DECONSTRUCTION.md` | Historical rationale for separating durable canon from V0 materialization. |
 
-3. `V0-03_NAMESPACE_AUTHORITY_AND_SECRETS.md`  
-   PFID/namespace rules, principals, grants, authority boundaries, machine identities and secret references. No secret value belongs in this public repository.
+PF-01, PF-02, PF-05 and PF-06 are unchanged by this materialization pass.
 
-4. `V0-04_CURRENT_REGISTRY_SITUATION.md`  
-   Inputs and reconstruction rules for C. This is a finite recognition view, not a dump of every filesystem byte.
+## Convergence
 
-5. `V0-05_IDEAL_REGISTRY_V0.md`  
-   Human-readable target I and admission rules.
-
-6. `registry-v0.yaml`  
-   Machine-readable initial V0 manifest. This file is intended to become the comparison input for delta computation.
-
-7. `PF-03-PF-04-DECONSTRUCTION.md`  
-   Separates durable architectural law from older materialization choices in PF-03 and PF-04 before those canonical documents are revised.
-
-## Existing canon treatment
-
-For this pass:
-
-- **PF-01 Powerfarm Charter:** unchanged.
-- **PF-02 Research and Evidence Standard:** unchanged.
-- **PF-05 Products and Business System:** unchanged.
-- **PF-06 Standard Documents Catalog:** unchanged.
-- **PF-03 Powerfarm Operating System:** deconstruct materialization-specific clauses; preserve durable architectural doctrine.
-- **PF-04 Intelligence and Technology System:** deconstruct implementation/materialization-specific clauses; preserve representation, verification, replaceability and engineering doctrine.
-
-## Relationship to execution
-
-The 32-step execution sequence remains the implementation program, but it is subordinate to this finite target. Cleanup should increasingly be generated from the deltas rather than discovered ad hoc.
-
-The convergence condition is:
+Cleanup is complete when:
 
 ```text
-Negative Delta = empty, except explicit retained/deferred exceptions
-Positive Delta = empty
-Current Registry = adopted Ideal Registry V0
+C - I = empty except explicit retained/deferred exceptions
+I - C = empty
+post-cleanup census matches adopted topology
+Current Registry digest = adopted Ideal Registry V0 digest
 ```
+
+Only after that cleanup convergence does the V0 program move from removing legacy material to building missing positive delta.

@@ -1,75 +1,142 @@
-# V0-02 - App Park, Engine Park and App Contracts
+# V0-02 - Continuity, Parks and App Contracts
 
-**Status:** WORKING V0, recognized at `6438c55a20e82e922322d26561487f91761a6e3a`  
-**Scope:** finite V0 runtime and placement contract for the LABs.
+**Status:** WORKING V0  
+**Recognition baseline:** `6438c55a20e82e922322d26561487f91761a6e3a`  
+**Scope:** V0 materialization of Powerfarm Continuity.
 
-## Purpose
+## Continuity
 
-PF-03 defines an App Contract as the root institutional contract of an application. This document makes the V0 materialization explicit enough to compute topology and cleanup deltas.
+Continuity answers:
 
-A directory, process, package or database does not become a Powerfarm application merely because it exists on a LAB.
+> **How do we do it?**
+
+It turns recognized contracts into verified material reality.
+
+Current V0 materialization consists of:
+
+- the three macOS LABs;
+- Google ADK Workflow Engine;
+- App Park;
+- Engine Park;
+- onboarding/materialization workflows;
+- Host Runner boundaries for machine-changing effects;
+- verification, receipts and recovery;
+- CloudKit provisioning for contract-declared app/engine databases.
+
+These are current materializations of Continuity, not eternal provider choices.
 
 ## V0 machine set
 
-The current V0 territory contains these machines:
+The V0 territory contains:
 
 - `pf.lab-8gb`
 - `pf.lab-512`
 - `pf.lab-256`
 
-LAB 256 is included in the target set even when observation coverage is temporarily incomplete.
-
-Each machine has four conceptual areas:
+Each LAB converges to:
 
 ```text
 protected human/system material
 POWERFARM institutional root
-App Park <host>
-Engine Park <host>
+App Park
+Engine Park
+Host Runner
 ```
 
-Exact filesystem paths are materialization detail and are generated from topology once adopted.
+Exact filesystem paths are materialization detail.
 
-## App Park
+## App Park and Engine Park
 
-An App Park contains admitted Powerfarm applications assigned to that place.
+**App Park** contains admitted Powerfarm applications assigned to a LAB.
 
-An application belongs in App Park only when an adopted App Contract identifies:
+**Engine Park** contains admitted shared execution/runtime engines provided as place capabilities.
 
-- stable application identity;
-- owner/principal;
-- source repository and recognized artifact version;
+Physical presence does not create membership. A directory, process, package, runtime or database belongs to a Park only when Identity recognizes the governing contract and placement.
+
+An App or Engine contract must identify enough to materialize and recover the resident, including:
+
+- stable identity and owner/principal;
+- recognized source/artifact version;
 - placement;
 - lifecycle state;
-- owned state stores and their authority;
-- capabilities provided and consumed;
+- capabilities provided/consumed;
+- state-store declarations and authority;
 - health/verification interface;
-- required Antenna, Heartime, Continuity and Search relationships;
+- required service relationships;
+- resource requirements where material;
 - install, upgrade, retirement and recovery semantics;
 - secret references, never secret values.
 
-A repo clone without an App Contract is not an admitted application.
+## Onboarding law
 
-## Engine Park
+Onboarding is a Continuity workflow executed from an adopted contract, not “clone and start”.
 
-An Engine Park contains shared execution/runtime engines intentionally provided as place capabilities.
+Working V0 uses Google ADK Workflow Engine to orchestrate onboarding.
 
-An engine belongs in Engine Park only when Registry recognition and a contract identify:
+```text
+recognized App / Engine Contract
+        ↓
+validate identity, authority and template
+        ↓
+Google ADK onboarding workflow
+        ↓
+select declared LAB / Park
+        ↓
+materialize software + runtime relationships
+        ↓
+provision declared state stores
+        ↓
+configure secret/provider bindings
+        ↓
+verify health and declared effects
+        ↓
+receipt + census evidence
+        ↓
+recognize resulting materialization
+```
 
-- stable engine identity;
-- supported capability;
-- recognized version;
-- placement;
-- consumers;
-- resource requirements;
-- verification/health contract;
-- upgrade and retirement path.
+The durable law is:
 
-Language runtimes, model runtimes, browsers, databases or toolchains are not automatically engines. They become engines only when Powerfarm recognizes them as shared capabilities.
+> **Declare → Materialize → Prove → Recognize**
+
+## CloudKit provisioning
+
+CloudKit's final V0 role is the database substrate for admitted App Park applications and Engine Park engines when their contracts require it.
+
+Continuity provisions those databases during onboarding according to the contract.
+
+The contract must declare, at minimum:
+
+- store id;
+- owner app/engine;
+- purpose;
+- authority scope;
+- container/environment/database/zone locator;
+- schema/migration identity;
+- durability and backup rule;
+- searchability;
+- sensitivity;
+- retirement/recovery semantics.
+
+The database contents remain operational state owned by that app or engine. The Registry records the declaration and relationship, not the app's ordinary rows.
+
+Current container:
+
+`iCloud.app.powerfarm`
+
+CloudKit identity does not replace Powerfarm identity.
+
+### Legacy CloudKit deletion law
+
+Historical Apple-first Registry/test records are negative delta with terminal disposition `DELETE`.
+
+Before deletion, Powerfarm enumerates their exact surviving population and migrates only anything still institutionally required. Frozen census/receipts preserve the history.
+
+At convergence, CloudKit contains only contract-owned app/engine databases. No company Registry authority remains there.
 
 ## Host Runner
 
-V0 requires one deterministic Host Runner per LAB as the materialization/execution boundary for approved machine-changing operations.
+Each LAB has one deterministic Host Runner boundary for approved machine-changing work.
 
 The Host Runner:
 
@@ -78,86 +145,26 @@ The Host Runner:
 - produces receipts;
 - reports health;
 - does not grant itself authority;
-- does not make LLM output equivalent to approval.
+- does not treat LLM output as approval.
 
-Agents may propose. The runner executes only authorized plans.
+Google ADK may orchestrate a workflow; the Host Runner remains the controlled local effect boundary where the workflow requires machine changes.
 
-## Initial V0 application set
+## Admission and delta rule
 
-The initial target recognizes these logical applications/components, subject to exact manifest expansion in `registry-v0.yaml`:
+A required resident is not complete until:
 
-- `pf.minivault`
-- `pf.search`
-- `pf.host-runner` on each LAB
-- `pf.identity`
-- `pf.continuity`
-- `pf.antenna`
-- `pf.heartime`
-- `pf.research`
-- operator-facing projection surfaces required by the adopted V0
-- the explicitly adopted App Park applications discovered during target compilation
+1. its Registry identity and recognized version exist;
+2. its contract is adopted;
+3. placement and required grants/secret references are declared;
+4. Continuity materializes it;
+5. required stores/relationships are provisioned;
+6. verification passes;
+7. census observes the expected resident.
 
-This list is a target namespace, not permission to keep every historical implementation bearing a similar name.
+An observed app/engine/process that is not explained by protected human/system rules, an adopted contract, or a declared temporary migration exception is negative-delta material.
 
-## Placement law
+Its disposition comes from the finite V0 delta model.
 
-Registry/Ideal Registry declares logical placement. Materialization follows:
+## Exit criteria
 
-```text
-recognized app/engine
-  -> App Contract / capability contract
-  -> topology rule
-  -> target Place
-  -> materialize
-  -> verify
-  -> census
-  -> recognize/adopt
-```
-
-Physical presence never precedes authority logically, even when bootstrap work temporarily creates bytes before final recognition.
-
-## State stores
-
-Application state stores MUST be declared by contract with at least:
-
-- store id;
-- engine;
-- purpose;
-- owner;
-- place or remote substrate;
-- authoritative_for;
-- durability;
-- schema/migration identity;
-- snapshot/backup rule;
-- searchability;
-- sensitivity.
-
-SQLite is allowed when appropriate but is not the V0 default authority for every project. CloudKit and Supabase are adopted where their authority scope fits.
-
-## Negative-delta implications
-
-An installed app/engine/process is negative-delta material when it is not required by:
-
-- protected human/system rules;
-- an adopted App Contract;
-- an adopted Engine capability contract;
-- a declared temporary migration exception.
-
-Disposition is explicit: delete, archive-then-delete, keep outside Registry, quarantine/decide, or replace.
-
-## Positive-delta implications
-
-A required V0 application is positive delta until:
-
-1. its Registry identity exists;
-2. its recognized artifact/version exists;
-3. its App Contract is adopted;
-4. its placement is declared;
-5. required grants and secret references exist;
-6. it is materialized;
-7. health/admission evidence passes;
-8. the post-materialization census observes it where expected.
-
-## V0 exit criteria
-
-Every App Park and Engine Park resident is explained by an adopted contract, and every adopted contract has a matching verified materialization or an explicit declared exception.
+Continuity V0 is converged when every App Park and Engine Park resident is explained by an adopted contract, every adopted resident has verified materialization, and CloudKit contains only contract-owned app/engine databases.
