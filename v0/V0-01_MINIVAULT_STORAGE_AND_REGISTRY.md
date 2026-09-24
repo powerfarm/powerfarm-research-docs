@@ -1,197 +1,166 @@
-# V0-01 - Minivault, Storage and Registry
+# V0-01 - Identity, Registry and Minivault
 
-**Status:** WORKING V0, recognized at `6438c55a20e82e922322d26561487f91761a6e3a`  
-**Scope:** V0 materialization of PF-03/PF-04 architecture.  
-**Owner:** Powerfarm / Director.
+**Status:** WORKING V0  
+**Recognition baseline:** `6438c55a20e82e922322d26561487f91761a6e3a`  
+**Scope:** V0 materialization of Powerfarm Identity.
 
-## Decision
+## Identity
 
-Powerfarm V0 separates semantic authority, company-wide recognition, project-local semantic worlds, immutable bytes, execution state and human projections.
+Identity answers:
+
+> **Who are we?**
+
+For V0, Identity contains three core functions:
+
+- **OAuth / principals / authorization**: who or what may act;
+- **Registry**: what Powerfarm recognizes and the structural rules recognized things must satisfy;
+- **Minivault**: durable institutional objects Powerfarm chooses to preserve.
+
+These functions share an Identity substrate in V0 but remain semantically distinct.
+
+## Registry: the skeleton
+
+The Registry is normative, not observational.
+
+It records the minimum institutional structure needed to make Powerfarm coherent:
+
+- stable identities;
+- recognized artifact/repository versions;
+- contracts and contract templates;
+- grants and authority;
+- ownership and placement relationships;
+- declared state stores and their authority;
+- provider bindings and durable locators;
+- references to promoted Minivault objects.
+
+It does **not** attempt to contain:
+
+- ordinary application rows;
+- workflow chatter;
+- every experiment event;
+- logs or telemetry;
+- every repository edit;
+- every operational database mutation.
+
+The rule is:
+
+> **The Registry does not need to know what everyone is doing. It requires recognized things to do it through the declared contracts and forms.**
+
+Operational truth remains with the software that owns it.
+
+## Minivault: the promotion boundary
+
+Most daily Powerfarm activity is intentionally local, mutable and disposable. Some of it becomes institutionally valuable.
 
 ```text
-                        POWERFARM V0
-
-        company / institutional plane
-                  Supabase
-                     |
-          Registry + authority + ops
-                     |
-                     +------ Powerfarm Search ------> Airtable
-                     |              ^
-                     |              |
-                     |          CloudKit sources
-                     |
-        project / LAB-adjacent plane
-              CloudKit / Minivault
+daily work
+   ↓
+valuable durable result
+   ↓
+promote
+   ↓
+Minivault
+   ↓
+optional Registry recognition / relationship
 ```
 
-The two data planes are not duplicate truths.
+Minivault preserves the semantics and provenance of promoted objects independently of a particular storage engine.
 
-- **Supabase** is the company control plane: institutional Registry, grants/authority, operational automation state, adopted/published cross-project state, Search coordination and durable company-wide projections.
-- **CloudKit** is the Apple/LAB-adjacent application database substrate: final V0 contains only databases owned by admitted Ecosystem Apps. Historical Registry/test material is not part of the target.
-- **Minivault** owns semantic identity and invariants. A storage engine does not redefine Minivault semantics.
-- **Powerfarm Search** is the federated read model across recognized stores. It never becomes authority.
-- **Airtable** is a human projection of Powerfarm Search and may be rebuilt.
+V0 preserves these invariants from the current kernel work:
 
-## Minivault invariants
-
-The current Minivault kernel establishes a storage-independent semantic layer. V0 preserves:
-
-- canonical semantic identity with BLAKE3;
-- transport/content identity with SHA-256 where exact bytes are addressed;
+- canonical semantic identity, currently using BLAKE3;
+- exact byte/content identity, currently using SHA-256 where content addressing is required;
 - immutable revisions;
 - logical aliases/heads;
-- provenance, relations, validation, review and publication;
-- compare-and-swap or equivalent preconditioned publication;
-- no storage backend becoming ontology merely by holding records.
+- provenance and relations;
+- validation, review and publication;
+- preconditioned/compare-and-swap publication where required;
+- storage backends do not become ontology merely by holding records.
 
-The V0 implementation SHOULD expose explicit read/commit ports rather than require whole-world snapshot transactions when a remote backend cannot provide them naturally.
+Exact immutable bytes may be stored separately from their semantic records, but they remain independently verifiable.
 
-## Supabase company plane
+## Powerfarm repositories
 
-Working V0 binds `pf.store.supabase.company` to the existing Supabase project:
+A **Powerfarm Repository** is an institutional software object, not necessarily a GitHub repository.
+
+Working V0 direction:
+
+- Powerfarm-native repository identity, versions, relations and provenance belong to Identity/Minivault;
+- exact repository objects or bundles may use Supabase Storage or another adopted immutable byte substrate;
+- GitHub may be used as a collaboration, source projection, publication or interoperability surface;
+- a GitHub repository does not define the Powerfarm-native repository format merely because the two are synchronized.
+
+The exact native repository schema is implementation work. Provider choice must not redefine repository identity.
+
+## Supabase Identity substrate
+
+Working V0 binds `pf.store.supabase.company` to:
 
 - project ref: `ekjlmclhqnsstfjzuabz`
 - provider-side name: `powerfarm.kernal`
 - region: `eu-west-1`
-- observed state on 23 September 2026: `ACTIVE_HEALTHY`
-- PostgreSQL: 17.6.1.166 / engine 17
 
-The provider-side spelling does not define Powerfarm identity. The stable institutional identity is `pf.store.supabase.company`.
+The provider name is not the institutional identity.
 
-At first census the project had zero user migrations, zero Storage buckets, zero Edge Functions, zero Auth users and zero development branches. It is therefore treated as a clean, unmaterialized V0 substrate rather than a legacy database to untangle.
+This project is the V0 destination for Identity materialization: OAuth/principals, Registry, Minivault metadata/objects and supporting Identity state. The exact database/kernel schema is still being built.
 
-V0 intends one Powerfarm Supabase project as the central company control plane.
+At first census it contained no Powerfarm user migrations, Storage buckets, Edge Functions, Auth users or development branches and is therefore treated as a clean destination substrate.
 
-Expected logical homes:
+### Legacy Supabase migration
 
-- `registry`: institutionally recognized entities, artifacts, artifact versions, contracts, grants, capacities, placements, territories, census observations and related recognition state;
-- `vault`: adopted/published company-wide Minivault objects when they genuinely belong at company scope;
-- `ops`: jobs, receipts, requests, findings, health and delta execution state;
-- `projection`: rebuildable Search/Airtable projector state;
-- `private`: material that must not be exposed through normal data APIs.
+A separate historical Supabase project named `powerfarm-registry` is a migration source, not a V0 authority.
 
-The exact schema is implementation, but the ownership split is part of this V0 specification.
-
-## CloudKit project-vault plane
-
-The existing Apple implementation identifies container:
-
-`iCloud.app.powerfarm`
-
-The historical implementation uses the Public Cloud Database and includes:
-
-`PFEntity`, `PFPrincipal`, `PFGrant`, `PFPlace`, `PFContract`, `PFArtifact`, `PFArtifactVersion`, `PFApplication`, `PFRecognition`, `PFBinding`, `PFSoftware`, `PFContent`, and `PFHead`.
-
-V0 direction:
-
-- admitted Ecosystem Apps MAY use CloudKit for app-owned databases where the Apple/LAB relationship makes it advantageous;
-- each Ecosystem App database SHOULD be isolated by explicit locator: container + environment + database scope + zone;
-- private/custom zones are preferred for project worlds that must not be public;
-- `PFContent`/CKAsset or a successor adapter MAY implement exact immutable byte storage, but Minivault ContentRef semantics remain backend-independent;
-- CloudKit record identity MUST NOT replace PFID, Minivault logical identity or content digests;
-- local filesystem databases are not the default project authority merely because the project runs on a Mac.
-
-The previously proposed zone name `PowerfarmInstitution` is historical design input, not yet treated as a proven live resource. V0 may adopt a different zone/sharding layout after live CloudKit inventory.
-
-### CloudKit deletion law
-
-The historical Public Database Registry/test material is **negative delta with terminal disposition `DELETE`**.
-
-Before deletion, Powerfarm preserves only the evidence needed to prove what existed and, where applicable, migrates any still-authoritative content into its V0 owner. The frozen census/receipts are the historical record; CloudKit itself is not the archive.
-
-At V0 convergence:
-
-- no historical `PFEntity`, `PFPrincipal`, `PFGrant`, `PFPlace`, `PFContract`, `PFArtifact`, `PFArtifactVersion`, `PFApplication`, `PFRecognition`, `PFBinding`, `PFSoftware`, legacy `PFContent`, or legacy `PFHead` test material remains merely because an old test created it;
-- any CloudKit data that remains belongs to an admitted Ecosystem App database and is declared by that app's contract;
-- institutional Registry authority lives in Supabase, not CloudKit.
-
-## Powerfarm Search
-
-Powerfarm Search is the federated read model defined by PF-03:
+Its exact contents require a read-only census before migration. The rule is:
 
 ```text
-query
-  -> Registry / recognized relationships
-  -> recognized Search surfaces
-  -> authorization boundary
-  -> federated reads
-  -> normalized results + provenance
+legacy powerfarm-registry
+  → identify required institutional truth
+  → migrate to V0 Identity
+  → verify identities / relationships / receipts
+  → retire and disregard the legacy project
 ```
 
-V0 Search MUST preserve at least:
+Powerfarm does not modernize the legacy project in place.
 
-- source store/application;
-- canonical subject/artifact identity;
-- source locator;
-- query/freshness time;
-- authority/contract reference where relevant;
-- material/content reference where relevant;
-- provenance sufficient to explain why the result exists.
+## Search and Airtable
 
-Search indexes and projector state are disposable. Their loss MUST NOT erase canonical state.
+Powerfarm Search is a federated read model over recognized sources.
 
-### Search sources in V0
+Search:
 
-- Supabase SearchSource: company Registry, adopted objects, ops/health and searchable company-wide state.
-- CloudKit SearchSource: recognized project-vault surfaces reached through an Apple-authenticated client/agent where required.
-- Future stores may implement SearchSource without changing the Search model.
+- discovers sources through Registry/contracts;
+- preserves source identity, locator, freshness and provenance;
+- does not own canonical state;
+- may be rebuilt.
 
-## Airtable projection
+Airtable is the human frontend/projection of Search.
 
-Airtable is a projection of **Powerfarm Search**, not an independent replica of every backend.
+The current Registry-shaped Airtable base is a migration source. Required Registry truth moves to Supabase, migration is verified, the old Registry tables/records are deleted, and Airtable is rebuilt as Search.
 
-V0 Airtable should expose a compact human surface such as:
+Manual Airtable edits must not directly mutate Registry authority.
 
-- SEARCH
-- SOURCES
-- HEALTH
-- REQUESTS
-- ACTIVITY
+## Storage and custody
 
-Airtable rows MUST carry stable canonical/source locators and freshness/provenance sufficient to trace the row back to its owner.
-
-Manual Airtable edits MUST NOT directly mutate Registry authority. Write intent enters through a request/approval path.
-
-### Airtable deletion/rebuild law
-
-Today's Airtable Registry is a **migration source**, not a legacy system to retain.
-
-The transition is:
-
-```text
-current Airtable Registry
-  -> classify authoritative rows
-  -> migrate/recognize in Supabase Registry
-  -> verify counts, identities, relationships and receipts
-  -> DELETE old Airtable Registry tables/records
-  -> rebuild Airtable as the Powerfarm Search frontend
-```
-
-The frozen Airtable export and migration receipts preserve history. The old Registry materialization itself is deleted after verification. Final Airtable contains only Search/projection surfaces and related non-authoritative request/health views.
-
-## Immutable bytes and custody
-
-Storage and backup are distinct concerns.
+Storage and backup are implementation concerns under declared ownership.
 
 V0 requires:
 
-- exact immutable bytes to be addressable and independently verifiable;
-- at least one off-machine durable copy for material company bytes during bootstrap;
-- backup policy to remain independent of synchronization semantics;
-- a second failure domain for material company truth before any copy is called redundant.
+- promoted immutable bytes to be addressable and independently verifiable;
+- material company bytes to have durable off-machine custody;
+- backup policy to remain independent of synchronization;
+- redundancy claims to require a distinct failure domain.
 
-The exact second provider is not canon. AWS S3 is not mandatory. iCloud/CloudKit, Cloudflare R2, S3-compatible storage or another independently verifiable store may satisfy the role when explicitly adopted.
+No specific second provider is canon.
 
-## V0 exit criteria
+CloudKit is **not** the Identity/Registry substrate in final V0. Its V0 role is defined by Continuity in V0-02.
 
-This specification is sufficiently materialized when:
+## Exit criteria
 
-1. Supabase company plane is live and identified.
-2. CloudKit project-vault locator policy is adopted and at least one real project round-trips through it.
-3. Minivault semantic conformance tests pass against each adopted store adapter.
-4. Powerfarm Search federates at least Supabase + CloudKit with provenance.
-5. Airtable is generated from Search rather than treated as authority.
-6. Backup/custody rules are verified by restore/hash evidence.
-7. Historical CloudKit Registry/test records are deleted; remaining CloudKit data belongs only to admitted Ecosystem Apps.
-8. The old Airtable Registry materialization is deleted and Airtable has been rebuilt as the Powerfarm Search frontend.
+Identity V0 is sufficiently materialized when:
+
+1. the destination Supabase project implements the recognized Identity contracts;
+2. required truth from legacy Supabase and Airtable Registry sources has been migrated and verified;
+3. the legacy Supabase Registry and old Airtable Registry materializations are retired;
+4. Minivault promotion and retrieval preserve identity, provenance and exact-byte verification;
+5. Search can explain recognized sources without becoming authority;
+6. no provider name or storage engine is required to define institutional identity.
