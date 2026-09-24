@@ -89,6 +89,9 @@ required:
       id: pf.store.cloudkit.apps
       rebuild_allowed: true
       remote_programmatic_provisioning_required: true
+      private_zone_provisioning_requires_user_authenticated_owner: true
+      server_to_server_key_private_database_authority: false
+      provisioner_placement: always-on-ecosystem-lab
       must_not_depend_on: pf.lab-256
       preserve_provider_capability:
         - apple-developer-account-binding
@@ -199,19 +202,34 @@ legacy_sources:
   - id: legacy.cloudkit.registry-tests
     kind: test-state
     terminal_disposition: DELETE
-    after: exact-census-and-required-migration
+    after: signed-census-and-director-disposal-decision
 
   - id: legacy.supabase.powerfarm-registry
     kind: migration-source
     provider_name: powerfarm-registry
+    live_provider_project_visible: false
+    local_source: ~/lab/powerfarm-registry
     terminal_disposition: REPLACE
     replacement: pf.store.supabase.company
     final_authority: false
-    requires:
-      - read-only-census
-      - migrate-required-institutional-truth
-      - verify-migration
-      - retire-and-disregard-as-v0-authority
+    migrate_only:
+      - required-identity-and-registry-truth
+    do_not_migrate_by-default:
+      - runs
+      - adk-runtime-state
+      - workspace-and-gadget-working-state
+
+  - id: legacy.supabase.google-adk-mapping
+    kind: empty-project
+    provider_ref: vbgzdqdlarulpfsyjrke
+    terminal_disposition: DELETE
+    evidence:
+      user_tables: 0
+      auth_users: 0
+      storage_buckets: 0
+      user_migrations: 0
+      edge_functions: 0
+      development_branches: 0
 
 negative_delta_dispositions:
   - DELETE
@@ -233,19 +251,47 @@ repository_territories:
     transfer_disposition: ARCHIVE_THEN_MOVE
     active_registry_membership_after_transfer: false
 
+current_negative_delta:
+  lab8_app_park:
+    keep_repair:
+      - coloured-places
+    delete:
+      - cockpit
+      - work-graph
+      - zelador
+      - zelador-grid
+  lab512_app_park:
+    delete:
+      - zelador
+  lab8_engine_park:
+    delete:
+      - powerfarm
+      - workflow-engine
+    add:
+      - google-adk
+  supabase:
+    delete:
+      - vbgzdqdlarulpfsyjrke
+
+secret_references:
+  coloured_places:
+    - supabase-publishable-key
+    - oauth-client-id
+    - oauth-client-secret
+    - antenna-client-token-file
+  research:
+    - braintrust
+    - google
+  identity:
+    - supabase
+  apple_provisioner:
+    - apple
+  manhattan:
+    - MANHATTAN_HOST
+
 unresolved_before_adoption:
-  - id: CK-LIVE-001
-    requirement: enumerate exact surviving CloudKit Development records/assets/heads
-  - id: APP-PARK-CURRENT-001
-    requirement: enumerate current admitted App Park residents
-  - id: ENGINE-PARK-CURRENT-001
-    requirement: enumerate current admitted Engine Park residents
-  - id: SECRET-REFS-001
-    requirement: enumerate stable secret references without values
   - id: REPO-CURRENT-001
     requirement: classify observed Powerfarm repositories
-  - id: LEGACY-SUPABASE-001
-    requirement: census powerfarm-registry and define required Identity migration set
 
 completion:
   negative_delta: empty_or_explicitly_retained
