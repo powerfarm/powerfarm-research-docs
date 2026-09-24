@@ -1,6 +1,6 @@
 # V0-03 - Namespace, Authority and Secrets
 
-**Status:** PROPOSED until merged to `main`  
+**Status:** WORKING V0, recognized at `6438c55a20e82e922322d26561487f91761a6e3a`  
 **Scope:** identity, naming, authority and secret-reference rules for V0.
 
 ## Namespace

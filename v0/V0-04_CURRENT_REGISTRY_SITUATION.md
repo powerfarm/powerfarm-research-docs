@@ -1,6 +1,6 @@
 # V0-04 - Current Registry Situation
 
-**Status:** PROPOSED reconstruction of C  
+**Status:** WORKING reconstruction of C, V0 package recognized at `6438c55a20e82e922322d26561487f91761a6e3a`  
 **As-of:** 23 September 2026  
 **Purpose:** define the finite current recognition situation used for delta calculation.
 
@@ -88,19 +88,50 @@ Live CloudKit record population is an explicit current unknown because non-inter
 
 ### 6. Supabase
 
-Supabase is the selected V0 company/control-plane direction, but no Supabase project has yet been adopted as the authoritative Current Registry in this reconstruction.
+A live Powerfarm Supabase project is directly observed through the provider connector:
 
-Therefore:
+- project ref: `ekjlmclhqnsstfjzuabz`;
+- provider-side name: `powerfarm.kernal`;
+- region: `eu-west-1`;
+- state: `ACTIVE_HEALTHY`;
+- PostgreSQL: 17.6.1.166 / engine 17;
+- user migrations: 0;
+- Storage buckets: 0;
+- Edge Functions: 0;
+- Auth users: 0;
+- development branches: 0;
+- Supabase Vault exists and is empty;
+- only platform/system schemas and tables were observed.
 
-- Supabase target design belongs in I;
-- any existing Supabase resources discovered later must be reconciled into C before adoption;
-- presence of credentials does not prove adopted infrastructure.
+This resolves **SUPABASE-LIVE-001**. The project is a clean, unmaterialized current substrate rather than a legacy Powerfarm database. Working V0 binds it to institutional identity `pf.store.supabase.company`; the provider-side spelling does not define that identity.
 
 ### 7. Powerfarm Search and Airtable projection
 
 Powerfarm Search exists as architectural doctrine/design but no complete federated Supabase + CloudKit Search implementation has yet been proven live.
 
 Airtable currently exists as benchmark/design state, not yet as the rebuildable projection of Powerfarm Search specified by V0.
+
+### 8. GitHub repository territories
+
+The active Powerfarm GitHub organization currently exposes at least these observed repositories:
+
+- `powerfarm/.github`
+- `powerfarm/powerfarm-identity`
+- `powerfarm/powerfarm-antenna`
+- `powerfarm/powerfarm-specs`
+- `powerfarm/powerfarm-process-manager`
+- `powerfarm/powerfarm-coloured-places`
+- `powerfarm/powerfarm-continuity`
+- `powerfarm/powerfarm-platform`
+- `powerfarm/powerfarm-research-docs`
+- `powerfarm/powerfarm-cli`
+- `powerfarm/powerfarm-heartime`
+
+Observation is not adoption. **REPO-CURRENT-001** remains open until each observed repository receives an explicit V0 disposition.
+
+A separate GitHub organization, **`powercitty`**, is designated by the Director as the historical-preservation destination for superseded repositories. Moving a repository from Powerfarm to `powercitty` means **archive/preserve outside the active Registry**, not deletion.
+
+The GitHub App is installed on `powercitty`. A live provider census on 23 September 2026 observed **18 repositories with mixed public/private visibility**. The detailed repository-name inventory is retained in private LAB receipts rather than repeated in this public canon.
 
 ## Current fragmentation
 
@@ -124,11 +155,10 @@ The following unknowns must resolve to an explicit finite record or explicit abs
 
 1. **CK-LIVE-001:** enumerate live records/assets/heads in `iCloud.app.powerfarm` by environment/database/zone.
 2. **LAB256-CENSUS-001:** reconcile the LAB 256 current material census to the same population granularity used for the other LABs.
-3. **SUPABASE-LIVE-001:** determine whether any existing Powerfarm Supabase project/resources must be recognized as current state or treated as unadopted experiments.
-4. **APP-PARK-CURRENT-001:** enumerate currently recognized App Park residents versus mere directories/processes.
-5. **ENGINE-PARK-CURRENT-001:** enumerate currently recognized Engine Park residents versus installed tools/runtimes.
-6. **SECRET-REFS-001:** enumerate required secret references by stable name/consumer without capturing values.
-7. **REPO-CURRENT-001:** enumerate GitHub repositories that are institutionally recognized today versus historical/experimental repos.
+3. **APP-PARK-CURRENT-001:** enumerate currently recognized App Park residents versus mere directories/processes.
+4. **ENGINE-PARK-CURRENT-001:** enumerate currently recognized Engine Park residents versus installed tools/runtimes.
+5. **SECRET-REFS-001:** enumerate required secret references by stable name/consumer without capturing values.
+6. **REPO-CURRENT-001:** classify observed Powerfarm repositories as V0-survivor, historical-preserved, or outside Registry scope.
 
 There is no open-ended discovery clause beyond these categories. New facts found while resolving them are entered under one of these categories or require an explicit amendment to this document.
 

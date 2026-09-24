@@ -1,6 +1,6 @@
 # V0-01 - Minivault, Storage and Registry
 
-**Status:** PROPOSED until merged to `main`  
+**Status:** WORKING V0, recognized at `6438c55a20e82e922322d26561487f91761a6e3a`  
 **Scope:** V0 materialization of PF-03/PF-04 architecture.  
 **Owner:** Powerfarm / Director.
 
@@ -48,6 +48,18 @@ The current Minivault kernel establishes a storage-independent semantic layer. V
 The V0 implementation SHOULD expose explicit read/commit ports rather than require whole-world snapshot transactions when a remote backend cannot provide them naturally.
 
 ## Supabase company plane
+
+Working V0 binds `pf.store.supabase.company` to the existing Supabase project:
+
+- project ref: `ekjlmclhqnsstfjzuabz`
+- provider-side name: `powerfarm.kernal`
+- region: `eu-west-1`
+- observed state on 23 September 2026: `ACTIVE_HEALTHY`
+- PostgreSQL: 17.6.1.166 / engine 17
+
+The provider-side spelling does not define Powerfarm identity. The stable institutional identity is `pf.store.supabase.company`.
+
+At first census the project had zero user migrations, zero Storage buckets, zero Edge Functions, zero Auth users and zero development branches. It is therefore treated as a clean, unmaterialized V0 substrate rather than a legacy database to untangle.
 
 V0 intends one Powerfarm Supabase project as the central company control plane.
 

@@ -1,7 +1,7 @@
 # Powerfarm V0 target package
 
-**Status:** PROPOSED  
-**Recognition rule:** this package becomes the working V0 definition only when the Director merges its pull request into `main`.  
+**Status:** WORKING V0  
+**Recognition:** Director merge of PR #5 into `main`, commit `6438c55a20e82e922322d26561487f91761a6e3a`.  
 **Date:** 23 September 2026
 
 This directory exists to make Powerfarm V0 finite before further consolidation work.

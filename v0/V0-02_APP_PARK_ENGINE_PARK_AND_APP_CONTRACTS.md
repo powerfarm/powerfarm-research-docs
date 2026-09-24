@@ -1,6 +1,6 @@
 # V0-02 - App Park, Engine Park and App Contracts
 
-**Status:** PROPOSED until merged to `main`  
+**Status:** WORKING V0, recognized at `6438c55a20e82e922322d26561487f91761a6e3a`  
 **Scope:** finite V0 runtime and placement contract for the LABs.
 
 ## Purpose

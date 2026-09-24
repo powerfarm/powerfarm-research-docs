@@ -1,6 +1,6 @@
 # V0-05 - Ideal Registry V0
 
-**Status:** PROPOSED target I  
+**Status:** WORKING V0 target I, recognized at `6438c55a20e82e922322d26561487f91761a6e3a`  
 **Purpose:** define the finite institutional state Powerfarm intends to recognize for V0.
 
 Ideal Registry V0 is not a list of every byte, process, package or historical project. It is the finite set of identities, versions, contracts, grants, stores, placements and required relationships that make V0 coherent.
@@ -52,7 +52,7 @@ These are semantic responsibilities. Their implementation may consist of several
 
 ### Infrastructure/control-plane entities
 
-- Powerfarm Supabase company plane.
+- Powerfarm Supabase company plane, bound for working V0 to Supabase project ref `ekjlmclhqnsstfjzuabz` (provider-side name `powerfarm.kernal`, region `eu-west-1`). The provider project name is not the institutional identity; `pf.store.supabase.company` is.
 - CloudKit container `iCloud.app.powerfarm` as adopted Apple project-vault substrate.
 - one Host Runner installation per LAB.
 - Powerfarm Search Supabase source.
@@ -156,6 +156,8 @@ Each LAB must converge to:
 - one Host Runner.
 
 Historical projects may be preserved outside the admitted Parks or archived. Presence outside a Park is not necessarily negative delta; disposition depends on ownership/history/protection.
+
+For Git repositories, working V0 designates GitHub organization **`powercitty`** as the historical-preservation organization for superseded Powerfarm repositories. Transfer to Powercitty is an archival disposition, not destruction, and does not by itself confer active V0 Registry membership.
 
 ## V0 secret policy
 
