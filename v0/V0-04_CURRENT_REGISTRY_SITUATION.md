@@ -1,137 +1,123 @@
 # V0-04 - Current Registry Situation
 
-**Status:** WORKING reconstruction of C, V0 package recognized at `6438c55a20e82e922322d26561487f91761a6e3a`  
-**As-of:** 23 September 2026  
-**Purpose:** define the finite current recognition situation used for delta calculation.
+**Status:** WORKING reconstruction of C  
+**Recognition baseline:** `6438c55a20e82e922322d26561487f91761a6e3a`  
+**As-of:** 24 September 2026
 
-This is not the Raw Census itself. The Census observes what exists. **Current Registry Situation (C)** records what Powerfarm currently recognizes or is relying on as institutional state, including fragmented legacy recognition that has not yet been consolidated.
+**C** is the finite set of institutional state Powerfarm currently recognizes or relies on. It is reconstructed from evidence; it is not the Raw Census.
+
+Unknowns remain unknown until resolved. Observation alone does not admit a thing into Powerfarm.
 
 ## Evidence boundary
 
-The initial reconstruction uses:
+C currently draws from:
 
-- frozen September 22 Raw Census and post-census receipts;
-- frozen Airtable benchmark export;
-- `.powerfarm` CAS/manifests/certifications/capacities on LAB 8GB and LAB 512;
-- live host/process/topology observations made during consolidation;
-- the existing Apple/CloudKit implementation on LAB 256;
-- the six research documents in this repository;
-- GitHub repository identity where explicitly adopted;
-- current execution receipts.
+- September census and cleanup receipts;
+- frozen Airtable export;
+- frozen local `.powerfarm` CAS/manifests/certifications/capacities;
+- LAB material/process/topology observations;
+- Apple/CloudKit implementation and signed census;
+- Supabase provider observations;
+- GitHub repositories and preservation territory;
+- research canon and execution receipts.
 
-Unknown live data is recorded as unknown, not guessed.
+## Current recognized / relied-on sources
 
-## Current recognition sources
+### Canon
 
-### 1. Research canon
+PF-01 through PF-06 are the recognized research/governance canon. PF-03/PF-04 contain the durable architecture/technical doctrine that V0 materializes.
 
-Currently recognized canonical research/governance documents:
+### Airtable legacy Registry
 
-- PF-01 Powerfarm Charter
-- PF-02 Research and Evidence Standard
-- PF-03 Powerfarm Operating System
-- PF-04 Intelligence and Technology System
-- PF-05 Products and Business System
-- PF-06 Standard Documents Catalog
-
-PF-03/PF-04 contain durable doctrine plus some materialization choices now being deconstructed.
-
-### 2. Airtable benchmark Registry
-
-A frozen export exists for the benchmark base:
+Frozen benchmark export:
 
 - base: `Powerfarm - LLM Engineering Benchmark Powerplant`
 - 38 tables
 - 347 records
-- export SHA-256: `0ea09c53bc59512118c69f60f7572d19ae2e48c0cbf23bf183c033bd2863e9ec`
+- SHA-256: `0ea09c53bc59512118c69f60f7572d19ae2e48c0cbf23bf183c033bd2863e9ec`
 
-The base contains an extensive Registry-like schema including principles, operators, models, technologies, benchmarks, claims, experiments, artifacts, registry items/relations, contracts, capacities, permissions, grants, territories, topology rules, censuses and census observations.
+It contains Registry-shaped research, artifact, contract, authority, topology and census state.
 
-This base is evidence and design input. It is not the adopted V0 authority.
+It is a **migration source**, not V0 authority. Required institutional truth moves to Supabase Identity; after verification, the old Registry tables/records are deleted. The frozen export and migration receipts preserve history.
 
-Its terminal V0 disposition is **`DELETE` after verified migration**: authoritative Registry facts are moved/recognized in Supabase, migration receipts are checked, then the old Airtable Registry tables/records are deleted and the Airtable surface is rebuilt as Powerfarm Search. The frozen export, not the live legacy tables, preserves the historical state.
+### Local Registry/CAS evidence
 
-### 3. Powerfarm local Registry/CAS state
+Frozen verified CAS:
 
-Verified frozen CAS state:
+- LAB 8GB: 62 objects, 0 mismatches;
+- LAB 512: 66 objects, 0 mismatches.
 
-- LAB 8GB: 62 CAS objects, 0 hash mismatches.
-- LAB 512: 66 CAS objects, 0 hash mismatches.
+Associated manifests, certifications and capacities remain evidence to reconcile into C. Their mere presence does not imply V0 admission.
 
-Associated `.powerfarm` manifests, certifications, capacities and Capacity Registry material were frozen during A1.
-
-These bytes and records are current evidence. Individual items still need reconciliation into C and then comparison with I.
-
-### 4. Machines
+### Machines
 
 Current V0 machine population:
 
-- `pf.lab-8gb` - active and remotely managed.
-- `pf.lab-512` - active and remotely managed.
-- `pf.lab-256` - reachable over SSH; Desktop Commander agent observed offline during this reconstruction.
+- `pf.lab-8gb`
+- `pf.lab-512`
+- `pf.lab-256`
 
-The Raw Census and subsequent cleanup receipts define their current material state. Machine presence alone does not admit every installed artifact.
+LAB 256 is reachable over SSH; its Desktop Commander availability has been intermittent. Census/receipts, not connectivity tooling, define material state.
 
-### 5. Apple/CloudKit implementation
+### CloudKit legacy test state
 
-On LAB 256, the historical Apple implementation exists under `Powerfarm-apple-native`.
+Container: `iCloud.app.powerfarm`.
 
-Verified implementation facts:
+Historical Apple code used the Public Cloud Database with record families:
 
-- CloudKit container identifier: `iCloud.app.powerfarm`.
-- current Swift Registry adapter selects `publicCloudDatabase`;
-- current Content Store uses Public Cloud Database `PFContent` + `CKAsset`;
-- content records use SHA-256 digest-based record names;
-- record vocabulary includes PFEntity, PFPrincipal, PFGrant, PFPlace, PFContract, PFArtifact, PFArtifactVersion, PFApplication, PFRecognition, PFBinding, PFSoftware, PFContent and PFHead.
+`PFEntity`, `PFPrincipal`, `PFGrant`, `PFPlace`, `PFContract`, `PFArtifact`, `PFArtifactVersion`, `PFApplication`, `PFRecognition`, `PFBinding`, `PFSoftware`, `PFContent`, `PFHead`.
 
-A read-only signed census was executed locally on LAB 256 against both CloudKit environments.
+Signed census established:
 
-**Production**
+- **Production:** none of the 13 historical record types exist.
+- **Development present:** `PFPrincipal`, `PFGrant`, `PFContract`, `PFContent`, `PFHead`.
+- **Development absent:** the other eight expected types.
+- generic historical `TRUEPREDICATE` enumeration fails because the required query index is absent.
 
-- account status: available;
-- none of the 13 expected Powerfarm record types exist.
+The exact surviving Development population is still unresolved. These records are old test material with terminal disposition `DELETE` after exact enumeration and migration of anything uniquely required.
 
-**Development**
+The previously proposed `PowerfarmInstitution` private zone is historical design input, not a proven V0 resource.
 
-- account status: available;
-- record types proven present: `PFPrincipal`, `PFGrant`, `PFContract`, `PFContent`, `PFHead`;
-- record types proven absent: `PFEntity`, `PFPlace`, `PFArtifact`, `PFArtifactVersion`, `PFApplication`, `PFRecognition`, `PFBinding`, `PFSoftware`;
-- the surviving Development record families cannot be generically enumerated by the historical `TRUEPREDICATE` code path because the required query index is absent.
+### Supabase Identity destination
 
-Therefore the earlier apparent zero counts are **not** treated as proof that Development is empty. Population of the five surviving record families remains to be recovered by deterministic record IDs / direct fetch before **CK-LIVE-001** is closed.
+Observed destination:
 
-These surviving Development records are understood to be **old test material**. Their terminal V0 disposition is **`DELETE`** after the census proves their exact population and any still-useful payload is migrated or shown to be unnecessary. They are not a legacy Registry to preserve in CloudKit.
+- institutional binding: `pf.store.supabase.company`
+- project ref: `ekjlmclhqnsstfjzuabz`
+- provider name: `powerfarm.kernal`
+- region: `eu-west-1`
+- state: `ACTIVE_HEALTHY`
+- PostgreSQL 17.6.1.166 / engine 17
 
-The later Apple transition plan proposed a Private custom zone, historically named `PowerfarmInstitution`, but that zone has **not yet been proven live** in this reconstruction.
+At first census it had:
 
-### 6. Supabase
+- 0 user migrations;
+- 0 Storage buckets;
+- 0 Edge Functions;
+- 0 Auth users;
+- 0 development branches;
+- empty Supabase Vault;
+- only platform/system tables.
 
-A live Powerfarm Supabase project is directly observed through the provider connector:
+It is therefore treated as the clean V0 Identity destination whose schema/kernel is still to be built.
 
-- project ref: `ekjlmclhqnsstfjzuabz`;
-- provider-side name: `powerfarm.kernal`;
-- region: `eu-west-1`;
-- state: `ACTIVE_HEALTHY`;
-- PostgreSQL: 17.6.1.166 / engine 17;
-- user migrations: 0;
-- Storage buckets: 0;
-- Edge Functions: 0;
-- Auth users: 0;
-- development branches: 0;
-- Supabase Vault exists and is empty;
-- only platform/system schemas and tables were observed.
+### Legacy Supabase Identity/Registry source
 
-This resolves **SUPABASE-LIVE-001**. The project is a clean, unmaterialized current substrate rather than a legacy Powerfarm database. Working V0 binds it to institutional identity `pf.store.supabase.company`; the provider-side spelling does not define that identity.
+A separate historical Supabase project named `powerfarm-registry` contains prior OAuth/Registry-era material.
 
-### 7. Powerfarm Search and Airtable projection
+It is **not** the V0 destination and must not be modernized in place.
 
-Powerfarm Search exists as architectural doctrine/design but no complete federated Supabase + CloudKit Search implementation has yet been proven live.
+Its exact contents have not yet been provider-censused for this V0 reconstruction. Required institutional truth must be identified, migrated into the V0 Identity destination, verified, and the legacy project then retired/disregarded as authority.
 
-Airtable currently exists as benchmark/design state, not yet as the rebuildable projection of Powerfarm Search specified by V0.
+### Search / Airtable projection
 
-### 8. GitHub repository territories
+Powerfarm Search exists as architecture/design; a complete federated implementation has not yet been proven live.
 
-The active Powerfarm GitHub organization currently exposes at least these observed repositories:
+Airtable is not yet the rebuildable Search frontend required by I.
+
+### GitHub territories
+
+Observed active/candidate Powerfarm repositories include:
 
 - `powerfarm/.github`
 - `powerfarm/powerfarm-identity`
@@ -145,48 +131,41 @@ The active Powerfarm GitHub organization currently exposes at least these observ
 - `powerfarm/powerfarm-cli`
 - `powerfarm/powerfarm-heartime`
 
-Observation is not adoption. **REPO-CURRENT-001** remains open until each observed repository receives an explicit V0 disposition.
+Observation is not adoption.
 
-A separate GitHub organization, **`powercitty`**, is designated by the Director as the historical-preservation destination for superseded repositories. Moving a repository from Powerfarm to `powercitty` means **archive/preserve outside the active Registry**, not deletion.
+GitHub organization `powercitty` is the historical-preservation territory for superseded repositories. A live census observed 18 repositories there with mixed visibility. Detailed names remain in private receipts.
 
-The GitHub App is installed on `powercitty`. A live provider census on 23 September 2026 observed **18 repositories with mixed public/private visibility**. The detailed repository-name inventory is retained in private LAB receipts rather than repeated in this public canon.
+Moving a repo from `powerfarm` to `powercitty` is `ARCHIVE_THEN_MOVE`, not active V0 membership.
 
-## Current fragmentation
+## Fragmentation to reconcile
 
-Today, institutional recognition is fragmented across:
+Current institutional meaning is spread across:
 
 ```text
-research canon
-Airtable benchmark Registry
-.powerfarm manifests/certifications/CAS
-Apple CloudKit implementation
+canon
+Airtable legacy Registry
+local CAS/manifests
+legacy Supabase Registry/OAuth
+CloudKit test state
 LAB material state
-GitHub repositories/history
+GitHub history
 execution receipts
 ```
 
-The V0 program does not declare one of these retrospectively omniscient. It reconciles them into C with provenance.
+V0 reconciles these sources with provenance rather than declaring any one retrospectively complete.
 
-## Finite unresolved items before C is frozen
+## Bounded unresolved gates before C freezes
 
-The following unknowns must resolve to an explicit finite record or explicit absence:
+1. **CK-LIVE-001**: enumerate exact surviving CloudKit Development records/assets/heads.
+2. **LAB256-CENSUS-001**: reconcile LAB 256 to the same material-census granularity as the other LABs.
+3. **APP-PARK-CURRENT-001**: distinguish admitted App Park residents from mere directories/processes.
+4. **ENGINE-PARK-CURRENT-001**: distinguish admitted Engine Park residents from installed runtimes/tools.
+5. **SECRET-REFS-001**: enumerate stable secret references/consumers without values.
+6. **REPO-CURRENT-001**: classify observed Powerfarm repos as V0 survivor, historical-preserved or outside scope.
+7. **LEGACY-SUPABASE-001**: census `powerfarm-registry`, identify required OAuth/Registry/Minivault truth, and produce the migration set.
 
-1. **CK-LIVE-001:** enumerate live records/assets/heads in `iCloud.app.powerfarm` by environment/database/zone.
-2. **LAB256-CENSUS-001:** reconcile the LAB 256 current material census to the same population granularity used for the other LABs.
-3. **APP-PARK-CURRENT-001:** enumerate currently recognized App Park residents versus mere directories/processes.
-4. **ENGINE-PARK-CURRENT-001:** enumerate currently recognized Engine Park residents versus installed tools/runtimes.
-5. **SECRET-REFS-001:** enumerate required secret references by stable name/consumer without capturing values.
-6. **REPO-CURRENT-001:** classify observed Powerfarm repositories as V0-survivor, historical-preserved, or outside Registry scope.
+There is no open-ended discovery clause. New facts must fit one of these gates or explicitly amend C.
 
-There is no open-ended discovery clause beyond these categories. New facts found while resolving them are entered under one of these categories or require an explicit amendment to this document.
+## Freeze condition
 
-## Freeze condition for C
-
-Current Registry Situation is frozen when:
-
-- every unresolved item above is resolved or explicitly marked unavailable with bounded impact;
-- every C row has a source/provenance reference;
-- current identities are stable enough to compare against `registry-v0.yaml`;
-- C has a canonical digest.
-
-Only then should the full negative and positive deltas be treated as authoritative cleanup/build lists.
+C freezes when every gate is resolved or explicitly bounded, every row has provenance, identities are stable enough for comparison with `registry-v0.yaml`, and C has a canonical digest.
