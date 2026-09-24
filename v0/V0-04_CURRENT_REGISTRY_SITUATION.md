@@ -51,13 +51,12 @@ Associated manifests, certifications and capacities remain evidence to reconcile
 
 ### Machines
 
-Current V0 machine population:
+Current ecosystem machine population:
 
-- `pf.lab-8gb`
-- `pf.lab-512`
-- `pf.lab-256`
+- `pf.lab-8gb`: online, headless/always-on target.
+- `pf.lab-512`: online, headless/always-on target.
 
-LAB 256 is reachable over SSH; its Desktop Commander availability has been intermittent. Census/receipts, not connectivity tooling, define material state.
+LAB 256 is the Director's personal/mobile computer and is **outside the ecosystem**. Its intermittent availability is expected, not a health failure. Historical Powerfarm material on LAB 256 is evidence/migration input only; no V0 service may depend on it.
 
 ### CloudKit legacy test state
 
@@ -109,6 +108,20 @@ It is **not** the V0 destination and must not be modernized in place.
 
 Its exact contents have not yet been provider-censused for this V0 reconstruction. Required institutional truth must be identified, migrated into the V0 Identity destination, verified, and the legacy project then retired/disregarded as authority.
 
+### Continuity survivor observations
+
+Live inspection on 24 September 2026 established:
+
+- Manhattan daemon + agent are running on **both** ecosystem LABs and are protected survivors.
+- Coloured Places exists under LAB 8GB App Park with a built Next.js application and admission documentation, but no live Coloured Places process was observed.
+- Google ADK was not found installed on either ecosystem LAB.
+- LAB 8GB contains several current/historical App Park residents beyond Coloured Places, including `zelador-grid`, `work-graph`, `cockpit` and `zelador`.
+- LAB 512 App Park contains `zelador`.
+- Engine Park contains historical/current workflow-engine and Powerfarm trees that are not yet admitted by the simplified V0 target.
+- `~/POWERFARM` currently contains receipts but no canonical Research workspace, making `~/POWERFARM/Research` a clean positive-delta target.
+
+These observations substantially bound APP-PARK-CURRENT-001 and ENGINE-PARK-CURRENT-001: unexplained Park residents are candidate negative delta until explicitly contracted.
+
 ### Search / Airtable projection
 
 Powerfarm Search exists as architecture/design; a complete federated implementation has not yet been proven live.
@@ -157,8 +170,7 @@ V0 reconciles these sources with provenance rather than declaring any one retros
 ## Bounded unresolved gates before C freezes
 
 1. **CK-LIVE-001**: enumerate exact surviving CloudKit Development records/assets/heads.
-2. **LAB256-CENSUS-001**: reconcile LAB 256 to the same material-census granularity as the other LABs.
-3. **APP-PARK-CURRENT-001**: distinguish admitted App Park residents from mere directories/processes.
+2. **APP-PARK-CURRENT-001**: distinguish admitted App Park residents from mere directories/processes.
 4. **ENGINE-PARK-CURRENT-001**: distinguish admitted Engine Park residents from installed runtimes/tools.
 5. **SECRET-REFS-001**: enumerate stable secret references/consumers without values.
 6. **REPO-CURRENT-001**: classify observed Powerfarm repos as V0 survivor, historical-preserved or outside scope.
