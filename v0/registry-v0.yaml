@@ -1,5 +1,5 @@
 version: powerfarm.registry-v0.working-2
-status: working
+status: freeze-ready
 date: 2026-09-24
 
 recognition:
@@ -41,32 +41,63 @@ required:
   machines:
     - id: pf.lab-8gb
       kind: machine
+      expected_availability: always-on
     - id: pf.lab-512
       kind: machine
+      expected_availability: always-on
+
+  excluded_machines:
     - id: pf.lab-256
-      kind: machine
+      reason: director-personal-mobile-computer
+      may_be_required_for_ecosystem_availability: false
 
   continuity:
     workflow_engine:
       implementation: google-adk
       role: onboarding-and-workflow-orchestration
+      placement: engine-park
+      current_state: positive-delta
 
     host_runners:
       - id: pf.host-runner.lab-8gb
         place: pf.lab-8gb
       - id: pf.host-runner.lab-512
         place: pf.lab-512
-      - id: pf.host-runner.lab-256
-        place: pf.lab-256
 
     parks:
       app_park:
         admission: contract-required
+        required_residents:
+          - pf.app.coloured-places
       engine_park:
         admission: contract-required
+        required_residents:
+          - google-adk
+
+    permanent_processes:
+      - id: pf.process.manhattan
+        places:
+          - pf.lab-8gb
+          - pf.lab-512
+        cleanup_protected: true
+
+    research:
+      filesystem_root: ~/POWERFARM/Research
+      observability: braintrust
 
     cloudkit:
       id: pf.store.cloudkit.apps
+      rebuild_allowed: true
+      remote_programmatic_provisioning_required: true
+      private_zone_provisioning_requires_user_authenticated_owner: true
+      server_to_server_key_private_database_authority: false
+      provisioner_placement: always-on-ecosystem-lab
+      must_not_depend_on: pf.lab-256
+      preserve_provider_capability:
+        - apple-developer-account-binding
+        - container-identity
+        - provisioning-and-signing-material
+        - required-keys-and-certificates
       target: iCloud.app.powerfarm
       role: contract-provisioned-app-and-engine-database-substrate
       owner_scope: admitted-apps-and-engines
@@ -91,6 +122,14 @@ required:
         - institutional-registry
         - minivault
         - identity-supporting-state
+
+    minivault_interface:
+      id: pf.app.minivault-web
+      kind: web-app
+      audiences:
+        - llm
+        - human
+      authority: false
 
     repositories:
       native_semantics_home: identity-minivault
@@ -163,19 +202,34 @@ legacy_sources:
   - id: legacy.cloudkit.registry-tests
     kind: test-state
     terminal_disposition: DELETE
-    after: exact-census-and-required-migration
+    after: signed-census-and-director-disposal-decision
 
   - id: legacy.supabase.powerfarm-registry
     kind: migration-source
     provider_name: powerfarm-registry
+    live_provider_project_visible: false
+    local_source: ~/lab/powerfarm-registry
     terminal_disposition: REPLACE
     replacement: pf.store.supabase.company
     final_authority: false
-    requires:
-      - read-only-census
-      - migrate-required-institutional-truth
-      - verify-migration
-      - retire-and-disregard-as-v0-authority
+    migrate_only:
+      - required-identity-and-registry-truth
+    do_not_migrate_by-default:
+      - runs
+      - adk-runtime-state
+      - workspace-and-gadget-working-state
+
+  - id: legacy.supabase.google-adk-mapping
+    kind: empty-project
+    provider_ref: vbgzdqdlarulpfsyjrke
+    terminal_disposition: DELETE
+    evidence:
+      user_tables: 0
+      auth_users: 0
+      storage_buckets: 0
+      user_migrations: 0
+      edge_functions: 0
+      development_branches: 0
 
 negative_delta_dispositions:
   - DELETE
@@ -189,29 +243,66 @@ repository_territories:
   active:
     provider: github
     organization: powerfarm
-    meaning: active-or-candidate-source-projection
+    meaning: active-v0-source-projection
+    repositories:
+      - .github
+      - powerfarm-research-docs
+      - powerfarm-specs
+      - powerfarm-identity
+      - powerfarm-continuity
+      - powerfarm-coloured-places
+      - powerfarm-antenna
+      - powerfarm-heartime
   historical:
     provider: github
     organization: powercitty
     meaning: superseded-repository-preservation
     transfer_disposition: ARCHIVE_THEN_MOVE
     active_registry_membership_after_transfer: false
+    move_from_powerfarm:
+      - powerfarm-process-manager
+      - powerfarm-platform
+      - powerfarm-cli
 
-unresolved_before_adoption:
-  - id: CK-LIVE-001
-    requirement: enumerate exact surviving CloudKit Development records/assets/heads
-  - id: LAB256-CENSUS-001
-    requirement: reconcile LAB 256 material census
-  - id: APP-PARK-CURRENT-001
-    requirement: enumerate current admitted App Park residents
-  - id: ENGINE-PARK-CURRENT-001
-    requirement: enumerate current admitted Engine Park residents
-  - id: SECRET-REFS-001
-    requirement: enumerate stable secret references without values
-  - id: REPO-CURRENT-001
-    requirement: classify observed Powerfarm repositories
-  - id: LEGACY-SUPABASE-001
-    requirement: census powerfarm-registry and define required Identity migration set
+current_negative_delta:
+  lab8_app_park:
+    keep_repair:
+      - coloured-places
+    delete:
+      - cockpit
+      - work-graph
+      - zelador
+      - zelador-grid
+  lab512_app_park:
+    delete:
+      - zelador
+  lab8_engine_park:
+    delete:
+      - powerfarm
+      - workflow-engine
+    add:
+      - google-adk
+  supabase:
+    delete:
+      - vbgzdqdlarulpfsyjrke
+
+secret_references:
+  coloured_places:
+    - supabase-publishable-key
+    - oauth-client-id
+    - oauth-client-secret
+    - antenna-client-token-file
+  research:
+    - braintrust
+    - google
+  identity:
+    - supabase
+  apple_provisioner:
+    - apple
+  manhattan:
+    - MANHATTAN_HOST
+
+unresolved_before_adoption: []
 
 completion:
   negative_delta: empty_or_explicitly_retained

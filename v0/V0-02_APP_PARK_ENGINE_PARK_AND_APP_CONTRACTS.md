@@ -14,7 +14,7 @@ It turns recognized contracts into verified material reality.
 
 Current V0 materialization consists of:
 
-- the three macOS LABs;
+- two always-on macOS LABs: `pf.lab-8gb` and `pf.lab-512`;
 - Google ADK Workflow Engine;
 - App Park;
 - Engine Park;
@@ -27,13 +27,16 @@ These are current materializations of Continuity, not eternal provider choices.
 
 ## V0 machine set
 
-The V0 territory contains:
+The trusted V0 ecosystem territory contains only:
 
 - `pf.lab-8gb`
 - `pf.lab-512`
-- `pf.lab-256`
 
-Each LAB converges to:
+Both are expected to be continuously available, headless and UPS-backed.
+
+LAB 256 is the Director's personal/mobile computer. It is explicitly **outside the ecosystem expected population** and MUST NOT be required for availability, scheduling, census health, execution, storage or recovery.
+
+Each ecosystem LAB converges to:
 
 ```text
 protected human/system material
@@ -44,6 +47,28 @@ Host Runner
 ```
 
 Exact filesystem paths are materialization detail.
+
+## Fixed Continuity residents
+
+The following residents are explicit V0 survivors/targets:
+
+- `pf.app.coloured-places`: Continuity observability and urgent-fix/operator application. It currently exists on LAB 8GB and is expected to be restored to service.
+- `pf.process.manhattan`: permanent infrastructure process. Current daemon/agent materializations on both ecosystem LABs are protected from cleanup.
+- Google ADK Workflow Engine: required Engine Park resident for Continuity workflows and onboarding. It is currently missing from both ecosystem LABs and is therefore positive delta.
+
+Other current Park residents remain unadmitted until a V0 contract explicitly preserves them.
+
+## Research workspace
+
+Powerfarm Research receives one canonical macOS filesystem root:
+
+`~/POWERFARM/Research`
+
+Research experiments run beneath this root rather than creating durable institutional meaning through arbitrary historical project folders.
+
+Research observability is externalized to **Braintrust**. Braintrust is a Research observability/evaluation surface, not Registry authority.
+
+Historical Research directories outside the canonical root are migration/cleanup candidates: preserve or promote required outputs, then remove or archive them according to the delta.
 
 ## App Park and Engine Park
 
@@ -101,7 +126,15 @@ The durable law is:
 
 ## CloudKit provisioning
 
-CloudKit's final V0 role is the database substrate for admitted App Park applications and Engine Park engines when their contracts require it.
+Apple infrastructure is treated as a replaceable provisioning substrate. The existing CloudKit data/schema may be wiped and rebuilt.
+
+Powerfarm MUST preserve or be able to recreate the Apple developer capability required for remote programmatic provisioning, including the developer account relationship, container identity, signing/provisioning material and required keys/certificates.
+
+For **private CloudKit data**, the provisioning unit is a private-database custom record zone/namespace. Apple permits custom zones only in the owning user's private database, and server-to-server keys alone administer the public database. Therefore V0 private provisioning requires a **user-authenticated Apple provisioner** acting as the Director's iCloud owner identity on an always-on ecosystem LAB, or an equivalent user-authenticated CloudKit Web Services flow.
+
+The control request may originate remotely, but the authenticated Apple execution path MUST NOT depend on LAB 256.
+
+CloudKit's final V0 role is the database/namespace substrate for admitted App Park applications and Engine Park engines when their contracts require it.
 
 Continuity provisions those databases during onboarding according to the contract.
 
@@ -130,13 +163,13 @@ CloudKit identity does not replace Powerfarm identity.
 
 Historical Apple-first Registry/test records are negative delta with terminal disposition `DELETE`.
 
-Before deletion, Powerfarm enumerates their exact surviving population and migrates only anything still institutionally required. Frozen census/receipts preserve the history.
+The Director has classified that state as disposable test material. Exact record-by-record enumeration is no longer a cleanup gate. The signed census and existing receipts preserve sufficient evidence; the historical data/schema may be wiped and rebuilt while preserving/recreating the provider capability above.
 
-At convergence, CloudKit contains only contract-owned app/engine databases. No company Registry authority remains there.
+At convergence, CloudKit contains only contract-owned app/engine databases/namespaces. No company Registry authority remains there.
 
 ## Host Runner
 
-Each LAB has one deterministic Host Runner boundary for approved machine-changing work.
+Each ecosystem LAB has one deterministic Host Runner boundary for approved machine-changing work.
 
 The Host Runner:
 

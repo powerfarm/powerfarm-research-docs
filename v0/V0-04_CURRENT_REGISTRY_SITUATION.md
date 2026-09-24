@@ -51,13 +51,12 @@ Associated manifests, certifications and capacities remain evidence to reconcile
 
 ### Machines
 
-Current V0 machine population:
+Current ecosystem machine population:
 
-- `pf.lab-8gb`
-- `pf.lab-512`
-- `pf.lab-256`
+- `pf.lab-8gb`: online, headless/always-on target.
+- `pf.lab-512`: online, headless/always-on target.
 
-LAB 256 is reachable over SSH; its Desktop Commander availability has been intermittent. Census/receipts, not connectivity tooling, define material state.
+LAB 256 is the Director's personal/mobile computer and is **outside the ecosystem**. Its intermittent availability is expected, not a health failure. Historical Powerfarm material on LAB 256 is evidence/migration input only; no V0 service may depend on it.
 
 ### CloudKit legacy test state
 
@@ -74,7 +73,7 @@ Signed census established:
 - **Development absent:** the other eight expected types.
 - generic historical `TRUEPREDICATE` enumeration fails because the required query index is absent.
 
-The exact surviving Development population is still unresolved. These records are old test material with terminal disposition `DELETE` after exact enumeration and migration of anything uniquely required.
+The surviving Development state is classified by the Director as disposable test material. Exact record-by-record enumeration no longer blocks cleanup. The signed census/receipts preserve the evidence boundary; historical CloudKit data/schema may be wiped and rebuilt while preserving the Apple developer/container capability.
 
 The previously proposed `PowerfarmInstitution` private zone is historical design input, not a proven V0 resource.
 
@@ -101,13 +100,44 @@ At first census it had:
 
 It is therefore treated as the clean V0 Identity destination whose schema/kernel is still to be built.
 
+The same live provider census currently exposes one additional project, `Google ADK mapping` (project ref `vbgzdqdlarulpfsyjrke`). Read-only inspection found no user tables, no Auth users, no Storage buckets, no user migrations, no Edge Functions and no development branches. It has no role in I and is negative delta with target disposition `DELETE` after recognition of this target and dependency verification.
+
 ### Legacy Supabase Identity/Registry source
 
-A separate historical Supabase project named `powerfarm-registry` contains prior OAuth/Registry-era material.
+A historical Supabase implementation named `powerfarm-registry` contains prior OAuth/Registry-era material.
 
 It is **not** the V0 destination and must not be modernized in place.
 
-Its exact contents have not yet been provider-censused for this V0 reconstruction. Required institutional truth must be identified, migrated into the V0 Identity destination, verified, and the legacy project then retired/disregarded as authority.
+The current connected Supabase account does not expose a live project by that name. The historical source is, however, preserved locally on LAB 8GB at `~/lab/powerfarm-registry` with migrations covering identities/identity links, artifacts/versions/relations, grants, approvals, OAuth clients, service definitions/contracts/events, runs, ADK runtime state, workspaces and gadget state.
+
+This bounds the migration problem:
+
+- Identity/Registry concepts and any still-required recognized facts are migration input;
+- old runs, ADK session/event/checkpoint/effect state, workspace/gadget drafts and other operational implementation state do not migrate merely because the old schema contained them;
+- the frozen Airtable export and local migration/source history provide the remaining reconstruction evidence if the old cloud project is no longer available.
+
+No live legacy Supabase authority is currently visible through the provider connection.
+
+### Continuity survivor observations
+
+Live inspection on 24 September 2026 established:
+
+- Manhattan daemon + agent are running on **both** ecosystem LABs and are protected survivors.
+- Coloured Places exists under LAB 8GB App Park with a built Next.js application and admission documentation, but no live Coloured Places process was observed.
+- Google ADK was not found installed on either ecosystem LAB.
+- LAB 8GB App Park contains `coloured-places`, `work-graph`, `zelador`, `zelador-grid`, plus `cockpit` as a symlink to an older UI.
+- LAB 512 App Park contains `zelador`.
+- LAB 8GB Engine Park contains `powerfarm` and `workflow-engine`; LAB 512 Engine Park has no live resident.
+- `~/POWERFARM` currently contains receipts but no canonical Research workspace, making `~/POWERFARM/Research` a clean positive-delta target.
+
+Director disposition resolves the Park census:
+
+- `coloured-places`: **KEEP / REPAIR / ADMIT**;
+- Manhattan on both LABs: **KEEP / PROTECT**;
+- LAB 8GB `work-graph`, `zelador`, `zelador-grid`, `cockpit`: **DELETE**;
+- LAB 512 `zelador`: **DELETE**;
+- LAB 8GB Engine Park `powerfarm` and `workflow-engine`: **DELETE**;
+- Google ADK: **positive delta**, to become the required Engine Park resident.
 
 ### Search / Airtable projection
 
@@ -131,11 +161,28 @@ Observed active/candidate Powerfarm repositories include:
 - `powerfarm/powerfarm-cli`
 - `powerfarm/powerfarm-heartime`
 
-Observation is not adoption.
+The current repository classification is:
+
+**Active V0 source territory**
+
+- `powerfarm/.github` — organization metadata/configuration; retained outside software authority.
+- `powerfarm/powerfarm-research-docs` — canon and V0 target.
+- `powerfarm/powerfarm-specs` — operational contracts/specifications.
+- `powerfarm/powerfarm-identity` — active Identity source; its older Registry/ADK/workspace implementation details do not automatically survive the V0 migration.
+- `powerfarm/powerfarm-continuity` — active Continuity source; machine materialization must converge on the Google ADK/Host Runner/Park model.
+- `powerfarm/powerfarm-coloured-places` — required Continuity observability/urgent-fix app.
+- `powerfarm/powerfarm-antenna` — retained source for the PF-03 Antenna service responsibility; not automatically an admitted runtime.
+- `powerfarm/powerfarm-heartime` — retained source for the PF-03 Heartime service responsibility; not automatically an admitted runtime.
+
+**Historical-preservation disposition**
+
+- `powerfarm/powerfarm-process-manager` → `ARCHIVE_THEN_MOVE` to `powercitty`.
+- `powerfarm/powerfarm-platform` → `ARCHIVE_THEN_MOVE` to `powercitty`.
+- `powerfarm/powerfarm-cli` → `ARCHIVE_THEN_MOVE` to `powercitty`.
 
 GitHub organization `powercitty` is the historical-preservation territory for superseded repositories. A live census observed 18 repositories there with mixed visibility. Detailed names remain in private receipts.
 
-Moving a repo from `powerfarm` to `powercitty` is `ARCHIVE_THEN_MOVE`, not active V0 membership.
+Moving a repo from `powerfarm` to `powercitty` preserves source/history but ends active V0 Registry membership.
 
 ## Fragmentation to reconcile
 
@@ -154,15 +201,20 @@ execution receipts
 
 V0 reconciles these sources with provenance rather than declaring any one retrospectively complete.
 
-## Bounded unresolved gates before C freezes
+## C freeze readiness
 
-1. **CK-LIVE-001**: enumerate exact surviving CloudKit Development records/assets/heads.
-2. **LAB256-CENSUS-001**: reconcile LAB 256 to the same material-census granularity as the other LABs.
-3. **APP-PARK-CURRENT-001**: distinguish admitted App Park residents from mere directories/processes.
-4. **ENGINE-PARK-CURRENT-001**: distinguish admitted Engine Park residents from installed runtimes/tools.
-5. **SECRET-REFS-001**: enumerate stable secret references/consumers without values.
-6. **REPO-CURRENT-001**: classify observed Powerfarm repos as V0 survivor, historical-preserved or outside scope.
-7. **LEGACY-SUPABASE-001**: census `powerfarm-registry`, identify required OAuth/Registry/Minivault truth, and produce the migration set.
+All previously bounded census gates are now resolved or explicitly bounded:
+
+- CloudKit historical test state is disposable under Director decision; signed census evidence is sufficient.
+- LAB 256 is outside ecosystem expected population.
+- App Park and Engine Park residents have explicit keep/delete/add dispositions.
+- required secret references are bounded by name/consumer without values.
+- observed Powerfarm repositories have explicit active or historical-preservation disposition.
+- no live `powerfarm-registry` project is visible through the connected Supabase account; local migrations/source plus frozen institutional exports bound the recoverable migration evidence.
+
+**No open census category remains before C freeze.**
+
+Director merge of this target can serve as the recognition point after which C is frozen and the negative delta becomes executable.
 
 There is no open-ended discovery clause. New facts must fit one of these gates or explicitly amend C.
 
