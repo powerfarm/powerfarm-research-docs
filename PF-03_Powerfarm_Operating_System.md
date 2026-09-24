@@ -72,12 +72,13 @@ Identity answers:
 
 > What exists in Powerfarm, which version is recognized, and who or what is authorized to do what?
 
-Identity includes two distinct functions:
+Identity includes three distinct functions:
 
 - standards-based authentication and authorization, including OAuth, human identity, machine identity, clients, consent, and tokens;
-- institutional recognition through the Registry.
+- institutional recognition through the Registry;
+- durable preservation of promoted institutional objects through Minivault.
 
-The Registry is a service within Identity, not a fourth sector.
+Registry and Minivault are services within Identity, not additional sectors.
 
 ### Continuity
 
@@ -185,15 +186,13 @@ Where material, Powerfarm SHOULD be able to explain not only what it asserts but
 
 ## 3.4 Substrates
 
-Powerfarm separates human-readable source, immutable content, institutional recognition, and operational state.
+Powerfarm separates editable software work, immutable content, institutional recognition, and operational state.
 
-### GitHub or equivalent source control
+### Repositories and source-control projections
 
-Source control answers:
+A Powerfarm Repository is an institutional software object whose native representation is not defined by any external source-control provider.
 
-> How was this software built and why did it change?
-
-It is the human-readable and editable source of software when a repository exists.
+Source-control systems such as GitHub MAY provide collaboration, editable projections, publication, interoperability and change history. They do not define the institutional repository identity or native repository format.
 
 ### Content-addressed storage
 
@@ -223,9 +222,10 @@ Content identity establishes exact bytes only. Meaning, institutional recognitio
 The durable separation is:
 
 ```text
-source control → human-readable source and change history
-content store  → exact immutable values, composition, and transport
-Registry       → institutional recognition and semantic identity
+repository     → institutional software object and trajectory
+source control → editable/collaborative projection when used
+content store  → exact immutable values, composition and transport
+Registry       → institutional recognition and structural relationships
 local stores   → mutable application-owned operational state
 model context  → temporary reasoning working set
 ```
@@ -279,9 +279,11 @@ An artifact version identifies an exact version and MAY reference repository, co
 Software therefore has distinct institutional homes:
 
 ```text
-source control → human-readable source and history
-content store  → exact immutable values and referenced composition
-Registry       → institutionally recognized identity and version
+repository     → software trajectory and native institutional object
+source control → optional collaboration/publication projection
+Minivault      → promoted durable objects and provenance
+content store  → exact immutable bytes and referenced composition
+Registry       → recognized identity, version and relationships
 ```
 
 ## 3.6 Contracts
@@ -377,29 +379,23 @@ The conceptual flow is:
 ```text
 App Contract
     ↓
-validate
+validate identity / authority / template
     ↓
-Identity
+Continuity workflow
     ↓
-Registry recognition
+placement
     ↓
-Placement
+materialize software and service relationships
     ↓
-instantiate local stores
+provision declared stores
     ↓
-apply schemas / migrations
-    ↓
-configure authentication
-    ↓
-materialize service relationships
-    ↓
-materialize capabilities and search surfaces
+configure provider / secret bindings
     ↓
 verify
     ↓
-admission evidence
+receipt + census evidence
     ↓
-ADMITTED
+Registry recognizes the resulting materialization
 ```
 
 The governing model is:
@@ -1039,6 +1035,13 @@ Search finds.
 ---
 
 # Revision notes
+
+## Version 1.4, effective 24 September 2026
+
+- Clarified the three durable questions: Research is what Powerfarm studies, Continuity is how Powerfarm materializes work, and Identity is who Powerfarm is.
+- Made Minivault an explicit Identity function alongside OAuth/authorization and Registry recognition.
+- Clarified that Powerfarm repositories are institutional software objects whose native format is not defined by GitHub or another source-control provider.
+- Simplified onboarding into contract validation, Continuity materialization/provisioning, verification, evidence and recognition.
 
 ## Version 1.3, effective 23 September 2026
 
