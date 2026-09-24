@@ -41,32 +41,60 @@ required:
   machines:
     - id: pf.lab-8gb
       kind: machine
+      expected_availability: always-on
     - id: pf.lab-512
       kind: machine
+      expected_availability: always-on
+
+  excluded_machines:
     - id: pf.lab-256
-      kind: machine
+      reason: director-personal-mobile-computer
+      may_be_required_for_ecosystem_availability: false
 
   continuity:
     workflow_engine:
       implementation: google-adk
       role: onboarding-and-workflow-orchestration
+      placement: engine-park
+      current_state: positive-delta
 
     host_runners:
       - id: pf.host-runner.lab-8gb
         place: pf.lab-8gb
       - id: pf.host-runner.lab-512
         place: pf.lab-512
-      - id: pf.host-runner.lab-256
-        place: pf.lab-256
 
     parks:
       app_park:
         admission: contract-required
+        required_residents:
+          - pf.app.coloured-places
       engine_park:
         admission: contract-required
+        required_residents:
+          - google-adk
+
+    permanent_processes:
+      - id: pf.process.manhattan
+        places:
+          - pf.lab-8gb
+          - pf.lab-512
+        cleanup_protected: true
+
+    research:
+      filesystem_root: ~/POWERFARM/Research
+      observability: braintrust
 
     cloudkit:
       id: pf.store.cloudkit.apps
+      rebuild_allowed: true
+      remote_programmatic_provisioning_required: true
+      must_not_depend_on: pf.lab-256
+      preserve_provider_capability:
+        - apple-developer-account-binding
+        - container-identity
+        - provisioning-and-signing-material
+        - required-keys-and-certificates
       target: iCloud.app.powerfarm
       role: contract-provisioned-app-and-engine-database-substrate
       owner_scope: admitted-apps-and-engines
@@ -91,6 +119,14 @@ required:
         - institutional-registry
         - minivault
         - identity-supporting-state
+
+    minivault_interface:
+      id: pf.app.minivault-web
+      kind: web-app
+      audiences:
+        - llm
+        - human
+      authority: false
 
     repositories:
       native_semantics_home: identity-minivault
@@ -200,8 +236,6 @@ repository_territories:
 unresolved_before_adoption:
   - id: CK-LIVE-001
     requirement: enumerate exact surviving CloudKit Development records/assets/heads
-  - id: LAB256-CENSUS-001
-    requirement: reconcile LAB 256 material census
   - id: APP-PARK-CURRENT-001
     requirement: enumerate current admitted App Park residents
   - id: ENGINE-PARK-CURRENT-001
