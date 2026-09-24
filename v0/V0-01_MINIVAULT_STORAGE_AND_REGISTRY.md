@@ -122,6 +122,14 @@ legacy powerfarm-registry
 
 Powerfarm does not modernize the legacy project in place.
 
+## Minivault Web
+
+V0 requires a human/LLM-facing Minivault application, `pf.app.minivault-web`.
+
+Its purpose is to let intelligent systems and the Director store, discover and retrieve promoted software/repository objects and other durable Minivault content without exposing raw database internals.
+
+The app is a projection/interface over Identity/Minivault, not a second authority. It should expose stable object identity, provenance, versions/heads, relationships and exact-byte retrieval where permitted.
+
 ## Search and Airtable
 
 Powerfarm Search is a federated read model over recognized sources.
