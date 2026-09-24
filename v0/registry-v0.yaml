@@ -1,5 +1,5 @@
 version: powerfarm.registry-v0.working-2
-status: working
+status: freeze-ready
 date: 2026-09-24
 
 recognition:
@@ -243,13 +243,26 @@ repository_territories:
   active:
     provider: github
     organization: powerfarm
-    meaning: active-or-candidate-source-projection
+    meaning: active-v0-source-projection
+    repositories:
+      - .github
+      - powerfarm-research-docs
+      - powerfarm-specs
+      - powerfarm-identity
+      - powerfarm-continuity
+      - powerfarm-coloured-places
+      - powerfarm-antenna
+      - powerfarm-heartime
   historical:
     provider: github
     organization: powercitty
     meaning: superseded-repository-preservation
     transfer_disposition: ARCHIVE_THEN_MOVE
     active_registry_membership_after_transfer: false
+    move_from_powerfarm:
+      - powerfarm-process-manager
+      - powerfarm-platform
+      - powerfarm-cli
 
 current_negative_delta:
   lab8_app_park:
@@ -289,9 +302,7 @@ secret_references:
   manhattan:
     - MANHATTAN_HOST
 
-unresolved_before_adoption:
-  - id: REPO-CURRENT-001
-    requirement: classify observed Powerfarm repositories
+unresolved_before_adoption: []
 
 completion:
   negative_delta: empty_or_explicitly_retained
