@@ -28,7 +28,7 @@ Powerfarm V0 separates semantic authority, company-wide recognition, project-loc
 The two data planes are not duplicate truths.
 
 - **Supabase** is the company control plane: institutional Registry, grants/authority, operational automation state, adopted/published cross-project state, Search coordination and durable company-wide projections.
-- **CloudKit** is the Apple/LAB-adjacent project-vault plane: project-local Minivault worlds, immutable revisions, heads, relations and CKAssets where appropriate.
+- **CloudKit** is the Apple/LAB-adjacent application database substrate: final V0 contains only databases owned by admitted Ecosystem Apps. Historical Registry/test material is not part of the target.
 - **Minivault** owns semantic identity and invariants. A storage engine does not redefine Minivault semantics.
 - **Powerfarm Search** is the federated read model across recognized stores. It never becomes authority.
 - **Airtable** is a human projection of Powerfarm Search and may be rebuilt.
@@ -85,14 +85,26 @@ The historical implementation uses the Public Cloud Database and includes:
 
 V0 direction:
 
-- project semantic worlds SHOULD use CloudKit where the Apple/LAB relationship makes it advantageous;
-- project-local records SHOULD be isolated by explicit locator: container + environment + database scope + zone;
+- admitted Ecosystem Apps MAY use CloudKit for app-owned databases where the Apple/LAB relationship makes it advantageous;
+- each Ecosystem App database SHOULD be isolated by explicit locator: container + environment + database scope + zone;
 - private/custom zones are preferred for project worlds that must not be public;
 - `PFContent`/CKAsset or a successor adapter MAY implement exact immutable byte storage, but Minivault ContentRef semantics remain backend-independent;
 - CloudKit record identity MUST NOT replace PFID, Minivault logical identity or content digests;
 - local filesystem databases are not the default project authority merely because the project runs on a Mac.
 
 The previously proposed zone name `PowerfarmInstitution` is historical design input, not yet treated as a proven live resource. V0 may adopt a different zone/sharding layout after live CloudKit inventory.
+
+### CloudKit deletion law
+
+The historical Public Database Registry/test material is **negative delta with terminal disposition `DELETE`**.
+
+Before deletion, Powerfarm preserves only the evidence needed to prove what existed and, where applicable, migrates any still-authoritative content into its V0 owner. The frozen census/receipts are the historical record; CloudKit itself is not the archive.
+
+At V0 convergence:
+
+- no historical `PFEntity`, `PFPrincipal`, `PFGrant`, `PFPlace`, `PFContract`, `PFArtifact`, `PFArtifactVersion`, `PFApplication`, `PFRecognition`, `PFBinding`, `PFSoftware`, legacy `PFContent`, or legacy `PFHead` test material remains merely because an old test created it;
+- any CloudKit data that remains belongs to an admitted Ecosystem App database and is declared by that app's contract;
+- institutional Registry authority lives in Supabase, not CloudKit.
 
 ## Powerfarm Search
 
@@ -141,6 +153,23 @@ Airtable rows MUST carry stable canonical/source locators and freshness/provenan
 
 Manual Airtable edits MUST NOT directly mutate Registry authority. Write intent enters through a request/approval path.
 
+### Airtable deletion/rebuild law
+
+Today's Airtable Registry is a **migration source**, not a legacy system to retain.
+
+The transition is:
+
+```text
+current Airtable Registry
+  -> classify authoritative rows
+  -> migrate/recognize in Supabase Registry
+  -> verify counts, identities, relationships and receipts
+  -> DELETE old Airtable Registry tables/records
+  -> rebuild Airtable as the Powerfarm Search frontend
+```
+
+The frozen Airtable export and migration receipts preserve history. The old Registry materialization itself is deleted after verification. Final Airtable contains only Search/projection surfaces and related non-authoritative request/health views.
+
 ## Immutable bytes and custody
 
 Storage and backup are distinct concerns.
@@ -164,3 +193,5 @@ This specification is sufficiently materialized when:
 4. Powerfarm Search federates at least Supabase + CloudKit with provenance.
 5. Airtable is generated from Search rather than treated as authority.
 6. Backup/custody rules are verified by restore/hash evidence.
+7. Historical CloudKit Registry/test records are deleted; remaining CloudKit data belongs only to admitted Ecosystem Apps.
+8. The old Airtable Registry materialization is deleted and Airtable has been rebuilt as the Powerfarm Search frontend.
