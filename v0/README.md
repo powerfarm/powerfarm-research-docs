@@ -1,75 +1,29 @@
-# Powerfarm V0
+# V0
 
-**Status:** WORKING V0  
-**Recognition baseline:** Director merge of PR #5, commit `6438c55a20e82e922322d26561487f91761a6e3a`.  
-**Purpose:** make Powerfarm finite enough to clean, verify, and then build.
+Current materialization of the canon: what should exist now (**I**), what exists (**C**), and the plan from C to I.
 
-The six Powerfarm research documents remain canon. This package turns that durable doctrine into a finite V0 materialization.
-
-## Architecture in three questions
-
-| Sector | Question | V0 responsibility |
-|---|---|---|
-| **Research** | **What we study** | Experiments, evidence, techniques, software produced by research, findings and conclusions. |
-| **Continuity** | **How we do it** | Materialization and execution: LABs, workflows, App Park, Engine Park, onboarding, verification and recovery. |
-| **Identity** | **Who we are** | OAuth/principals, Registry recognition and Minivault preservation. |
-
-Everything else is a service, contract, projection or replaceable substrate supporting those sectors.
-
-The Registry is Powerfarm's institutional skeleton. It records the identities, versions, contracts, grants, templates and relationships that define admissible Powerfarm structure. It does **not** mirror ordinary daily operational state.
-
-Daily work remains with the software that owns it. When that work produces durable institutional value, the valuable object may be promoted into Minivault and recognized by the Registry.
-
-## Finite cleanup model
-
-Let:
-
-- **C** = Current situation: what exists today in legacy sources and in the world, with the dispositions recorded in V0-01 §11 and observed by census.
-- **I** = Ideal Registry V0: the finite state Powerfarm intends to recognize, defined machine-readably in `registry-v0.yaml` and reached through the Foundation Act and institutional API calls (V0-01 §6). The migration creates no rows: the Registry starts empty, and its first two contracts are written by the Foundation Act.
-
-Then:
-
-```text
-Negative Delta = C - I
-Positive Delta = I - C
-```
-
-A replacement may appear in both.
-
-Allowed negative-delta dispositions are:
-
-- `DELETE`
-- `ARCHIVE_THEN_DELETE`
-- `ARCHIVE_THEN_MOVE`
-- `KEEP_OUTSIDE_REGISTRY`
-- `QUARANTINE_OR_DECIDE`
-- `REPLACE`
-
-The Raw Census observes the world. It is evidence for C, not C itself.
-
-## Document ownership
-
-| File | Owns |
+| File | Contents |
 |---|---|
-| `PF-03_Powerfarm_Operating_System.md` | Durable institutional architecture. |
-| `PF-04_Intelligence_and_Technology_System.md` | Durable technical and engineering doctrine. |
-| `V0-01_DATA_REGISTRY_IDENTITY_AND_STORES.md` | Data materialization: Registry (types from contracts, offices, mandates, authority), Identity (keyring), Content Store, Minivault, institutional API and Foundation Act, Antenna observation store, names, secrets, approvals, admission law and legacy disposition. Replaces the former V0-01, V0-03 and V0-05; retires V0-04. |
-| `V0-02_APP_PARK_ENGINE_PARK_AND_APP_CONTRACTS.md` | Continuity materialization: LABs, Google ADK workflows, Parks, onboarding and CloudKit provisioning. |
-| `V0-06_POWERFARM_SEARCH.md` | Search: the rebuildable read model and its Airtable projection. |
-| `registry-v0.yaml` | Machine-readable target I, bootstrap order, dispositions and open decisions. |
-| `PF-03-PF-04-DECONSTRUCTION.md` | Historical rationale for separating durable canon from V0 materialization. |
+| [V0-00_DELTA_AND_PLAN.md](V0-00_DELTA_AND_PLAN.md) | C, delta, plan, decisions, proofs |
+| [V0-01_DATA_REGISTRY_IDENTITY_AND_STORES.md](V0-01_DATA_REGISTRY_IDENTITY_AND_STORES.md) | Target: Registry, Identity, Content Store, Minivault, Antenna store, offices and autonomy |
+| [V0-02_APP_PARK_ENGINE_PARK_AND_APP_CONTRACTS.md](V0-02_APP_PARK_ENGINE_PARK_AND_APP_CONTRACTS.md) | Target: LABs, agents, Host Runners, Parks, onboarding, Places |
+| [V0-06_POWERFARM_SEARCH.md](V0-06_POWERFARM_SEARCH.md) | Target: Search |
+| [registry-v0.yaml](registry-v0.yaml) | Target, machine-readable |
+| [history/](history/) | Executed tranches and superseded notes |
 
-PF-01, PF-02, PF-05 and PF-06 are unchanged by this materialization pass.
-
-## Convergence
-
-Cleanup is complete when:
+## Delta
 
 ```text
-C - I = empty except explicit retained/deferred exceptions
-I - C = empty
-post-cleanup census matches adopted topology
-Current Registry digest = adopted Ideal Registry V0 digest
+negative delta = C − I     remove, archive, move, quarantine
+positive delta = I − C     build, materialize, recognize
 ```
 
-Only after that cleanup convergence does the V0 program move from removing legacy material to building missing positive delta.
+Dispositions: `DELETE`, `ARCHIVE_THEN_DELETE`, `ARCHIVE_THEN_MOVE`, `KEEP_OUTSIDE_REGISTRY`, `QUARANTINE_OR_DECIDE`, `REPLACE`.
+
+Rules:
+- nothing is removed before custody is verified;
+- observation is evidence of C; it does not admit anything into I.
+
+Converged when `C − I` holds only explicit exceptions, `I − C` is empty, and the latest census matches the target.
+
+Changes are adopted by Director merge. No secrets, personal data or internal addresses in this folder.

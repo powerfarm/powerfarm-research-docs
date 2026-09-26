@@ -1,12 +1,12 @@
 version: powerfarm.registry-v0.working-3
-status: proposed
+status: adopted
 date: 2026-09-26
 supersedes: powerfarm.registry-v0.working-2
 
 recognition:
   authority: director_merge
-  baseline_pull_request: 5
-  baseline_commit: 6438c55a20e82e922322d26561487f91761a6e3a
+  baseline_pull_request: 13
+  baseline_commit: 9efd916399a7f5511734c9476f64fd4615d73879
 
 architecture:
   research:
@@ -202,12 +202,16 @@ required:
     parks:
       app_park:
         admission: contract-required
-        required_residents:
-          - pf.app.coloured-places
+        required_residents: []
       engine_park:
         admission: contract-required
         required_residents:
           - google-adk
+    places:
+      id: pf.app.coloured-places
+      placement: vercel
+      vercel_project: powerfarm-places
+      role: projection
 
     permanent_processes:
       - id: pf.process.manhattan
@@ -338,10 +342,10 @@ required:
       path: PF-06_Standard_Documents_Catalog.md
 
   v0_specifications:
+    - path: v0/V0-00_DELTA_AND_PLAN.md
     - path: v0/V0-01_DATA_REGISTRY_IDENTITY_AND_STORES.md
     - path: v0/V0-02_APP_PARK_ENGINE_PARK_AND_APP_CONTRACTS.md
     - path: v0/V0-06_POWERFARM_SEARCH.md
-    - path: v0/PF-03-PF-04-DECONSTRUCTION.md
 
 required_contract_families:
   - app-contract
@@ -438,8 +442,8 @@ repository_territories:
 
 current_negative_delta:
   lab8_app_park:
-    keep_repair:
-      - coloured-places
+    replace:
+      - coloured-places: vercel-projection
     delete:
       - cockpit
       - work-graph

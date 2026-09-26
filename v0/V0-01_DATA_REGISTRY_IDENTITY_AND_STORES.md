@@ -1,17 +1,9 @@
 # V0-01 — Data: Registry, Identity, Content Store, Minivault and Operational Stores
 
-**Status:** WORKING V0, proposed for Director adoption
-**Date:** 26 September 2026
+**Status:** WORKING V0, adopted
 **Canon:** PF-03 §§3.2–3.8, 3.12–3.13; PF-04 §1.4; `powerfarm-specs/specs/REGISTRY_CORE_v0.md`
 
-**Replaces:**
-- the previous V0-01 (Identity, Registry and Minivault);
-- V0-03 (Namespace, Authority and Secrets);
-- V0-05 (Ideal Registry V0).
-
-**Retires:** V0-04 (Current Registry Situation). Its history remains in Git.
-
-This is the single V0 materialization plan for Powerfarm data: where each kind of state lives, who owns it, how things come into existence, and how authority is computed. PF-03 remains the architecture. This document chooses the current materialization, and those choices are replaceable.
+Target for Powerfarm data. The delta and the plan are in [V0-00](V0-00_DELTA_AND_PLAN.md).
 
 ---
 
@@ -461,48 +453,10 @@ No authority may be inferred from physical presence, provider accounts or connec
 
 ---
 
-## 11. Legacy disposition
+## 11. Kept references
 
-The previous "current situation" (V0-04) is retired. Legacy sources are disposed of as follows:
-
-| source | disposition |
-|---|---|
-| Registry schema bootstrapped in `powerfarm.kernal` on 24 Sep 2026 without this plan | `ARCHIVE_THEN_DELETE`: full export (data and original SQL) kept as evidence; schema renamed to legacy with access closed; final deletion performed by the Director |
-| observation schema created in `powerfarm.kernal` on 26 Sep 2026 (test data) | same; agents restart in the Antenna store |
-| frozen Airtable Registry export (in the Minivault bucket) | becomes the first Content Store object recognized after the Foundation Act |
-| legacy Supabase `powerfarm-registry` (source preserved on LAB 8GB) | migration input only for required identity facts; runs, ADK state and workspace drafts do not migrate |
-| CloudKit legacy test state | per V0-02 |
-| **the book** (Supabase project `vbgzdqdlarulpfsyjrke`, "Google ADK mapping"; 16 schemas, about 186 tables, verified 2026-09-26) | **KEEP.** A reference work Powerfarm acquired. It exists independently, and its existence is not Powerfarm's to decide. It is read, never used as a backend; no DDL; never on a deletion list. It may be recognized as a Research reference |
-
----
-
-## 12. Build order
-
-| phase | what | done when |
-|---|---|---|
-| 0 | this plan adopted | the Director merges it |
-| 1 | Registry + API + Foundation Act | tests on a throwaway database prove: the first two contracts, the type rule, authority computation, a new generation taking effect immediately, and a Foundation Act that cannot run twice |
-| 2 | Identity | the Director signs in; an account without admission is refused; a retired person is blocked |
-| 3 | Content Store + manifests | a contract is recognized only when its bytes match the digest; reads without authority are denied |
-| 4 | Antenna store | the Registry projection refreshes by itself; the agents write there; both views work |
-| 5 | Coloured Places | the Director sees everything the contracts allow |
-| 6 | Minivault | on the shared Content Store, governed by contracts |
-
----
-
-## 13. Open decisions
-
-| # | decision | recommendation |
-|---|---|---|
-| 1 | login methods per person in V0 | e-mail only |
-| 2 | where large bytes (models, archives) live | outside the Content Store in V0; the Content Store holds the manifest pointing to them |
-| 3 | initial rung of each Engineer operation class | OBSERVE or SUGGEST for all; protected classes stay gated at every rung |
-| 4 | off-machine backup destination for Registry and Content Store exports | to be decided |
-
-**Decided by the Director (2026-09-26):**
-- **the book is kept** (§11);
-- **offices:** the Director is the owner; LLMs hold the Engineer office and gain autonomy through the matrix (§2.8);
-- **Director powers in V0:** everything, gated by approval for protected effects;
-- **who admits people:** the Director;
-- **Registry in the Antenna store:** an API-refreshed projection, not replication (§7.2);
-- **Antenna store cost:** accepted at the researched price.
+**The book** (Supabase project `vbgzdqdlarulpfsyjrke`, "Google ADK mapping") is an acquired reference work:
+- it is kept, and its existence is not Powerfarm's to decide;
+- it is read, never used as a backend;
+- no DDL is run on it;
+- it may be recognized as a Research reference.
