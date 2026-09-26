@@ -14,7 +14,7 @@ It turns recognized contracts into verified material reality.
 
 Current V0 materialization consists of:
 
-- two always-on macOS LABs: `pf.lab-8gb` and `pf.lab-512`;
+- two always-on macOS LABs: `powerfarm.app/machine/lab-8gb` and `powerfarm.app/machine/lab-512`;
 - one agent per LAB (§Agents);
 - Google ADK Workflow Engine;
 - App Park;
@@ -30,8 +30,8 @@ These are current materializations of Continuity, not eternal provider choices.
 
 The trusted V0 ecosystem territory contains only:
 
-- `pf.lab-8gb`
-- `pf.lab-512`
+- `powerfarm.app/machine/lab-8gb`
+- `powerfarm.app/machine/lab-512`
 
 Both are expected to be continuously available, headless and UPS-backed.
 
@@ -53,8 +53,8 @@ Exact filesystem paths are materialization detail.
 
 The following residents are explicit V0 survivors/targets:
 
-- `pf.app.coloured-places`: Continuity observability and urgent-fix/operator application. It runs on Vercel as a projection over the Registry and the Antenna store, not as an App Park resident.
-- `pf.process.manhattan`: permanent infrastructure process. Current daemon/agent materializations on both ecosystem LABs are protected from cleanup.
+- `powerfarm.app/app/coloured-places`: Continuity observability and urgent-fix/operator application. It runs on Vercel as a projection over the Registry and the Antenna store, not as an App Park resident.
+- `powerfarm.app/process/manhattan`: permanent infrastructure process. Current daemon/agent materializations on both ecosystem LABs are protected from cleanup.
 - Google ADK Workflow Engine: required Engine Park resident for Continuity workflows and onboarding. It is currently missing from both ecosystem LABs and is therefore positive delta.
 
 Other current Park residents remain unadmitted until a V0 contract explicitly preserves them.
@@ -185,7 +185,7 @@ Google ADK may orchestrate a workflow; the Host Runner remains the controlled lo
 
 ## Agents
 
-One agent per LAB (`pf.agent.lab-8gb`, `pf.agent.lab-512`; `pf.agent.lab-256` on the bench, never required):
+One agent per LAB (`powerfarm.app/agent/lab-8gb`, `powerfarm.app/agent/lab-512`; `powerfarm.app/agent/lab-256` on the bench, never required):
 
 - the only launchd service allowed besides protected processes and remote-access tunnels; installed by its installer, with health check and automatic rollback;
 - releases go LAB 256 → LAB 512 → LAB 8GB; the two ecosystem LABs never update together;

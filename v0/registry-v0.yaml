@@ -1,22 +1,23 @@
-version: powerfarm.registry-v0.working-3
+version: powerfarm.registry-v0.working-4
 status: adopted
 date: 2026-09-26
-supersedes: powerfarm.registry-v0.working-2
+supersedes: powerfarm.registry-v0.working-3
 
 recognition:
   authority: director_merge
   baseline_pull_request: 13
   baseline_commit: 9efd916399a7f5511734c9476f64fd4615d73879
+  amended_by_pull_request: 15
 
 architecture:
   research:
-    id: pf.research
+    id: powerfarm.app/sector/research
     question: what-we-study
   continuity:
-    id: pf.continuity
+    id: powerfarm.app/sector/continuity
     question: how-we-do-it
   identity:
-    id: pf.identity
+    id: powerfarm.app/sector/identity
     question: who-we-are
     functions:
       - oauth-and-principals
@@ -40,6 +41,60 @@ principles:
   first_write_is_the_foundation_act: true
   all_writes_through_the_institutional_api: true
   operational_state_outside_the_identity_substrate: true
+  one_name_is_identity_address_and_link: true
+  legacy_state_is_not_archived: true
+  the_registry_is_born_from_the_story_not_migrated: true
+
+names:
+  specification: v0/V0-07_NAMES_AND_ADDRESSES.md
+  thing: powerfarm.app/<type>/<name>
+  contract: powerfarm.app/contract/<name>
+  version_suffix: "@<version>"
+  service: <service>.powerfarm.app
+  bytes: sha256:<hex>
+  type_segment: name-of-the-contract-that-defines-the-type
+  stored_without_scheme: true
+  resolvable_with_https_prefix: true
+  lowercase_ascii: true
+  never_reused: true
+  never_renamed: true
+  names_say_what_not_where: true
+  provider_identities_are_bindings: true
+  first_person_name: chosen-at-foundation-not-in-public-docs
+
+hostnames:
+  first_party_only: true
+  webauthn_relying_party_id: powerfarm.app
+  previews: <service>-preview.powerfarm.app
+  services:
+    - host: powerfarm.app
+      role: front-door-and-name-resolver
+      entity: powerfarm.app/service/registry
+      stage: v0
+    - host: id.powerfarm.app
+      role: identity-login-oauth-issuer
+      entity: powerfarm.app/service/identity
+      stage: v0
+    - host: api.powerfarm.app
+      role: institutional-api
+      entity: powerfarm.app/service/api
+      stage: v0
+    - host: vault.powerfarm.app
+      role: minivault-web-projection
+      entity: powerfarm.app/app/minivault-web
+      stage: v0
+    - host: places.powerfarm.app
+      role: coloured-places
+      entity: powerfarm.app/app/coloured-places
+      stage: v0
+    - host: mcp.powerfarm.app
+      role: mcp-door
+      entity: powerfarm.app/service/mcp
+      stage: later-closed-until-supabase-oauth-fix
+    - host: search.powerfarm.app
+      role: search
+      entity: powerfarm.app/service/search
+      stage: later
 
 bootstrap:
   first_two_contracts:
@@ -62,22 +117,22 @@ bootstrap:
     - execution-approval
     - backup-custody
   entity_types:
-    person: pf.person.*
-    agent: pf.agent.*
-    office: pf.office.*
-    sector: pf.<sector>
-    machine: pf.lab-*
-    service: pf.<service>
-    host-runner: pf.host-runner.*
-    process: pf.process.*
-    app: pf.app.*
-    engine: pf.engine.*
-    mcp: pf.mcp.*
-    store: pf.store.*
-    repository: pf.repo.*
-    secret: pf.secret.*
-    search-source: pf.search-source.*
-    projection: pf.projection.*
+    person: powerfarm.app/person/*
+    agent: powerfarm.app/agent/*
+    office: powerfarm.app/office/*
+    sector: powerfarm.app/sector/<sector>
+    machine: powerfarm.app/machine/*
+    service: powerfarm.app/service/<service>
+    host-runner: powerfarm.app/host-runner/*
+    process: powerfarm.app/process/*
+    app: powerfarm.app/app/*
+    engine: powerfarm.app/engine/*
+    mcp: powerfarm.app/mcp/*
+    store: powerfarm.app/store/*
+    repository: powerfarm.app/repository/*
+    secret: powerfarm.app/secret/*
+    search-source: powerfarm.app/search-source/*
+    projection: powerfarm.app/projection/*
   artifact_types:
     - document
     - software
@@ -113,7 +168,7 @@ foundation_act:
     - entity_type.person
     - entity_type.office
     - director_action_types
-    - office.pf.office.director
+    - powerfarm.app/office/director
     - first_person
     - mandate.director.first_person
     - admission.first_person
@@ -121,11 +176,11 @@ foundation_act:
 
 required:
   offices:
-    - id: pf.office.director
+    - id: powerfarm.app/office/director
       type: office
       eligible_holder_types:
         - person
-    - id: pf.office.engineer
+    - id: powerfarm.app/office/engineer
       type: office
       eligible_holder_types:
         - agent
@@ -142,7 +197,7 @@ required:
         evidence_authored_by_subject: false
         protected_classes_gated_at_every_rung: true
         initial_rung: OBSERVE-or-SUGGEST
-        precedent_ledger: agent-runtime-events-in-pf.store.neon.antenna
+        precedent_ledger: agent-runtime-events-in-powerfarm.app/store/antenna
 
   references:
     - id: the-book
@@ -158,31 +213,31 @@ required:
       verified: 2026-09-26 16 schemas ~186 tables
 
   persons:
-    - role: holder-of-pf.office.director
+    - role: holder-of-powerfarm.app/office/director
       id: chosen-at-foundation
-      mandate: pf.contract.mandate.director.<holder>
+      mandate: powerfarm.app/contract/mandate.director.<holder>
 
   agents:
-    - id: pf.agent.lab-8gb
-      place: pf.lab-8gb
+    - id: powerfarm.app/agent/lab-8gb
+      place: powerfarm.app/machine/lab-8gb
       required: true
-    - id: pf.agent.lab-512
-      place: pf.lab-512
+    - id: powerfarm.app/agent/lab-512
+      place: powerfarm.app/machine/lab-512
       required: true
-    - id: pf.agent.lab-256
-      place: pf.lab-256
+    - id: powerfarm.app/agent/lab-256
+      place: powerfarm.app/machine/lab-256
       required: false
 
   machines:
-    - id: pf.lab-8gb
+    - id: powerfarm.app/machine/lab-8gb
       kind: machine
       expected_availability: always-on
-    - id: pf.lab-512
+    - id: powerfarm.app/machine/lab-512
       kind: machine
       expected_availability: always-on
 
   excluded_machines:
-    - id: pf.lab-256
+    - id: powerfarm.app/machine/lab-256
       reason: director-personal-mobile-computer
       may_be_required_for_ecosystem_availability: false
 
@@ -194,10 +249,10 @@ required:
       current_state: positive-delta
 
     host_runners:
-      - id: pf.host-runner.lab-8gb
-        place: pf.lab-8gb
-      - id: pf.host-runner.lab-512
-        place: pf.lab-512
+      - id: powerfarm.app/host-runner/lab-8gb
+        place: powerfarm.app/machine/lab-8gb
+      - id: powerfarm.app/host-runner/lab-512
+        place: powerfarm.app/machine/lab-512
 
     parks:
       app_park:
@@ -208,16 +263,18 @@ required:
         required_residents:
           - google-adk
     places:
-      id: pf.app.coloured-places
+      id: powerfarm.app/app/coloured-places
       placement: vercel
       vercel_project: powerfarm-places
+      hostname: places.powerfarm.app
+      repository: powerfarm/places
       role: projection
 
     permanent_processes:
-      - id: pf.process.manhattan
+      - id: powerfarm.app/process/manhattan
         places:
-          - pf.lab-8gb
-          - pf.lab-512
+          - powerfarm.app/machine/lab-8gb
+          - powerfarm.app/machine/lab-512
         cleanup_protected: true
 
     research:
@@ -225,13 +282,13 @@ required:
       observability: braintrust
 
     cloudkit:
-      id: pf.store.cloudkit.apps
+      id: powerfarm.app/store/apps
       rebuild_allowed: true
       remote_programmatic_provisioning_required: true
       private_zone_provisioning_requires_user_authenticated_owner: true
       server_to_server_key_private_database_authority: false
       provisioner_placement: always-on-ecosystem-lab
-      must_not_depend_on: pf.lab-256
+      must_not_depend_on: powerfarm.app/machine/lab-256
       preserve_provider_capability:
         - apple-developer-account-binding
         - container-identity
@@ -247,7 +304,7 @@ required:
 
   identity:
     supabase:
-      id: pf.store.supabase.company
+      id: powerfarm.app/store/company
       role: identity-substrate
       target: supabase
       provider_binding:
@@ -265,9 +322,9 @@ required:
         - institutional-api
 
     content_store:
-      id: pf.store.content
+      id: powerfarm.app/store/content
       substrate: supabase-storage-private-bucket
-      within: pf.store.supabase.company
+      within: powerfarm.app/store/company
       byte_digest: sha256
       manifests: true
       digest_is_capability: false
@@ -278,7 +335,7 @@ required:
 
 
     minivault_interface:
-      id: pf.app.minivault-web
+      id: powerfarm.app/app/minivault-web
       kind: web-app
       audiences:
         - llm
@@ -296,8 +353,8 @@ required:
 
   operational:
     antenna_store:
-      id: pf.store.neon.antenna
-      owner: pf.antenna
+      id: powerfarm.app/store/antenna
+      owner: powerfarm.app/service/antenna
       provider: neon
       provisioned_through: vercel-integration
       role: observational-evidence
@@ -308,37 +365,37 @@ required:
         - duties-by-facts
 
   services:
-    - id: pf.antenna
+    - id: powerfarm.app/service/antenna
       kind: service
-    - id: pf.heartime
+    - id: powerfarm.app/service/heartime
       kind: service
-    - id: pf.search
+    - id: powerfarm.app/service/search
       kind: service
 
   search:
     authority: false
     sources:
-      - id: pf.search-source.supabase
-        source: pf.store.supabase.company
-      - id: pf.search-source.cloudkit
-        source: pf.store.cloudkit.apps
+      - id: powerfarm.app/search-source/company
+        source: powerfarm.app/store/company
+      - id: powerfarm.app/search-source/apps
+        source: powerfarm.app/store/apps
     human_projection:
-      id: pf.projection.airtable
+      id: powerfarm.app/projection/airtable
       role: powerfarm-search-frontend
       authoritative: false
 
   canonical_documents:
-    - id: pf.doc.PF-01
+    - id: powerfarm.app/document/pf-01
       path: PF-01_Powerfarm_Charter.md
-    - id: pf.doc.PF-02
+    - id: powerfarm.app/document/pf-02
       path: PF-02_Research_and_Evidence_Standard.md
-    - id: pf.doc.PF-03
+    - id: powerfarm.app/document/pf-03
       path: PF-03_Powerfarm_Operating_System.md
-    - id: pf.doc.PF-04
+    - id: powerfarm.app/document/pf-04
       path: PF-04_Intelligence_and_Technology_System.md
-    - id: pf.doc.PF-05
+    - id: powerfarm.app/document/pf-05
       path: PF-05_Products_and_Business_System.md
-    - id: pf.doc.PF-06
+    - id: powerfarm.app/document/pf-06
       path: PF-06_Standard_Documents_Catalog.md
 
   v0_specifications:
@@ -346,6 +403,7 @@ required:
     - path: v0/V0-01_DATA_REGISTRY_IDENTITY_AND_STORES.md
     - path: v0/V0-02_APP_PARK_ENGINE_PARK_AND_APP_CONTRACTS.md
     - path: v0/V0-06_POWERFARM_SEARCH.md
+    - path: v0/V0-07_NAMES_AND_ADDRESSES.md
 
 required_contract_families:
   - app-contract
@@ -362,25 +420,31 @@ legacy_sources:
   - id: legacy.supabase.kernal-registry-2026-09-24
     kind: unauthorized-bootstrap
     location: powerfarm.kernal schema powerfarm_registry
-    terminal_disposition: ARCHIVE_THEN_DELETE
-    archive: full-export-data-and-original-sql
+    terminal_disposition: DELETE
+    archive: none
+    method: renamed-out-of-the-way-and-closed-by-the-rebuild-script-then-dropped-by-director
     final_deletion_by: director
     id_mapping:
-      pf.person.director: pf.office.director (office) + first person (mandate)
-      pf.host-runner.lab-8gb (used by agent): pf.agent.lab-8gb
-      pf.host-runner.lab-512 (used by agent): pf.agent.lab-512
+      pf.person.director: powerfarm.app/office/director (office) + first person (mandate)
+      pf.host-runner.lab-8gb (used by agent): powerfarm.app/agent/lab-8gb
+      pf.host-runner.lab-512 (used by agent): powerfarm.app/agent/lab-512
 
   - id: legacy.supabase.kernal-observation-2026-09-26
     kind: test-state
     location: powerfarm.kernal schema powerfarm_observacao
-    terminal_disposition: ARCHIVE_THEN_DELETE
+    terminal_disposition: DELETE
+    archive: none
+    method: renamed-out-of-the-way-and-closed-by-the-rebuild-script-then-dropped-by-director
     final_deletion_by: director
-    replacement: pf.store.neon.antenna
+    replacement: powerfarm.app/store/antenna
 
   - id: legacy.airtable.registry-export
-    kind: frozen-evidence
+    kind: legacy-export
     location: minivault bucket
-    disposition: first-content-store-object-recognized-after-foundation
+    terminal_disposition: DELETE
+    archive: none
+    with: legacy.supabase.kernal-registry-2026-09-24
+    final_deletion_by: director
 
   - id: legacy.airtable.registry
     kind: migration-source
@@ -398,18 +462,13 @@ legacy_sources:
     live_provider_project_visible: false
     local_source: ~/lab/powerfarm-registry
     terminal_disposition: REPLACE
-    replacement: pf.store.supabase.company
+    replacement: powerfarm.app/store/company
     final_authority: false
-    migrate_only:
-      - required-identity-and-registry-truth
-    do_not_migrate_by-default:
-      - runs
-      - adk-runtime-state
-      - workspace-and-gadget-working-state
+    migrates: nothing
+    registry_born_from: foundation-act-and-the-story
 
 negative_delta_dispositions:
   - DELETE
-  - ARCHIVE_THEN_DELETE
   - ARCHIVE_THEN_MOVE
   - KEEP_OUTSIDE_REGISTRY
   - QUARANTINE_OR_DECIDE
@@ -426,7 +485,8 @@ repository_territories:
       - powerfarm-specs
       - powerfarm-identity
       - powerfarm-continuity
-      - powerfarm-coloured-places
+      - places
+      - minivault
       - powerfarm-antenna
       - powerfarm-heartime
   historical:

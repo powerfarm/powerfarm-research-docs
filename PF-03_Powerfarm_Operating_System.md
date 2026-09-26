@@ -259,13 +259,13 @@ grants
 An entity is a stable institutional identity, for example:
 
 ```text
-pf.identity
-pf.continuity
-pf.antenna
-pf.research
-pf.coloured-places
-pf.lab-8gb
-pf.app-park.8gb
+powerfarm.app/sector/identity
+powerfarm.app/sector/continuity
+powerfarm.app/sector/research
+powerfarm.app/service/antenna
+powerfarm.app/app/coloured-places
+powerfarm.app/machine/lab-8gb
+powerfarm.app/agent/lab-8gb
 ```
 
 An entity record SHOULD identify the thing without absorbing arbitrary operational state belonging to it.

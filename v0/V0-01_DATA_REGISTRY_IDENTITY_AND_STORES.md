@@ -24,24 +24,26 @@ Target for Powerfarm data. The delta and the plan are in [V0-00](V0-00_DELTA_AND
 ## 1. Map
 
 ```text
-┌──────────────── Identity substrate: pf.store.supabase.company ────────────────┐
-│  (Supabase project powerfarm.kernal, ref ekjlmclhqnsstfjzuabz, eu-west-1)     │
+┌────────────── Identity substrate: powerfarm.app/store/company ───────────────┐
+│  (Supabase project powerfarm.kernal, ref ekjlmclhqnsstfjzuabz, eu-west-1)    │
 │                                                                              │
 │  Registry        types, contracts (generations), entities, artifacts, grants │
 │  Identity        OAuth 2.1 server, bindings (keys → entities), admissions,   │
-│                  acceptances                                                  │
+│                  acceptances                                                 │
 │  Content Store   exact bytes by SHA-256 + manifests (private Storage bucket) │
 │  Minivault       promoted semantic objects over the same Content Store       │
-│  API             the only door in and out                                    │
-└───────────────┬───────────────────────────────────────────▲─────────────────┘
-                │ read-only Registry replica                 │ login + "may I?"
-                ▼                                            │
-┌──── Antenna observation store: pf.store.neon.antenna ───┐  ┌──────┴───────────────┐
-│  signals, inventories, agent conversation events        │◀─│ pf.app.coloured-places│
-│  read-only Registry replica                              │  │ (projection, Vercel)  │
-└───────────────▲──────────────────────────────────────────┘  └──────────────────────┘
+│  API             the only door in and out (api.powerfarm.app)                │
+└───────────────┬───────────────────────────────────────────▲──────────────────┘
+                │ read-only Registry replica                │ login + "may I?"
+                ▼                                           │
+┌─────────── Antenna observation store ────────────┐  ┌─────┴──────────────────┐
+│  powerfarm.app/store/antenna                     │◀─│ Coloured Places        │
+│  signals, inventories, agent events              │  │ places.powerfarm.app   │
+│  read-only Registry replica                      │  │ (projection)           │
+└───────────────▲──────────────────────────────────┘  └────────────────────────┘
                 │ each agent writes only its own observations
-     pf.agent.lab-8gb · pf.agent.lab-512 · (pf.agent.lab-256, never required)
+     powerfarm.app/agent/lab-8gb · powerfarm.app/agent/lab-512
+     (powerfarm.app/agent/lab-256: never required)
 ```
 
 Outside these databases (§9): GitHub, Google Drive, CloudKit (per V0-02) and the LABs' local agent state.
@@ -85,26 +87,26 @@ Contracts that define types have no subject entity: the definition exists before
 | **C. Enumerations** | entity types · artifact types · action types (below) | contracts |
 | **D. Entities** | each entity references the contract of its type; then offices and mandates | entities, contracts |
 
-**V0 entity types** (id forms follow §2.8):
+**V0 entity types** (names follow V0-07):
 
-| type | id form | examples |
+| type | name form | examples |
 |---|---|---|
-| person | `pf.person.*` | the Director's holder |
-| agent | `pf.agent.*` | LLM occupants: the local agents (`pf.agent.lab-8gb`), and LLM sessions acting through a bound credential |
-| office | `pf.office.*` | `pf.office.director` |
-| sector | `pf.<sector>` | `pf.identity`, `pf.continuity`, `pf.research` |
-| machine | `pf.lab-*` | `pf.lab-8gb`, `pf.lab-512` |
-| service | `pf.<service>` | `pf.antenna`, `pf.heartime`, `pf.search` |
-| host-runner | `pf.host-runner.*` | `pf.host-runner.lab-8gb` |
-| process | `pf.process.*` | `pf.process.manhattan` |
-| app | `pf.app.*` | `pf.app.coloured-places`, `pf.app.minivault-web` |
-| engine | `pf.engine.*` | `pf.engine.google-adk` |
-| mcp | `pf.mcp.*` | MCP servers admitted by contract |
-| store | `pf.store.*` | `pf.store.supabase.company`, `pf.store.neon.antenna` |
-| repository | `pf.repo.*` | Powerfarm-native repositories |
-| secret | `pf.secret.*` | secret references (§2.9) |
-| search-source | `pf.search-source.*` | per V0-06 |
-| projection | `pf.projection.*` | `pf.projection.airtable` |
+| person | `powerfarm.app/person/*` | the Director's holder |
+| agent | `powerfarm.app/agent/*` | LLM occupants: the local agents (`powerfarm.app/agent/lab-8gb`), and LLM sessions acting through a bound credential |
+| office | `powerfarm.app/office/*` | `powerfarm.app/office/director` |
+| sector | `powerfarm.app/sector/<sector>` | `powerfarm.app/sector/identity`, `powerfarm.app/sector/continuity`, `powerfarm.app/sector/research` |
+| machine | `powerfarm.app/machine/*` | `powerfarm.app/machine/lab-8gb`, `powerfarm.app/machine/lab-512` |
+| service | `powerfarm.app/service/<service>` | `powerfarm.app/service/antenna`, `powerfarm.app/service/heartime`, `powerfarm.app/service/search` |
+| host-runner | `powerfarm.app/host-runner/*` | `powerfarm.app/host-runner/lab-8gb` |
+| process | `powerfarm.app/process/*` | `powerfarm.app/process/manhattan` |
+| app | `powerfarm.app/app/*` | `powerfarm.app/app/coloured-places`, `powerfarm.app/app/minivault-web` |
+| engine | `powerfarm.app/engine/*` | `powerfarm.app/engine/google-adk` |
+| mcp | `powerfarm.app/mcp/*` | MCP servers admitted by contract |
+| store | `powerfarm.app/store/*` | `powerfarm.app/store/company`, `powerfarm.app/store/antenna` |
+| repository | `powerfarm.app/repository/*` | Powerfarm-native repositories |
+| secret | `powerfarm.app/secret/*` | secret references (§2.10) |
+| search-source | `powerfarm.app/search-source/*` | per V0-06 |
+| projection | `powerfarm.app/projection/*` | `powerfarm.app/projection/airtable` |
 
 **V0 artifact types:** document, software, schema, dataset, prompt, capability, execution-bundle, migration-evidence.
 
@@ -130,7 +132,7 @@ Each contract generation points to exactly one document: JSON bytes in the Conte
   - **duties** (what it must do);
   - **prerogatives**, such as `hold-mandate`.
 - An **Office** document declares which entity types may hold the office and which **powers** it confers.
-- A **Mandate** binds one holder to one office for an effective interval. Its id derives from both: `pf.contract.mandate.<office>.<holder>`.
+- A **Mandate** binds one holder to one office for an effective interval. Its id derives from both: `powerfarm.app/contract/mandate.<office>.<holder>`.
 
 Example: the Entity Type document for *agent*.
 
@@ -138,7 +140,7 @@ Example: the Entity Type document for *agent*.
 {
   "name": "Agent",
   "text": "An agent is a program that observes and acts for Powerfarm at a declared place.",
-  "ids": "pf.agent.*",
+  "ids": "powerfarm.app/agent/*",
   "prerogatives": ["hold-mandate"],
   "rights": [{ "may": "write-observation", "resource": "self" }],
   "duties": [
@@ -181,8 +183,8 @@ V0 has two offices:
 
 | office | held by | meaning |
 |---|---|---|
-| `pf.office.director` | a person (the owner) | decides, adopts contracts, approves effects |
-| `pf.office.engineer` | agents (LLM occupants) | builds, observes, diagnoses, proposes; gains autonomy with time and knowledge |
+| `powerfarm.app/office/director` | a person (the owner) | decides, adopts contracts, approves effects |
+| `powerfarm.app/office/engineer` | agents (LLM occupants) | builds, observes, diagnoses, proposes; gains autonomy with time and knowledge |
 
 The Engineer office's charter carries, in machine-readable terms, the **autonomy matrix**: for each **operation class**, the rung at which engineers may act.
 
@@ -230,11 +232,17 @@ Example (terms of the Engineer charter):
 
 ### 2.9 Names
 
-Powerfarm ids identify institutional things, not provider objects, filesystem paths or database rows.
+Names follow **V0-07 (Names and Addresses)**:
+- things are `powerfarm.app/<type>/<name>`;
+- contracts are `powerfarm.app/contract/<name>`;
+- services are `<service>.powerfarm.app`;
+- exact bytes are `sha256:<hex>`.
 
-- The preferred forms are those in §2.3, plus `pf.contract.*` for contracts.
-- Provider identities (Supabase user, Apple, GitHub, machine credential, OAuth subject) are **bindings** to Powerfarm identities. Replacing a provider must not redefine the institutional thing.
-- Ids are short, stable and in English. Names and texts may be in Portuguese.
+The name is the identity, the address and the link.
+
+- Names identify institutional things, never provider objects, filesystem paths or database rows. A name says *what*, never *where*.
+- Provider identities (Supabase user, Apple, GitHub, machine credential, OAuth subject) are **bindings** to names. Replacing a provider must not rename the institutional thing.
+- Names are short, stable, lowercase and in English, and they are never reused. Titles and texts may be in Portuguese.
 
 ### 2.10 Secrets
 
@@ -300,7 +308,7 @@ Rotation precedes deletion when exposure is possible.
 - **Storing:** the caller sends bytes, and the API computes the digest and records the object only if it matches.
 - **Reading:** a digest is not a capability. Reads go through the API, which asks the Registry whether the caller may read that object, through the artifact or contract that references it, or because it is public.
 - **Storing is not recognizing.** An object means nothing institutionally until the Registry recognizes it as an artifact version or a contract document.
-- **Where:** a private Supabase Storage bucket owned by `pf.store.supabase.company`.
+- **Where:** a private Supabase Storage bucket owned by `powerfarm.app/store/company`.
 - **Integrity:**
   - the bucket's access rules allow **insert only**: no update, no delete, so nothing is overwritten;
   - Supabase does not verify content digests, so the API computes SHA-256 server-side before recording an object;
@@ -322,7 +330,7 @@ Rotation precedes deletion when exposure is possible.
   - *exact bytes* use **SHA-256** in the shared Content Store.
 - Minivault permissions **come from Registry contracts**. There is no separate policy list deciding who may read or write.
 - A Minivault publication becomes institutional only when the Registry recognizes it as an artifact version.
-- `pf.app.minivault-web` is the human and LLM interface over Minivault: a projection, never a second authority.
+- `powerfarm.app/app/minivault-web` is the human and LLM interface over Minivault: a projection, never a second authority.
 
 ---
 
@@ -346,7 +354,7 @@ The API is the only door. Every call follows the same path: **key → entity →
 - phases A and B;
 - the entity types *person* and *office*;
 - the Director's action types;
-- the office `pf.office.director`;
+- the office `powerfarm.app/office/director`;
 - the first person;
 - that person's Director mandate;
 - that person's admission.
@@ -357,7 +365,7 @@ The first person's id and login e-mail are chosen at Foundation and are not reco
 
 ## 7. Operational: Antenna observation store
 
-`pf.store.neon.antenna` is a Neon Postgres database created through the Vercel integration. It is declared by a store-authority contract with `pf.antenna` as owner.
+`powerfarm.app/store/antenna` is a Neon Postgres database created through the Vercel integration. It is declared by a store-authority contract with `powerfarm.app/service/antenna` as owner.
 
 **Cost (researched 2026-09-26):**
 - Launch plan: US$0.106 per CU-hour. An always-on 0.25 CU compute costs about US$19/month, plus US$0.35 per GB-month of storage.
@@ -401,8 +409,8 @@ Each agent has its own database role, and that role can write only its own machi
 
 ## 8. Agents and Host Runners
 
-- **Agents** (`pf.agent.*`) observe, converse and propose. They may hold mandates.
-- **Host Runners** (`pf.host-runner.*`) remain the deterministic, allow-listed effect boundary of V0-02, and never treat LLM output as approval.
+- **Agents** (`powerfarm.app/agent/*`) observe, converse and propose. They may hold mandates.
+- **Host Runners** (`powerfarm.app/host-runner/*`) remain the deterministic, allow-listed effect boundary of V0-02, and never treat LLM output as approval.
 - An agent and the Host Runner on the same LAB are different entities.
 - **LAB 256** is outside the expected ecosystem population (V0-02). An agent may run there, but nothing may depend on it.
 
@@ -412,7 +420,7 @@ Each agent has its own database role, and that role can write only its own machi
 
 | place | holds | authority? |
 |---|---|---|
-| GitHub | source, canon, contract drafts | none for contracts: a text counts only after it is stored in the Content Store and recognized. **Transition:** until Minivault documents and `pf.doc.*` recognition exist, the Director's merge adopts canon; afterwards recognition adopts it and GitHub is a projection |
+| GitHub | source, canon, contract drafts | none for contracts: a text counts only after it is stored in the Content Store and recognized. **Transition:** until Minivault documents and `powerfarm.app/document/*` recognition exist, the Director's merge adopts canon; afterwards recognition adopts it and GitHub is a projection |
 | Google Drive "Powerfarm Backup" | cold archive of the LABs' organized folders | none; items may later be promoted and recognized |
 | CloudKit | contract-provisioned app and engine databases (V0-02) | owned by the declaring app or engine |
 | LABs | agent queues and credentials | none; rebuildable, except credentials |
