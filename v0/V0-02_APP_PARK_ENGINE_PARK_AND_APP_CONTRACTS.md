@@ -14,7 +14,8 @@ It turns recognized contracts into verified material reality.
 
 Current V0 materialization consists of:
 
-- two always-on macOS LABs: `pf.lab-8gb` and `pf.lab-512`;
+- two always-on macOS LABs: `powerfarm.app/machine/lab-8gb` and `powerfarm.app/machine/lab-512`;
+- one agent per LAB (§Agents);
 - Google ADK Workflow Engine;
 - App Park;
 - Engine Park;
@@ -29,8 +30,8 @@ These are current materializations of Continuity, not eternal provider choices.
 
 The trusted V0 ecosystem territory contains only:
 
-- `pf.lab-8gb`
-- `pf.lab-512`
+- `powerfarm.app/machine/lab-8gb`
+- `powerfarm.app/machine/lab-512`
 
 Both are expected to be continuously available, headless and UPS-backed.
 
@@ -52,8 +53,8 @@ Exact filesystem paths are materialization detail.
 
 The following residents are explicit V0 survivors/targets:
 
-- `pf.app.coloured-places`: Continuity observability and urgent-fix/operator application. It currently exists on LAB 8GB and is expected to be restored to service.
-- `pf.process.manhattan`: permanent infrastructure process. Current daemon/agent materializations on both ecosystem LABs are protected from cleanup.
+- `powerfarm.app/app/coloured-places`: Continuity observability and urgent-fix/operator application. It runs on Vercel as a projection over the Registry and the Antenna store, not as an App Park resident.
+- `powerfarm.app/process/manhattan`: permanent infrastructure process. Current daemon/agent materializations on both ecosystem LABs are protected from cleanup.
 - Google ADK Workflow Engine: required Engine Park resident for Continuity workflows and onboarding. It is currently missing from both ecosystem LABs and is therefore positive delta.
 
 Other current Park residents remain unadmitted until a V0 contract explicitly preserves them.
@@ -181,6 +182,33 @@ The Host Runner:
 - does not treat LLM output as approval.
 
 Google ADK may orchestrate a workflow; the Host Runner remains the controlled local effect boundary where the workflow requires machine changes.
+
+## Agents
+
+One agent per LAB (`powerfarm.app/agent/lab-8gb`, `powerfarm.app/agent/lab-512`; `powerfarm.app/agent/lab-256` on the bench, never required):
+
+- the only launchd service allowed besides protected processes and remote-access tunnels; installed by its installer, with health check and automatic rollback;
+- releases go LAB 256 → LAB 512 → LAB 8GB; the two ecosystem LABs never update together;
+- observes: signals every minute, inventory every 15 minutes, a copy of every conversation event, all written to the Antenna store;
+- converses with the Director through Coloured Places over a tunnel, accepting only short signed tokens;
+- proposes; it never executes machine changes itself: those go through the Host Runner after approval;
+- holds the Engineer office; its autonomy per operation class follows V0-01 §2.8.
+
+LAB 8GB is the principal: it also watches the cloud places (Identity substrate, apps, engines, archive). LAB 512 is the reserve and takes over when the principal is silent.
+
+## Experiments and dependencies
+
+- **Experiments run only through a ticket:**
+  - the ticket records the owner, project, requesting session, purpose, port and expiry (default 3 days);
+  - an expired experiment stops by itself;
+  - promotion makes it permanent through a contract.
+- **A service created outside the agent** (plist, cron, process manager, tunnel) is shown as "present and must not" and proposed for quarantine.
+- **Dependencies:**
+  - one package store per machine;
+  - shared build caches;
+  - clone-based deduplication of identical files;
+  - rebuildable folders pruned from idle projects;
+  - versions follow a policy (newest LTS for Node, newest stable otherwise), applied in code by a bot with tests.
 
 ## Admission and delta rule
 
