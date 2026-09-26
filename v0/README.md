@@ -24,8 +24,8 @@ Daily work remains with the software that owns it. When that work produces durab
 
 Let:
 
-- **C** = Current Registry Situation: what Powerfarm currently recognizes or relies on, reconstructed from census and evidence.
-- **I** = Ideal Registry V0: the finite state Powerfarm intends to recognize.
+- **C** = Current situation: what exists today in legacy sources and in the world, with the dispositions recorded in V0-01 §11 and observed by census.
+- **I** = Ideal Registry V0: the finite state Powerfarm intends to recognize, defined machine-readably in `registry-v0.yaml` and reached through the Foundation Act and institutional API calls (V0-01 §6). The Registry starts empty; nothing is seeded.
 
 Then:
 
@@ -53,12 +53,10 @@ The Raw Census observes the world. It is evidence for C, not C itself.
 |---|---|
 | `PF-03_Powerfarm_Operating_System.md` | Durable institutional architecture. |
 | `PF-04_Intelligence_and_Technology_System.md` | Durable technical and engineering doctrine. |
-| `V0-01_MINIVAULT_STORAGE_AND_REGISTRY.md` | Identity materialization: Registry, Minivault, Supabase, Search/Airtable and repository preservation. |
+| `V0-01_DATA_REGISTRY_IDENTITY_AND_STORES.md` | Data materialization: Registry (types from contracts, offices, mandates, authority), Identity (keyring), Content Store, Minivault, institutional API and Foundation Act, Antenna observation store, names, secrets, approvals, admission law and legacy disposition. Replaces the former V0-01, V0-03 and V0-05; retires V0-04. |
 | `V0-02_APP_PARK_ENGINE_PARK_AND_APP_CONTRACTS.md` | Continuity materialization: LABs, Google ADK workflows, Parks, onboarding and CloudKit provisioning. |
-| `V0-03_NAMESPACE_AUTHORITY_AND_SECRETS.md` | Names, principals, grants, secret references and approvals. |
-| `V0-04_CURRENT_REGISTRY_SITUATION.md` | C only: current evidence-backed recognition and bounded unknowns. |
-| `V0-05_IDEAL_REGISTRY_V0.md` | I only: the finite target and convergence condition. |
-| `registry-v0.yaml` | Machine-readable target, dispositions and unresolved gates. |
+| `V0-06_POWERFARM_SEARCH.md` | Search: the rebuildable read model and its Airtable projection. |
+| `registry-v0.yaml` | Machine-readable target I, bootstrap order, dispositions and open decisions. |
 | `PF-03-PF-04-DECONSTRUCTION.md` | Historical rationale for separating durable canon from V0 materialization. |
 
 PF-01, PF-02, PF-05 and PF-06 are unchanged by this materialization pass.

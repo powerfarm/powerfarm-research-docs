@@ -1,6 +1,7 @@
-version: powerfarm.registry-v0.working-2
-status: freeze-ready
-date: 2026-09-24
+version: powerfarm.registry-v0.working-3
+status: proposed
+date: 2026-09-26
+supersedes: powerfarm.registry-v0.working-2
 
 recognition:
   authority: director_merge
@@ -31,12 +32,115 @@ principles:
   storage_does_not_define_semantics: true
   provider_identity_does_not_define_institutional_identity: true
   secret_values_in_public_or_projected_state: forbidden
+  entities_are_governed_by_contracts: true
+  types_come_from_current_contracts: true
+  authority_is_computed_from_current_contracts_at_request_time: true
+  identity_is_the_entity_login_is_a_binding: true
+  registry_starts_empty_no_seed: true
+  first_write_is_the_foundation_act: true
+  all_writes_through_the_institutional_api: true
+  operational_state_outside_the_identity_substrate: true
+
+bootstrap:
+  seed:
+    - name: Contract Type
+      type: self
+    - name: Entity Type
+      type: Contract Type
+  contract_types:
+    - Artifact Type
+    - Action Type
+    - Office
+    - Mandate
+    - app-contract
+    - engine-capability
+    - store-authority
+    - search-contract
+    - host-runner
+    - machine-placement
+    - secret-consumer
+    - execution-approval
+    - backup-custody
+  entity_types:
+    person: pf.person.*
+    agent: pf.agent.*
+    office: pf.office.*
+    sector: pf.<sector>
+    machine: pf.lab-*
+    service: pf.<service>
+    host-runner: pf.host-runner.*
+    process: pf.process.*
+    app: pf.app.*
+    engine: pf.engine.*
+    mcp: pf.mcp.*
+    store: pf.store.*
+    repository: pf.repo.*
+    secret: pf.secret.*
+    search-source: pf.search-source.*
+    projection: pf.projection.*
+  artifact_types:
+    - document
+    - software
+    - schema
+    - dataset
+    - prompt
+    - capability
+    - execution-bundle
+    - migration-evidence
+  action_types:
+    - view
+    - converse
+    - approve
+    - admit-person
+    - recognize-contract
+    - inscribe-entity
+    - grant
+    - store-content
+    - read-content
+    - write-observation
+  mandate_prerogative:
+    holder_types:
+      - person
+      - agent
+
+foundation_act:
+  runs: once
+  precondition: registry-empty
+  after: closed-forever
+  recognizes:
+    - seed
+    - contract_types
+    - entity_type.person
+    - entity_type.office
+    - director_action_types
+    - office.pf.office.director
+    - first_person
+    - mandate.director.first_person
+    - admission.first_person
+  first_person_id_and_login: chosen-at-foundation-not-in-public-docs
 
 required:
+  offices:
+    - id: pf.office.director
+      type: office
+      eligible_holder_types:
+        - person
+
   persons:
-    - id: pf.person.director
-      kind: person
-      role: director
+    - role: holder-of-pf.office.director
+      id: chosen-at-foundation
+      mandate: pf.contract.mandate.director.<holder>
+
+  agents:
+    - id: pf.agent.lab-8gb
+      place: pf.lab-8gb
+      required: true
+    - id: pf.agent.lab-512
+      place: pf.lab-512
+      required: true
+    - id: pf.agent.lab-256
+      place: pf.lab-256
+      required: false
 
   machines:
     - id: pf.lab-8gb
@@ -120,8 +224,23 @@ required:
       intended_for:
         - oauth-and-principals
         - institutional-registry
+        - content-store
         - minivault
         - identity-supporting-state
+        - institutional-api
+
+    content_store:
+      id: pf.store.content
+      substrate: supabase-storage-private-bucket
+      within: pf.store.supabase.company
+      byte_digest: sha256
+      manifests: true
+      digest_is_capability: false
+
+    minivault_hashes:
+      semantic_identity: blake3
+      exact_bytes: sha256
+
 
     minivault_interface:
       id: pf.app.minivault-web
@@ -139,6 +258,19 @@ required:
         - publication
         - projection
       github_defines_native_format: false
+
+  operational:
+    antenna_store:
+      id: pf.store.neon.antenna
+      owner: pf.antenna
+      provider: neon
+      provisioned_through: vercel-integration
+      role: observational-evidence
+      writers: agents-own-observations-only
+      registry_replica: read-only
+      views:
+        - existence-by-recognition
+        - duties-by-facts
 
   services:
     - id: pf.antenna
@@ -175,11 +307,9 @@ required:
       path: PF-06_Standard_Documents_Catalog.md
 
   v0_specifications:
-    - path: v0/V0-01_MINIVAULT_STORAGE_AND_REGISTRY.md
+    - path: v0/V0-01_DATA_REGISTRY_IDENTITY_AND_STORES.md
     - path: v0/V0-02_APP_PARK_ENGINE_PARK_AND_APP_CONTRACTS.md
-    - path: v0/V0-03_NAMESPACE_AUTHORITY_AND_SECRETS.md
-    - path: v0/V0-04_CURRENT_REGISTRY_SITUATION.md
-    - path: v0/V0-05_IDEAL_REGISTRY_V0.md
+    - path: v0/V0-06_POWERFARM_SEARCH.md
     - path: v0/PF-03-PF-04-DECONSTRUCTION.md
 
 required_contract_families:
@@ -194,6 +324,29 @@ required_contract_families:
   - backup-custody
 
 legacy_sources:
+  - id: legacy.supabase.kernal-registry-2026-09-24
+    kind: unauthorized-bootstrap
+    location: powerfarm.kernal schema powerfarm_registry
+    terminal_disposition: ARCHIVE_THEN_DELETE
+    archive: full-export-data-and-original-sql
+    final_deletion_by: director
+    id_mapping:
+      pf.person.director: pf.office.director (office) + first person (mandate)
+      pf.host-runner.lab-8gb (used by agent): pf.agent.lab-8gb
+      pf.host-runner.lab-512 (used by agent): pf.agent.lab-512
+
+  - id: legacy.supabase.kernal-observation-2026-09-26
+    kind: test-state
+    location: powerfarm.kernal schema powerfarm_observacao
+    terminal_disposition: ARCHIVE_THEN_DELETE
+    final_deletion_by: director
+    replacement: pf.store.neon.antenna
+
+  - id: legacy.airtable.registry-export
+    kind: frozen-evidence
+    location: minivault bucket
+    disposition: first-content-store-object-recognized-after-foundation
+
   - id: legacy.airtable.registry
     kind: migration-source
     terminal_disposition: DELETE
@@ -301,8 +454,21 @@ secret_references:
     - apple
   manhattan:
     - MANHATTAN_HOST
+  agents:
+    - antenna-store-credential-per-agent
+    - chat-signing-key-per-agent
+    - ai-gateway
 
 unresolved_before_adoption: []
+
+open_decisions:
+  - registry-replica-in-antenna-store-vs-api-only
+  - login-methods-per-person
+  - large-bytes-location
+  - director-powers-v0
+  - who-admits-people
+  - antenna-store-cost
+  - off-machine-backup-destination
 
 completion:
   negative_delta: empty_or_explicitly_retained
