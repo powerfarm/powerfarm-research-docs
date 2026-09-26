@@ -24,7 +24,7 @@ This is the single V0 materialization plan for Powerfarm data: where each kind o
 5. **Authority is computed at request time from current contracts.** Holding a login grants nothing. When a contract generation changes, everyone it covers gains or loses the corresponding authority immediately. Nowhere is a copy of permissions kept.
 6. **There is one list of people and agents: the entities.** Logins and machine credentials are *bindings* (keys) to entities, never a second list.
 7. **Exact bytes are content-addressed (SHA-256).** A digest identifies content. It is not a capability.
-8. **All writes enter through the institutional API.** Nothing writes to tables directly. **There is no seed**: the first write is the **Foundation Act**, performed once through the API.
+8. **All writes enter through the institutional API.** Nothing writes to tables directly. **The migration creates only empty tables and rules, never rows.** The first write is the **Foundation Act**, performed once through the API.
 9. **Copies are projections.** Every replica, cache or search projection can be rebuilt from its source and never becomes authority.
 
 ---
@@ -80,7 +80,7 @@ The Registry keeps the minimal ontology of Registry Core v0. Tables may carry su
 - artifact.type,
 - grant.action.
 
-A type exists only while a contract defining it is current. The single exception is the seed contract, which is its own type. Adding a type is one API call that recognizes one contract. It needs no deploy.
+A type exists only while a contract defining it is current. The single exception is the first contract of the Foundation Act, *Contract Type*, which is its own type. Adding a type is one API call that recognizes one contract. It needs no deploy.
 
 Contracts that define types have no subject entity: the definition exists before any entity of that type. Every other contract must name its participants. For example, a mandate names an office and a holder.
 
@@ -88,7 +88,7 @@ Contracts that define types have no subject entity: the definition exists before
 
 | phase | what is recognized | table |
 |---|---|---|
-| **A. Seed** | 1. *Contract Type* (type: itself) · 2. *Entity Type* (type: Contract Type) | contracts |
+| **A. First two contracts of the Foundation Act** | 1. *Contract Type* (type: itself) · 2. *Entity Type* (type: Contract Type) | contracts |
 | **B. Contract types** | *Artifact Type*, *Action Type*, *Office*, *Mandate*, and the V0 contract families: app-contract, engine-capability, store-authority, search-contract, host-runner, machine-placement, secret-consumer, execution-approval, backup-custody | contracts |
 | **C. Enumerations** | entity types · artifact types · action types (below) | contracts |
 | **D. Entities** | each entity references the contract of its type; then offices and mandates | entities, contracts |
@@ -404,7 +404,7 @@ The previous "current situation" (V0-04) is retired. Legacy sources are disposed
 | phase | what | done when |
 |---|---|---|
 | 0 | this plan adopted | the Director merges it |
-| 1 | Registry + API + Foundation Act | tests on a throwaway database prove: the seed, the type rule, authority computation, a new generation taking effect immediately, and a Foundation Act that cannot run twice |
+| 1 | Registry + API + Foundation Act | tests on a throwaway database prove: the first two contracts, the type rule, authority computation, a new generation taking effect immediately, and a Foundation Act that cannot run twice |
 | 2 | Identity | the Director signs in; an account without admission is refused; a retired person is blocked |
 | 3 | Content Store + manifests | a contract is recognized only when its bytes match the digest; reads without authority are denied |
 | 4 | Antenna store | the Registry replica arrives by itself; the agents write there; both views work |

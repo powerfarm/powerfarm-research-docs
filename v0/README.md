@@ -25,7 +25,7 @@ Daily work remains with the software that owns it. When that work produces durab
 Let:
 
 - **C** = Current situation: what exists today in legacy sources and in the world, with the dispositions recorded in V0-01 §11 and observed by census.
-- **I** = Ideal Registry V0: the finite state Powerfarm intends to recognize, defined machine-readably in `registry-v0.yaml` and reached through the Foundation Act and institutional API calls (V0-01 §6). The Registry starts empty; nothing is seeded.
+- **I** = Ideal Registry V0: the finite state Powerfarm intends to recognize, defined machine-readably in `registry-v0.yaml` and reached through the Foundation Act and institutional API calls (V0-01 §6). The migration creates no rows: the Registry starts empty, and its first two contracts are written by the Foundation Act.
 
 Then:
 

@@ -36,13 +36,13 @@ principles:
   types_come_from_current_contracts: true
   authority_is_computed_from_current_contracts_at_request_time: true
   identity_is_the_entity_login_is_a_binding: true
-  registry_starts_empty_no_seed: true
+  migration_creates_no_rows: true
   first_write_is_the_foundation_act: true
   all_writes_through_the_institutional_api: true
   operational_state_outside_the_identity_substrate: true
 
 bootstrap:
-  seed:
+  first_two_contracts:
     - name: Contract Type
       type: self
     - name: Entity Type
@@ -108,7 +108,7 @@ foundation_act:
   precondition: registry-empty
   after: closed-forever
   recognizes:
-    - seed
+    - first_two_contracts
     - contract_types
     - entity_type.person
     - entity_type.office
