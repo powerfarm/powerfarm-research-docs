@@ -98,7 +98,7 @@ Contracts that define types have no subject entity: the definition exists before
 | type | id form | examples |
 |---|---|---|
 | person | `pf.person.*` | the Director's holder |
-| agent | `pf.agent.*` | `pf.agent.lab-8gb` |
+| agent | `pf.agent.*` | LLM occupants: the local agents (`pf.agent.lab-8gb`), and LLM sessions acting through a bound credential |
 | office | `pf.office.*` | `pf.office.director` |
 | sector | `pf.<sector>` | `pf.identity`, `pf.continuity`, `pf.research` |
 | machine | `pf.lab-*` | `pf.lab-8gb`, `pf.lab-512` |
@@ -117,6 +117,15 @@ Contracts that define types have no subject entity: the definition exists before
 **V0 artifact types:** document, software, schema, dataset, prompt, capability, execution-bundle, migration-evidence.
 
 **V0 action types:** view, converse, approve, admit-person, recognize-contract, inscribe-entity, grant, store-content, read-content, write-observation.
+
+Each Action Type contract names exactly one **authority** from the institutional vocabulary (OBSERVE · JUDGE · PROPOSE · GENERATE · EXECUTE · ORCHESTRATE · PERSIST · AUTHORIZE), so grants and offices speak one language:
+
+| action types | authority |
+|---|---|
+| view, read-content | OBSERVE |
+| converse | PROPOSE |
+| write-observation, store-content, inscribe-entity | PERSIST |
+| approve, admit-person, recognize-contract, grant | AUTHORIZE |
 
 ### 2.4 Machine-readable contract documents
 
@@ -156,7 +165,7 @@ may(entity, action, resource) =
   + current grants of the entity
 ```
 
-Mandates are prerogatives of persons and agents in V0.
+Mandates are prerogatives of persons and agents in V0. For an office governed by an autonomy matrix (§2.8), what a mandate lets its holder do *without asking* is capped by the rung of each operation class.
 
 Duties are queryable in the same way. The Antenna store compares them with observed facts (§7.3).
 
@@ -174,7 +183,60 @@ Consequential effects require explicit authorization under the governing contrac
 
 Where practical, an approval binds to the exact immutable plan or effect by digest. A materially changed plan requires a new approval.
 
-### 2.8 Names
+### 2.8 Offices and the autonomy matrix
+
+V0 has two offices:
+
+| office | held by | meaning |
+|---|---|---|
+| `pf.office.director` | a person (the owner) | decides, adopts contracts, approves effects |
+| `pf.office.engineer` | agents (LLM occupants) | builds, observes, diagnoses, proposes; gains autonomy with time and knowledge |
+
+The Engineer office's charter carries, in machine-readable terms, the **autonomy matrix**: for each **operation class**, the rung at which engineers may act.
+
+| rung | meaning |
+|---|---|
+| OBSERVE | inspect, diagnose, propose, verify; nothing changes |
+| SUGGEST | propose one specific declared operation; the Director accepts or rejects each time |
+| SAFE-AUTO | resolve, apply, retry and verify within an allowlist of reversible operations; exceptions surface |
+| POLICY-AUTO | operate routinely within policy; only a material delta, a boundary or a novel situation surfaces |
+
+**Laws of the matrix:**
+
+1. **Per class, never global.** "Engineer autonomy = 3" means nothing. Each operation class earns its rung separately.
+2. **Earned by precedent.** A class rises only when the record supports a statement of the form: *"for operation X, with input in band Y, there were N approvals and zero denials, under agent version Z, whose evaluation passes."* Before that, a rung is opinion.
+3. **Precedent is indexed by input, not by operation type.** A young institution sees only small cases; a matrix keyed by operation type learns "this is safe" and then auto-resolves the first large case. Recorded decisions therefore keep the relevant input dimensions.
+4. **Regressible.** A rung is lost when the evidence that earned it ages out, when risk changes, or when rollback stops being demonstrably reliable. Descent is normal operation, not an incident.
+5. **Authority survives autonomy.** Autonomy governs how much a proven mechanism may do without asking; it never removes the need for authority. Protected destructive operations and external effects keep a human gate at every rung.
+6. **Evidence is never authored by its subject.** An engineer cannot produce the evidence that promotes it. A rise is a new generation of the Engineer charter, recognized by the Director; a regression may be computed automatically.
+7. **The matrix is a resolver, not a rewrite.** It plugs into the runtime's existing approval seam (the agent asks, the resolver answers from the matrix or routes to the Director). Deterministic hand-written rules may exist before any learned rung; evaluations detect when a rung starts deciding wrongly.
+
+**Two edges carry this:**
+- **Authority descends:** mandate → grant → run → effect, and never widens.
+- **Evidence ascends:** act → receipt → evidence → promotion, and is never authored by its subject.
+
+**The precedent ledger already exists.** The agents' runtime durably records its events, including requests for actions, approval requests and decisions, and results. Every one of these events is copied to the Antenna store with the tool input, the deciding principal and the agent version. The matrix reads that ledger; nothing new has to be invented to feed it.
+
+In V0 every operation class starts at OBSERVE or SUGGEST.
+
+Example (terms of the Engineer charter):
+
+```json
+{
+  "name": "Engineer",
+  "holders": ["agent"],
+  "matrix": [
+    { "class": "observe-lab",           "rung": "OBSERVE" },
+    { "class": "restart-own-agent",     "rung": "SUGGEST" },
+    { "class": "prune-rebuildables",    "rung": "SUGGEST", "reversible": true },
+    { "class": "delete-anything",       "rung": "SUGGEST", "protected": true },
+    { "class": "change-tunnel",         "rung": "SUGGEST", "protected": true }
+  ],
+  "evidence_expires_after": "P90D"
+}
+```
+
+### 2.9 Names
 
 Powerfarm ids identify institutional things, not provider objects, filesystem paths or database rows.
 
@@ -182,7 +244,7 @@ Powerfarm ids identify institutional things, not provider objects, filesystem pa
 - Provider identities (Supabase user, Apple, GitHub, machine credential, OAuth subject) are **bindings** to Powerfarm identities. Replacing a provider must not redefine the institutional thing.
 - Ids are short, stable and in English. Names and texts may be in Portuguese.
 
-### 2.9 Secrets
+### 2.10 Secrets
 
 The Registry stores **secret references**, never values. A reference is an entity of type *secret*. A contract of family *secret-consumer* declares who may use it. A reference records:
 - owner;
@@ -216,7 +278,7 @@ Rotation precedes deletion when exposure is possible.
 | admissions | invited e-mail → intended person entity, admitted by, validity, used at |
 | acceptances | who accepted which generation of which contract, and when (receipt digest) |
 
-**Gates** (Supabase Auth hooks):
+**Gates** (Supabase Auth hooks, implemented as Postgres functions; the HTTP form has a known error-format bug):
 
 | situation | result |
 |---|---|
@@ -228,6 +290,12 @@ Rotation precedes deletion when exposure is possible.
 **OAuth 2.1:** the Identity substrate is the authorization server for everything.
 - Each **app** is an entity of type *app*. Its OAuth clients are keys bound to that entity.
 - **ChatGPT and Claude** connect through MCP with OAuth, always on behalf of a person, and never with more authority than that person.
+  - **Status (researched 2026-09-26):**
+    - the Supabase OAuth 2.1 server is beta;
+    - open bug `supabase/auth#2820` blocks MCP connectors that use public clients, `offline_access` or the `resource` parameter;
+    - tokens are not audience-bound (RFC 8707 is ignored), which MCP 2026-07-28 requires;
+    - only Dynamic Client Registration is offered, not Client ID Metadata Documents.
+  - The MCP door therefore stays **closed** until this is fixed or an OAuth bridge in front of Identity is adopted. Human sign-in is unaffected.
 - Each **agent** has its own machine credential, bound to its agent entity.
 
 ---
@@ -241,6 +309,10 @@ Rotation precedes deletion when exposure is possible.
 - **Reading:** a digest is not a capability. Reads go through the API, which asks the Registry whether the caller may read that object, through the artifact or contract that references it, or because it is public.
 - **Storing is not recognizing.** An object means nothing institutionally until the Registry recognizes it as an artifact version or a contract document.
 - **Where:** a private Supabase Storage bucket owned by `pf.store.supabase.company`.
+- **Integrity:**
+  - the bucket's access rules allow **insert only**: no update, no delete, so nothing is overwritten;
+  - Supabase does not verify content digests, so the API computes SHA-256 server-side before recording an object;
+  - a periodic sweep re-hashes stored objects and reports any mismatch.
 
 **Custody:**
 - promoted immutable bytes must be addressable and independently verifiable;
@@ -295,6 +367,10 @@ The first person's id and login e-mail are chosen at Foundation and are not reco
 
 `pf.store.neon.antenna` is a Neon Postgres database created through the Vercel integration. It is declared by a store-authority contract with `pf.antenna` as owner.
 
+**Cost (researched 2026-09-26):**
+- Launch plan: US$0.106 per CU-hour. An always-on 0.25 CU compute costs about US$19/month, plus US$0.35 per GB-month of storage.
+- The free plan cannot stay awake for per-minute writes: it scales to zero after 5 minutes and includes 100 CU-hours per month.
+
 ### 7.1 Tables
 
 | table | contents | retention |
@@ -306,12 +382,13 @@ The first person's id and login e-mail are chosen at Foundation and are not reco
 
 Each agent has its own database role, and that role can write only its own machine's observations.
 
-### 7.2 Registry replica
+### 7.2 Registry projection
 
-- A read-only replica of types, entities and current contracts with their documents.
-- It is maintained by replication from the Identity substrate. It never writes back and can be rebuilt from scratch.
+- A read-only projection of types, entities and current contracts with their documents. The principal agent refreshes it through the Registry API; the reserve takes over if the principal is silent.
+- V0 does **not** use database-to-database logical replication. It would require Supabase's IPv4 add-on, an allowlist of Neon's egress addresses and replication slots, and it does not carry schema changes.
+- The projection never writes back and can be rebuilt from scratch at any time.
 
-### 7.3 Views enabled by the replica
+### 7.3 Views enabled by the projection
 
 - **Existence × recognition.** The four states:
   - recognized;
@@ -343,7 +420,7 @@ Each agent has its own database role, and that role can write only its own machi
 
 | place | holds | authority? |
 |---|---|---|
-| GitHub | source, canon, contract drafts | none for contracts: a text counts only after it is stored in the Content Store and recognized |
+| GitHub | source, canon, contract drafts | none for contracts: a text counts only after it is stored in the Content Store and recognized. **Transition:** until Minivault documents and `pf.doc.*` recognition exist, the Director's merge adopts canon; afterwards recognition adopts it and GitHub is a projection |
 | Google Drive "Powerfarm Backup" | cold archive of the LABs' organized folders | none; items may later be promoted and recognized |
 | CloudKit | contract-provisioned app and engine databases (V0-02) | owned by the declaring app or engine |
 | LABs | agent queues and credentials | none; rebuildable, except credentials |
@@ -395,7 +472,7 @@ The previous "current situation" (V0-04) is retired. Legacy sources are disposed
 | frozen Airtable Registry export (in the Minivault bucket) | becomes the first Content Store object recognized after the Foundation Act |
 | legacy Supabase `powerfarm-registry` (source preserved on LAB 8GB) | migration input only for required identity facts; runs, ADK state and workspace drafts do not migrate |
 | CloudKit legacy test state | per V0-02 |
-| empty Supabase project `Google ADK mapping` | `DELETE` |
+| **the book** (Supabase project `vbgzdqdlarulpfsyjrke`, "Google ADK mapping"; 16 schemas, about 186 tables, verified 2026-09-26) | **KEEP.** A reference work Powerfarm acquired. It exists independently, and its existence is not Powerfarm's to decide. It is read, never used as a backend; no DDL; never on a deletion list. It may be recognized as a Research reference |
 
 ---
 
@@ -407,7 +484,7 @@ The previous "current situation" (V0-04) is retired. Legacy sources are disposed
 | 1 | Registry + API + Foundation Act | tests on a throwaway database prove: the first two contracts, the type rule, authority computation, a new generation taking effect immediately, and a Foundation Act that cannot run twice |
 | 2 | Identity | the Director signs in; an account without admission is refused; a retired person is blocked |
 | 3 | Content Store + manifests | a contract is recognized only when its bytes match the digest; reads without authority are denied |
-| 4 | Antenna store | the Registry replica arrives by itself; the agents write there; both views work |
+| 4 | Antenna store | the Registry projection refreshes by itself; the agents write there; both views work |
 | 5 | Coloured Places | the Director sees everything the contracts allow |
 | 6 | Minivault | on the shared Content Store, governed by contracts |
 
@@ -417,10 +494,15 @@ The previous "current situation" (V0-04) is retired. Legacy sources are disposed
 
 | # | decision | recommendation |
 |---|---|---|
-| 1 | Registry replica in the Antenna store vs API-only reads | replica |
-| 2 | login methods per person in V0 | e-mail only |
-| 3 | where large bytes (models, archives) live | outside the Content Store in V0; the Content Store holds the manifest pointing to them |
-| 4 | Director powers in V0 | view, converse, approve, admit-person, recognize-contract, inscribe-entity, grant |
-| 5 | who admits people | holders of *admit-person* (the Director in V0) |
-| 6 | Antenna store cost (always-on writes) | confirm the Neon price before creation |
-| 7 | off-machine backup destination for Registry and Content Store exports | to be decided |
+| 1 | login methods per person in V0 | e-mail only |
+| 2 | where large bytes (models, archives) live | outside the Content Store in V0; the Content Store holds the manifest pointing to them |
+| 3 | initial rung of each Engineer operation class | OBSERVE or SUGGEST for all; protected classes stay gated at every rung |
+| 4 | off-machine backup destination for Registry and Content Store exports | to be decided |
+
+**Decided by the Director (2026-09-26):**
+- **the book is kept** (§11);
+- **offices:** the Director is the owner; LLMs hold the Engineer office and gain autonomy through the matrix (§2.8);
+- **Director powers in V0:** everything, gated by approval for protected effects;
+- **who admits people:** the Director;
+- **Registry in the Antenna store:** an API-refreshed projection, not replication (§7.2);
+- **Antenna store cost:** accepted at the researched price.

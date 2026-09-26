@@ -125,6 +125,37 @@ required:
       type: office
       eligible_holder_types:
         - person
+    - id: pf.office.engineer
+      type: office
+      eligible_holder_types:
+        - agent
+      autonomy_matrix:
+        rungs:
+          - OBSERVE
+          - SUGGEST
+          - SAFE-AUTO
+          - POLICY-AUTO
+        per_operation_class: true
+        earned_by: precedent-indexed-by-input
+        regressible: true
+        authority_survives_autonomy: true
+        evidence_authored_by_subject: false
+        protected_classes_gated_at_every_rung: true
+        initial_rung: OBSERVE-or-SUGGEST
+        precedent_ledger: agent-runtime-events-in-pf.store.neon.antenna
+
+  references:
+    - id: the-book
+      provider: supabase
+      provider_ref: vbgzdqdlarulpfsyjrke
+      provider_name: Google ADK mapping
+      kind: acquired-reference-work
+      disposition: KEEP
+      existence_decided_by_powerfarm: false
+      access: read-only
+      use_as_backend: false
+      ddl_allowed: false
+      verified: 2026-09-26 16 schemas ~186 tables
 
   persons:
     - role: holder-of-pf.office.director
@@ -267,7 +298,7 @@ required:
       provisioned_through: vercel-integration
       role: observational-evidence
       writers: agents-own-observations-only
-      registry_replica: read-only
+      registry_projection: read-only-refreshed-through-registry-api
       views:
         - existence-by-recognition
         - duties-by-facts
@@ -372,18 +403,6 @@ legacy_sources:
       - adk-runtime-state
       - workspace-and-gadget-working-state
 
-  - id: legacy.supabase.google-adk-mapping
-    kind: empty-project
-    provider_ref: vbgzdqdlarulpfsyjrke
-    terminal_disposition: DELETE
-    evidence:
-      user_tables: 0
-      auth_users: 0
-      storage_buckets: 0
-      user_migrations: 0
-      edge_functions: 0
-      development_branches: 0
-
 negative_delta_dispositions:
   - DELETE
   - ARCHIVE_THEN_DELETE
@@ -435,9 +454,6 @@ current_negative_delta:
       - workflow-engine
     add:
       - google-adk
-  supabase:
-    delete:
-      - vbgzdqdlarulpfsyjrke
 
 secret_references:
   coloured_places:
@@ -462,13 +478,18 @@ secret_references:
 unresolved_before_adoption: []
 
 open_decisions:
-  - registry-replica-in-antenna-store-vs-api-only
   - login-methods-per-person
   - large-bytes-location
-  - director-powers-v0
-  - who-admits-people
-  - antenna-store-cost
+  - initial-rung-per-engineer-operation-class
   - off-machine-backup-destination
+
+decided_2026_09_26:
+  the_book: KEEP
+  offices: director-is-the-owner; llm-agents-hold-engineer
+  director_powers_v0: all, protected-effects-gated-by-approval
+  who_admits_people: director
+  registry_in_antenna_store: api-refreshed-projection-not-replication
+  antenna_store_cost: accepted-at-researched-price
 
 completion:
   negative_delta: empty_or_explicitly_retained
