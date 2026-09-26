@@ -1,8 +1,9 @@
-# V0-02 - Continuity, Parks and App Contracts
+# V0-02 — Continuity, Parks and App Contracts
 
-**Status:** WORKING V0  
-**Recognition baseline:** `6438c55a20e82e922322d26561487f91761a6e3a`  
-**Scope:** V0 materialization of Powerfarm Continuity.
+**Status:** WORKING V0
+**Canon:** PF-03 §§3.8, 3.11, 3.13
+
+Target for Powerfarm Continuity: the LABs, their agents and Host Runners, the Parks, onboarding, and the apps that run in the cloud. Delta and plan: [V0-00](V0-00_DELTA_AND_PLAN.md).
 
 ## Continuity
 
@@ -12,7 +13,7 @@ Continuity answers:
 
 It turns recognized contracts into verified material reality.
 
-Current V0 materialization consists of:
+V0 materializes it with:
 
 - two always-on macOS LABs: `powerfarm.app/machine/lab-8gb` and `powerfarm.app/machine/lab-512`;
 - one agent per LAB (§Agents);
@@ -35,7 +36,7 @@ The trusted V0 ecosystem territory contains only:
 
 Both are expected to be continuously available, headless and UPS-backed.
 
-LAB 256 is the Director's personal/mobile computer. It is explicitly **outside the ecosystem expected population** and MUST NOT be required for availability, scheduling, census health, execution, storage or recovery.
+LAB 256 (`powerfarm.app/machine/lab-256`) is the Director's personal computer. It is **outside the expected population** and MUST NOT be required for availability, scheduling, census health, execution, storage or recovery. It serves as the bench, where new agent releases run first.
 
 Each ecosystem LAB converges to:
 
@@ -51,13 +52,13 @@ Exact filesystem paths are materialization detail.
 
 ## Fixed Continuity residents
 
-The following residents are explicit V0 survivors/targets:
+The V0 residents:
 
-- `powerfarm.app/app/coloured-places`: Continuity observability and urgent-fix/operator application. It runs on Vercel as a projection over the Registry and the Antenna store, not as an App Park resident.
-- `powerfarm.app/process/manhattan`: permanent infrastructure process. Current daemon/agent materializations on both ecosystem LABs are protected from cleanup.
-- Google ADK Workflow Engine: required Engine Park resident for Continuity workflows and onboarding. It is currently missing from both ecosystem LABs and is therefore positive delta.
+- `powerfarm.app/app/coloured-places`: the operator view of places, observations and freshness, with the chat to each agent. It runs on Vercel at `places.powerfarm.app` as a projection over the Registry and the Antenna store, not as an App Park resident. Code: `powerfarm/places` (`apps/coloured-places`); every merge to `main` deploys it.
+- `powerfarm.app/process/manhattan`: a permanent infrastructure process. Its materializations on both LABs are protected from cleanup.
+- Google ADK Workflow Engine: the Engine Park resident for Continuity workflows and onboarding.
 
-Other current Park residents remain unadmitted until a V0 contract explicitly preserves them.
+Any other resident is unadmitted until a V0 contract preserves it.
 
 ## Research workspace
 
@@ -65,11 +66,9 @@ Powerfarm Research receives one canonical macOS filesystem root:
 
 `~/POWERFARM/Research`
 
-Research experiments run beneath this root rather than creating durable institutional meaning through arbitrary historical project folders.
+Research experiments run beneath this root. A result becomes institutional only when it is promoted and recognized.
 
-Research observability is externalized to **Braintrust**. Braintrust is a Research observability/evaluation surface, not Registry authority.
-
-Historical Research directories outside the canonical root are migration/cleanup candidates: preserve or promote required outputs, then remove or archive them according to the delta.
+Research observability is externalized to **Braintrust**. Braintrust is a Research observability and evaluation surface, not Registry authority.
 
 ## App Park and Engine Park
 
@@ -127,7 +126,7 @@ The durable law is:
 
 ## CloudKit provisioning
 
-Apple infrastructure is treated as a replaceable provisioning substrate. The existing CloudKit data/schema may be wiped and rebuilt.
+Apple infrastructure is a replaceable provisioning substrate. CloudKit data and schema are rebuildable: they may be wiped and provisioned again from the contracts.
 
 Powerfarm MUST preserve or be able to recreate the Apple developer capability required for remote programmatic provisioning, including the developer account relationship, container identity, signing/provisioning material and required keys/certificates.
 
@@ -158,15 +157,7 @@ Current container:
 
 `iCloud.app.powerfarm`
 
-CloudKit identity does not replace Powerfarm identity.
-
-### Legacy CloudKit deletion law
-
-Historical Apple-first Registry/test records are negative delta with terminal disposition `DELETE`.
-
-The Director has classified that state as disposable test material. Exact record-by-record enumeration is no longer a cleanup gate. The signed census and existing receipts preserve sufficient evidence; the historical data/schema may be wiped and rebuilt while preserving/recreating the provider capability above.
-
-At convergence, CloudKit contains only contract-owned app/engine databases/namespaces. No company Registry authority remains there.
+CloudKit identity does not replace Powerfarm identity. CloudKit holds only contract-owned app and engine databases; no Registry authority lives there.
 
 ## Host Runner
 
@@ -188,8 +179,8 @@ Google ADK may orchestrate a workflow; the Host Runner remains the controlled lo
 One agent per LAB (`powerfarm.app/agent/lab-8gb`, `powerfarm.app/agent/lab-512`; `powerfarm.app/agent/lab-256` on the bench, never required):
 
 - the only launchd service allowed besides protected processes and remote-access tunnels; installed by its installer, with health check and automatic rollback;
-- releases go LAB 256 → LAB 512 → LAB 8GB; the two ecosystem LABs never update together;
-- observes: signals every minute, inventory every 15 minutes, a copy of every conversation event, all written to the Antenna store;
+- code in `powerfarm/places` (`apps/agent`). **A release is a merge to `main`.** Each LAB's installer follows `main` by pulling, in the order LAB 256 → LAB 512 → LAB 8GB, and a LAB moves only after the previous one reports healthy; the two ecosystem LABs never update together;
+- observes: signals every minute, inventory every 15 minutes, a copy of every conversation event, all written to the Antenna store. Signals and inventories come from deterministic code; a model is never woken to produce them (V0-01 §7.5);
 - converses with the Director through Coloured Places over a tunnel, accepting only short signed tokens;
 - proposes; it never executes machine changes itself: those go through the Host Runner after approval;
 - holds the Engineer office; its autonomy per operation class follows V0-01 §2.8.
@@ -222,7 +213,7 @@ A required resident is not complete until:
 6. verification passes;
 7. census observes the expected resident.
 
-An observed app/engine/process that is not explained by protected human/system rules, an adopted contract, or a declared temporary migration exception is negative-delta material.
+An observed app, engine or process that is not explained by protected human or system rules, an adopted contract, or a declared temporary exception is negative-delta material.
 
 Its disposition comes from the finite V0 delta model.
 

@@ -7,8 +7,8 @@ How Powerfarm decides, allocates work, changes, and keeps the company coherent w
 | **DOCUMENT**  | PF-03             |
 |---------------|-------------------|
 | **STATUS**    | **CANONICAL**     |
-| **VERSION**   | 1.4               |
-| **EFFECTIVE** | 24 September 2026 |
+| **VERSION**   | 1.5               |
+| **EFFECTIVE** | 26 September 2026 |
 
 | **OWNS**         | Decision ownership, work lifecycle, institutional operating architecture, durable system boundaries, build-vs-use, resource allocation, exceptions, institutional drift, documentation governance, and durable operating rules. |
 |------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -167,6 +167,18 @@ Mutable operational state remains mutable. When an exact historical object must 
 Content-addressed objects are also reusable immutable values. They MAY be referenced, transported, cached, resolved remotely, composed into manifests or object graphs, and loaded on demand without changing their content identity.
 
 Content identity does not imply institutional authority.
+
+### Everything institutional is rebuildable
+
+Everything Powerfarm recognizes can be rebuilt from what it has preserved: its canon, its contracts and their documents, its recognized versions and their content, and the ordered record of its institutional acts.
+
+Institutional state comes into existence through recorded acts, never through bulk seeding. Replaying the same acts, in the same order, over the same preserved content rebuilds the same institution.
+
+Operational state follows its owner's contract: it is restored from a verified copy, or its loss is declared. Secret values are never restored; they are issued again.
+
+A rebuild MAY land on different providers, machines, or substrates. The institution stays the same because its names, contracts, and content do not depend on where they are hosted.
+
+> **Anything Powerfarm cannot rebuild from what it has preserved, it does not really have.**
 
 ### Context is a working set, not a warehouse
 
@@ -797,6 +809,8 @@ No meeting, report, review, or recurring ritual is canonical by default. A caden
 
 15. Treat active model context as a temporary working set; prefer durable references and on-demand loading for large reusable immutable content where practical.
 
+16. Bring institutional things into existence through recorded acts, never through bulk seeding, so that the institution can always be rebuilt by replaying them.
+
 ---
 
 # Appendix A. Formal Executability Model v0.1
@@ -1027,7 +1041,8 @@ Policy determines semantic triggering.
 Atomic claim establishes execution ownership.
 Continuity materializes transitions.
 Applications remember themselves.
+Recorded acts rebuild.
 Search finds.
 ```
 
-> **State is local. Contracts are global. Bytes are immutable when preserved. Authority is explicit. Execution is causal. Knowledge is the durable product.**
+> **State is local. Contracts are global. Bytes are immutable when preserved. Authority is explicit. Execution is causal. Everything institutional is rebuildable. Knowledge is the durable product.**
