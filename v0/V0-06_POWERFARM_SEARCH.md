@@ -1,58 +1,48 @@
 # V0-06 — Powerfarm Search
 
-**Status:** WORKING V0  
-**Scope:** the disposable human/search projection over recognized Powerfarm sources.
+**Status:** WORKING V0, deferred. Built after waves 1–3 of [V0-00](V0-00_DELTA_AND_PLAN.md).
+**Canon:** PF-03 §3.12
 
-## Purpose
+Target for Powerfarm Search: the read model over recognized Powerfarm sources, at `search.powerfarm.app` (V0-07).
+
+---
+
+## 1. Purpose
 
 Powerfarm Search answers:
 
 > **What can we discover about Powerfarm without moving authority into the search surface?**
 
-Search is a read model.
-
-It MUST NOT become a store of record, migration target, or hidden second Registry.
+Search is a read model. It MUST NOT become a store of record, a migration target, or a hidden second Registry.
 
 ```text
 sources of truth
       ↓
-Search connectors
+source connectors
       ↓
-Powerfarm Search projection
+Search projection
       ↓
-Airtable human interface
+human interface
 ```
 
-If Airtable disappears, no institutional fact changes.
+If the projection or its interface disappears, no institutional fact changes.
 
-## V0 authoritative sources
+---
 
-V0 Search reads from two source families.
+## 2. Sources
 
-### Supabase Identity
+### 2.1 V0 sources
 
-Search may project recognized, non-secret information from:
+| source | what Search may project | authority stays with |
+|---|---|---|
+| **Identity substrate** | recognized, non-secret Registry information; Minivault metadata and names suitable for discovery | the Registry and Minivault |
+| **App and engine databases** | contract-declared, non-secret metadata from admitted app and engine databases (including CloudKit namespaces) | the owning app or engine |
 
-- Registry;
-- Minivault metadata and locators appropriate for discovery.
+Search never infers ownership from physical presence. Ownership comes from contracts.
 
-Supabase remains authority for that information.
+### 2.2 Adding a source
 
-### Apple / CloudKit
-
-Search may project contract-declared, non-secret metadata from admitted App/Engine databases or namespaces.
-
-The owning app/engine remains authority for its operational state.
-
-Search does not infer app ownership from physical CloudKit presence. Ownership comes from Identity/contracts.
-
-## Additional sources
-
-GitHub, Cloudflare, Braintrust and other systems MAY become Search sources later.
-
-They are not V0 sources merely because they are useful or technically connectable.
-
-A new source requires an adopted connector/source contract defining:
+GitHub, Cloudflare, Braintrust and other systems MAY become sources. Being useful or connectable is not enough: a new source requires an adopted source contract that defines:
 
 - source identity;
 - authoritative scope;
@@ -60,149 +50,111 @@ A new source requires an adopted connector/source contract defining:
 - stable source key;
 - freshness semantics;
 - sensitivity exclusions;
-- backfill/rebuild behavior.
+- rebuild behavior.
 
-## Projection identity
+---
 
-Every projected object has a source-stable key.
+## 3. Projection identity
 
-Airtable record IDs MUST NOT become Powerfarm identity.
+- A projected thing that has a Powerfarm name keeps it: `powerfarm.app/<type>/<name>` (V0-07).
+- Anything else gets a deterministic key: `<source>:<kind>:<source-stable-id>`.
+- Record ids of the interface never become Powerfarm identity.
 
-Working form:
+---
 
-```text
-<source>:<kind>:<source-stable-id>
-```
+## 4. The projection
 
-The exact encoding may evolve, but it must remain deterministic and independent of Airtable.
+One unified discovery surface. Required fields:
 
-## Rebuildability
+- name or projection key;
+- source;
+- kind;
+- title;
+- short summary, when available;
+- recognized version and digest, when relevant;
+- freshness (last seen);
+- source link, when safe;
+- an explicit `projection-only` marker.
 
-Powerfarm Search MUST be fully reconstructable from its sources.
+Domain-specific detail MAY live in linked projection tables when real use requires it. Tables are not created merely because the source has tables.
 
-Therefore:
+---
 
-- no record may exist only in Airtable;
-- Airtable edits MUST NOT directly mutate source authority;
-- connector backfill must be able to recreate the projection;
-- losing the entire Airtable base is a recoverable projection loss, not institutional data loss.
-
-## Write boundary
-
-V0 Search is read-only toward sources.
-
-A future UI action MAY create a proposed command/request through a separately authorized Powerfarm API or workflow.
-
-That proposal is not a direct source mutation and MUST pass the authority/contract boundary before execution.
-
-## Connector responsibilities
+## 5. Connectors
 
 Each source connector MUST:
 
-1. enumerate or pull source deltas;
-2. map only declared projection fields;
-3. generate a deterministic projection key;
-4. upsert idempotently;
-5. record connector freshness/health;
-6. support full backfill/rebuild;
-7. exclude credentials and source-restricted sensitive values.
+1. enumerate or pull source changes;
+2. map only the declared projection fields;
+3. produce the deterministic key (§3);
+4. write idempotently;
+5. record its own freshness and health;
+6. support a full rebuild;
+7. exclude credentials and restricted values.
 
-Provider-specific rate limits and batch sizes belong in connector configuration/runbooks, not canon.
+Provider rate limits and batch sizes belong in connector configuration, not in this document.
 
-## Search projection model
+---
 
-The minimal V0 projection needs one unified discoverability surface.
+## 6. Rules
 
-Required projected fields:
+### 6.1 Rebuildable
 
-- stable projection key;
-- source;
-- kind;
-- title/name;
-- short description/summary when available;
-- recognized version/digest when relevant;
-- freshness/last-seen evidence;
-- source locator/deep link when safe;
-- explicit `projection-only` authority marker.
+Search MUST be fully reconstructable from its sources:
+- no record exists only in the projection;
+- edits in the interface never change a source;
+- a full rebuild recreates the projection;
+- losing the whole projection is a recoverable loss, not a loss of institutional data.
 
-Additional domain-specific detail MAY live in linked projection tables if real product use requires it.
+### 6.2 Read-only toward sources
 
-Do not create tables simply because the source has tables.
+Search never writes to a source. A future interface action MAY create a proposal through the institutional API; the proposal passes the authority and contract boundary like any other act.
 
-## Airtable role
-
-Airtable is the current human projection/frontend of Powerfarm Search.
-
-The current base has already been reduced to a single `Powerfarm Search` table after verified Minivault custody of the legacy 38-table/347-record export.
-
-Airtable is selected because it currently provides useful human/mobile interfaces without requiring Powerfarm to build a custom frontend first.
-
-Airtable-specific layout, automation, AI and plan limits are dated provider behavior and belong in research/runbooks.
-
-## Mobile rule
-
-The Director must be able to use the Search interface on iPhone.
-
-Any mobile-critical behavior MUST be tested on a physical iPhone before it becomes an acceptance dependency.
-
-Required slices should be shipped as stable views/tabs/quick filters rather than assuming desktop filtering/grouping behavior exists on iOS.
-
-## Security
+### 6.3 Security
 
 Search MUST NOT project:
-
 - secret values;
 - tokens;
-- private keys/certificates;
+- private keys or certificates;
 - credentials;
-- source fields excluded by the governing contract;
-- sensitive data merely hidden by Airtable interface cosmetics.
+- fields excluded by the governing contract.
 
-Security happens at connector selection and source authorization, not by hiding fields in Airtable.
+Security happens at source selection and authorization, never by hiding fields in the interface.
 
-## Freshness
+### 6.4 Freshness
 
-Each connector must expose enough health/freshness evidence to distinguish:
+Each connector exposes enough evidence to distinguish:
+- the source has no change;
+- the projection is current;
+- the connector is stale or broken;
+- the source could not be reached.
 
-- source has no change;
-- projection is current;
-- connector is stale/broken;
-- source could not be reached.
+A stale connector never makes stale data look current.
 
-A stale connector must not make stale projection data appear current.
+### 6.5 Mobile
 
-## Acceptance checks
+The Director uses Search on an iPhone. Any mobile-critical behavior is tested on a physical iPhone before it becomes an acceptance condition.
 
-V0 Search is conforming when:
+---
 
-1. **Rebuild:** delete a disposable test projection and reproduce the same projected key/digest set from sources.
-2. **Idempotency:** deliver one source object twice and produce one projection record.
-3. **Authority:** changing/deleting Airtable projection records changes no source state.
-4. **Secrets:** known secret-reference values never appear in the projection.
-5. **Freshness:** a stopped connector becomes visibly stale rather than silently current.
-6. **Mobile:** required Search views work on the Director's physical iPhone.
-7. **Source scope:** every projected row can name its source and governing projection rule.
+## 7. Acceptance
 
-## Current implementation state
+Search conforms when:
 
-As of 24 September 2026:
+1. **Rebuild:** a deleted projection is reproduced with the same set of keys and digests.
+2. **Idempotency:** a source object delivered twice produces one projection record.
+3. **Authority:** changing or deleting projection records changes no source.
+4. **Secrets:** known secret values never appear in the projection.
+5. **Freshness:** a stopped connector becomes visibly stale.
+6. **Mobile:** the required views work on the Director's iPhone.
+7. **Scope:** every projected record names its source and its projection rule.
 
-- Airtable contains one `Powerfarm Search` table;
-- the initial projection contains Supabase Registry and Minivault objects;
-- CloudKit is a declared source class but final app/engine databases have not yet been provisioned;
-- Airtable is not authority;
-- the pre-retirement Airtable dataset is preserved in Minivault with verified round-trip SHA-256 custody.
+---
 
-## Non-goals for V0
-
-Not required yet:
+## 8. Not in V0
 
 - a universal schema observatory;
-- automatic drift/lint engine;
-- GitHub/Cloudflare connectors;
+- automatic drift detection;
+- GitHub and Cloudflare connectors;
 - AI-generated summaries;
-- Omni workflows;
-- a custom Powerfarm Search web application;
 - two-way sync.
-
-Those remain valid future research/product directions.

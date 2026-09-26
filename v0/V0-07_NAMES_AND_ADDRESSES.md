@@ -1,9 +1,7 @@
 # V0-07 — Names and Addresses
 
-**Status:** WORKING V0, proposed for Director adoption
-**Date:** 26 September 2026
-**Canon:** PF-03 §3 (vocabulary); V0-01 §2.3, §2.4, §2.9
-**Replaces:** the `pf.*` id forms in V0-01, V0-02 and `registry-v0.yaml`, and V0-01 §2.9 (Names)
+**Status:** WORKING V0, adopted
+**Canon:** PF-03 §3 (vocabulary); V0-01 §§2.3, 2.4, 2.9
 
 ---
 
@@ -139,9 +137,9 @@ A hostname not in this table has no place in V0.
 - from Minivault: `program`, `component`, `knowledge`, `idea`, `decision`, `trajectory`, `unknown`
 
 **Action types:**
-- `view`, `converse`, `approve`, `admit-person`, `recognize-contract`, `inscribe-entity`, `grant`, `store-content`, `read-content`, `write-observation`
+- `view`, `converse`, `propose`, `publish`, `release`, `approve`, `admit-person`, `recognize-contract`, `inscribe-entity`, `grant`, `store-content`, `read-content`, `write-observation`
 
-**Minivault's older kinds meet the Registry here:**
+**How Minivault's kinds map to the Registry:**
 - `contract` becomes the artifact type `schema`;
 - `repository` is the entity type `repository`;
 - `identity` and `authority` are Registry entities and grants, not artifact types.
