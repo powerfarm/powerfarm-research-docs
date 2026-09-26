@@ -212,29 +212,29 @@ Internal use MAY precede public certainty when the decision stakes, reversibilit
 
 # 16. Canonical rules
 
-13. Evidence outranks preference.
+1. Evidence outranks preference.
 
-14. Research begins from a decision, not from a technology to celebrate.
+2. Research begins from a decision, not from a technology to celebrate.
 
-15. Measurements precede scores; scores precede interpretation.
+3. Measurements precede scores; scores precede interpretation.
 
-16. Claim scope never exceeds the study design without additional evidence.
+4. Claim scope never exceeds the study design without additional evidence.
 
-17. Uncertainty and contradiction remain visible.
+5. Uncertainty and contradiction remain visible.
 
-18. Negative results are product, not waste.
+6. Negative results are product, not waste.
 
-19. Benchmarks are replaceable instruments.
+7. Benchmarks are replaceable instruments.
 
-20. Real software work corrects laboratory understanding.
+8. Real software work corrects laboratory understanding.
 
-21. Strong claims require proportionally stronger evidence and verification.
+9. Strong claims require proportionally stronger evidence and verification.
 
-22. History is preserved when methods, confidence, or recommendations change.
+10. History is preserved when methods, confidence, or recommendations change.
 
-23. Fast-moving claims carry freshness and retest triggers.
+11. Fast-moving claims carry freshness and retest triggers.
 
-24. Powerfarm prefers saying "we do not know" to manufacturing certainty.
+12. Powerfarm prefers saying "we do not know" to manufacturing certainty.
 
 # 17. Change rule
 

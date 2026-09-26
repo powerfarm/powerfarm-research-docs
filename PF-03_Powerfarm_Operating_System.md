@@ -7,8 +7,8 @@ How Powerfarm decides, allocates work, changes, and keeps the company coherent w
 | **DOCUMENT**  | PF-03             |
 |---------------|-------------------|
 | **STATUS**    | **CANONICAL**     |
-| **VERSION**   | 1.3               |
-| **EFFECTIVE** | 23 September 2026 |
+| **VERSION**   | 1.4               |
+| **EFFECTIVE** | 24 September 2026 |
 
 | **OWNS**         | Decision ownership, work lifecycle, institutional operating architecture, durable system boundaries, build-vs-use, resource allocation, exceptions, institutional drift, documentation governance, and durable operating rules. |
 |------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -1031,40 +1031,3 @@ Search finds.
 ```
 
 > **State is local. Contracts are global. Bytes are immutable when preserved. Authority is explicit. Execution is causal. Knowledge is the durable product.**
-
----
-
-# Revision notes
-
-## Version 1.4, effective 24 September 2026
-
-- Clarified the three durable questions: Research is what Powerfarm studies, Continuity is how Powerfarm materializes work, and Identity is who Powerfarm is.
-- Made Minivault an explicit Identity function alongside OAuth/authorization and Registry recognition.
-- Clarified that Powerfarm repositories are institutional software objects whose native format is not defined by GitHub or another source-control provider.
-- Simplified onboarding into contract validation, Continuity materialization/provisioning, verification, evidence and recognition.
-
-## Version 1.3, effective 23 September 2026
-
-- Removed SQLite as a canonical default storage engine; preserved application ownership and declared authority as the durable rule.
-- Moved concrete Registry/Minivault/storage substrate choices to versioned materialization specifications rather than canon.
-- Reworded the implementation-order clause so provider/topology evolution does not masquerade as architectural change.
-- Preserved the existing architecture model, Registry semantics, App Contract model, execution doctrine, and Search/census boundaries.
-
-## Version 1.2, effective 16 September 2026
-
-- Clarified the Content Store as Powerfarm's immutable content plane rather than only an archival substrate.
-- Added content-addressed references, remote resolution, caching, transport, lazy loading, manifests, and immutable object composition to the architectural role of CAS.
-- Established active model context as a temporary reasoning working set rather than canonical storage.
-- Clarified that content identity remains distinct from semantic meaning, permissions, authority, and institutional recognition.
-- Updated the architectural mantra to reflect the Content Store's preservation and composition role.
-
-## Version 1.1, effective 16 September 2026
-
-- Integrated **Powerfarm Architecture Model v0.1** into PF-03 rather than creating an additional canonical document.
-- Clarified the boundary between PF-03 institutional operating architecture and PF-04 implementation-level technical design.
-- Formalized epistemically local temporal and observational evidence using `t_hat` and `w_hat`.
-- Separated semantic policy (`Trigger`) from execution coordination (`Claim`).
-- Defined the Registry as recording institutionally recognized assertions rather than possessing omniscient truth.
-- Defined the App Contract as the root contract that may reference subordinate relationship-specific contracts.
-- Defined census as a temporal obligation executed by Continuity whose result becomes observational evidence.
-- Added an explicit architecture freeze rule and implementation order: App Contract v0, Executability Contract v0, Registry Core v0.
