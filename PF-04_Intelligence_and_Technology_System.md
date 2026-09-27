@@ -7,12 +7,12 @@ Durable technical doctrine for intelligence, software representation, code, veri
 | **DOCUMENT**  | PF-04             |
 |---------------|-------------------|
 | **STATUS**    | **CANONICAL**     |
-| **VERSION**   | 1.2               |
-| **EFFECTIVE** | 23 September 2026 |
+| **VERSION**   | 1.3               |
+| **EFFECTIVE** | 27 September 2026 |
 
 | **OWNS**         | The durable technical doctrine Powerfarm uses to structure software and intelligent work, choose representations, govern production languages and code, preserve evidence, verify outcomes, and remain replaceable. |
 |------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **DOES NOT OWN** | A frozen technology stack, vendor list, repository map, infrastructure diagram, detailed security implementation manual, product roadmap, or language-specific profile. Those are standard instances when needed.        |
+| **DOES NOT OWN** | A frozen technology stack, vendor list, repository map, infrastructure diagram, detailed security implementation manual, product roadmap, or language-specific profile. Those belong in Specifications when durable shared behavior must be defined. |
 
 > **Normative language**
 >
@@ -64,7 +64,7 @@ Powerfarm software MAY include source code, contracts, graphs, schemas, capabili
 
 Agent-facing and human-facing interfaces SHOULD share domain logic where possible rather than duplicate it.
 
-Important domain capabilities SHOULD expose clear contracts, permissions, inputs, outputs, side effects, and verification paths.
+Important domain capabilities SHOULD expose clear contracts, authority requirements, inputs, outputs, side effects, and verification paths.
 
 ## 1.3 Continuity graph semantics
 
@@ -191,7 +191,7 @@ Introducing another production language requires a material reason tied to capab
 
 Every production language used by Powerfarm MUST have an adopted Language Profile.
 
-A Language Profile is a small operational standard, not a new canonical document. It MUST identify at least:
+A Language Profile is a small Specification, not a new canonical document. It MUST identify at least:
 
 - the adopted language version or version policy;
 - authoritative external style and API guidance where available;
@@ -368,7 +368,7 @@ Powerfarm SHOULD prefer the least expensive route that reliably meets the requir
 
 ## 5.4 Security and data baseline
 
-Detailed security and data governance standards are created only when operational need justifies them, but the following baseline is always active:
+Detailed security and data governance Specifications are created only when operational need justifies them, but the following baseline is always active:
 
 - credentials and secrets are not embedded in public artifacts or source by default;
 - access follows least privilege appropriate to the system and consequence;
@@ -389,7 +389,7 @@ Technical choices SHOULD be evaluated on relevant dimensions separately when tra
 
 The current stack, providers, repositories, hardware, database schemas, agent harnesses, and deployment topology are implementations, not institutional identity. They MAY change aggressively without changing this canon provided the durable architectural contracts remain satisfied.
 
-Current V0 provider, storage, and topology decisions SHOULD therefore live in versioned architecture/materialization specifications, App Contracts, and decision records. Revising those instances does not revise this canon unless the change alters durable representation, authority, verification, replaceability, or other doctrine owned here.
+Current provider, storage, topology, and materialization decisions SHOULD therefore live in Specifications, App Contracts, and supporting decision evidence. Revising those materials does not revise this canon unless the change alters durable representation, authority, verification, replaceability, or other doctrine owned here.
 
 ## 5.7 Replacement rule
 

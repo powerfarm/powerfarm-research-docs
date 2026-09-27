@@ -7,8 +7,8 @@ How Powerfarm decides, allocates work, changes, and keeps the company coherent w
 | **DOCUMENT**  | PF-03             |
 |---------------|-------------------|
 | **STATUS**    | **CANONICAL**     |
-| **VERSION**   | 1.5               |
-| **EFFECTIVE** | 26 September 2026 |
+| **VERSION**   | 1.6               |
+| **EFFECTIVE** | 27 September 2026 |
 
 | **OWNS**         | Decision ownership, work lifecycle, institutional operating architecture, durable system boundaries, build-vs-use, resource allocation, exceptions, institutional drift, documentation governance, and durable operating rules. |
 |------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -43,7 +43,7 @@ Powerfarm's durable product is accumulated knowledge about how to produce and op
 | Cadence follows need                        | Recurring rituals are created only when the underlying need recurs.                                                                |
 | Automation serves judgment                  | Agents and automation reduce coordination and execution burden, but must not conceal ownership or evidence.                        |
 
-# 3. Powerfarm Architecture Model v0.1
+# 3. Powerfarm Architecture Model
 
 ## 3.1 Purpose and scope
 
@@ -229,7 +229,7 @@ Powerfarm SHOULD prefer stable content references over repeated embedding or rep
 
 Content MAY reference other content by digest. This allows compound immutable values such as software trees, evidence sets, execution inputs, datasets, and bundles to be represented without requiring every consumer to load every underlying byte eagerly.
 
-Content identity establishes exact bytes only. Meaning, institutional recognition, permissions, authority, and legitimate relationships remain responsibilities of the Registry, its contracts, and Identity.
+Content identity establishes exact bytes only. Meaning, institutional recognition, authority, and legitimate relationships remain responsibilities of the Registry, its contracts, and Identity.
 
 The durable separation is:
 
@@ -250,24 +250,27 @@ The architectural rule is **ownership and declared authority, not a particular s
 
 SQLite, PostgreSQL, CloudKit, in-memory state, append-only journals, remote services, or another substrate MAY be used when their properties fit the application's contract, consequence, and operating environment.
 
-Concrete V0 storage choices belong in versioned architecture/materialization specifications and App Contracts rather than in this canon. A change of storage provider or engine does not change Powerfarm's institutional architecture unless ownership, authority, contracts, or durable semantics change.
+Concrete storage choices belong in Specifications and App Contracts rather than in this canon. A change of storage provider or engine does not change Powerfarm's institutional architecture unless ownership, authority, contracts, or durable semantics change.
 
 ## 3.5 Registry
 
 The Registry records institutionally recognized assertions. It does not possess an omniscient global truth and SHOULD NOT become the operational state store for Powerfarm.
 
-It has four basics:
+It has five primitive record kinds:
 
 ```text
 entities     things that act
 objects      things that are acted on
-versions     exact bytes of an object
-contracts    every recognized definition and relationship
+versions     exact immutable states of an object
+contracts    recognized definitions and relationships
+acts         recorded institutional transitions
 ```
+
+The first four describe recognized institutional state. Acts record how that state came into existence and changed.
 
 Whether a thing is an entity or an object follows one rule: **entities act; objects are acted on.**
 
-Every recognized change is an act, recorded in order. The acts are the history of the four basics and add no fifth kind of meaning. Everything else Powerfarm names (offices, permissions, placements, store authority) is a contract of some type, recognized as data, never a new basic.
+Everything else Powerfarm names as an institutional relationship or authority mechanism, including grants, permissions, offices, role assignments, delegations, placements, memberships, and store authority, is a contract of some type. These MUST NOT become parallel Registry primitives or hidden authority stores.
 
 ### Entities
 
@@ -306,7 +309,9 @@ Registry       → recognized identity, version and relationships
 
 ## 3.6 Contracts
 
-A contract records one recognized definition or relationship. Contracts define the types of entities, objects, actions and contracts; they relate entities and objects to each other; and they are the only source of authority beyond what a type gives every entity of that type. A permission is a contract that gives powers to its subject. An office is a contract whose powers go to whoever holds it, and holding it is another contract.
+A contract records one recognized definition or relationship. Contracts define the types of entities, objects, actions and contracts; they relate entities and objects to each other; and they are the only source of institutional authority beyond what a type gives every entity of that type.
+
+A grant is a contract. A permission is a contract. An office is a contract whose powers go to whoever holds it, and holding it is another contract. A role assignment, delegation, admission, membership, placement, service relationship, or store authority is likewise represented by a contract when it has institutional meaning. Powerfarm MUST NOT maintain a parallel grant or permission primitive whose authority can diverge from recognized contracts.
 
 Contracts are structural, not merely documentation. They define the institutionally recognized topology through which distributed state remains coherent.
 
@@ -325,7 +330,7 @@ It MAY declare:
 - runtime expectations and health interface;
 - owned state stores and their authority;
 - immutable content produced or consumed;
-- authentication relationships and permissions;
+- authentication relationships and authority contracts;
 - capabilities provided and consumed;
 - required Antenna, Heartime, Continuity, and Search relationships;
 - observability and freshness expectations;
@@ -390,7 +395,7 @@ Immutable snapshots MAY be preserved in content-addressed storage.
 
 ## 3.8 Admission and onboarding
 
-Onboarding is the materialization of an App Contract, not merely cloning code and starting a process.
+Onboarding is the materialization and recognition of contracts, not merely cloning code, creating accounts, or starting processes. For applications, the App Contract is the root onboarding contract.
 
 The conceptual flow is:
 
@@ -585,13 +590,13 @@ Execution changes that trajectory through authorized transitions. Contracts defi
 
 Powerfarm SHOULD implement and test the existing model before expanding it.
 
-The first three specifications are:
+The first Specifications Powerfarm needs are:
 
-1. **App Contract v0**: identity, source, version, placement, state stores, authority, capabilities, relationships, lifecycle, and admission evidence.
-2. **Executability Contract v0**: temporal and observational predicates, policy, generation, trigger semantics, claim semantics, idempotency, expiration, cancellation, retries, effects, verification, and uncertainty.
-3. **Registry Core v0**: the smallest durable institutional model: entities, objects, versions and contracts, and the acts that change them.
+1. **Contracts and Onboarding**: the common contract envelope and lifecycle; participants and subjects; authority derivation; acceptance, supersession, termination, and admission; App Contract; and onboarding evidence.
+2. **Registry Core**: the five primitive record kinds, recognition rules, type roots, authority evaluation, and ordered acts that change recognized state.
+3. **Executability and Continuity**: temporal and observational predicates, policy, generation, trigger semantics, claim semantics, idempotency, expiration, cancellation, retries, effects, verification, and uncertainty.
 
-Search, a full Heartime implementation, broader onboarding automation, Parks evolution, Registry/Minivault substrates, and other concrete materialization choices SHOULD be specified in versioned architecture/materialization documents and revised from evidence rather than promoted into canon by implementation inertia.
+Search, Heartime, Antenna, broader onboarding automation, Parks evolution, Registry/Minivault substrates, and other concrete materialization choices SHOULD be defined in Specifications when they require durable shared behavior and revised from evidence rather than promoted into canon by implementation inertia.
 
 # 4. Work lifecycle
 
@@ -749,27 +754,26 @@ The record SHOULD capture event, impact, causal factors, detection, recovery, wh
 
 # 13. Documentation system
 
-Powerfarm deliberately separates authority from volume. Documents are classified by role:
+Powerfarm deliberately separates authority from volume. There are only two authoritative document forms:
 
-| **Class**         | **Meaning**                                                                                                                                    |
-|-------------------|------------------------------------------------------------------------------------------------------------------------------------------------|
-| Canonical         | One of PF-01 through PF-05. Defines current institutional commitments and recognized operating rules.                                         |
-| Standard instance | A recurring document type from PF-06 instantiated because a real need exists. It can be authoritative within its scope without becoming canon. |
-| Working           | Proposal, draft, investigation, notes, or active design. May change freely.                                                                    |
-| Reference         | Useful explanation, evidence, report, external source, or technical detail that does not define company-wide authority.                       |
-| Historical        | Superseded material retained to reconstruct decisions, methods, and past recognized state.                                                     |
+| **Form** | **Meaning** |
+|---|---|
+| Canon | PF-01 through PF-06. Defines durable institutional truth and governs every Specification. |
+| Specification | A bounded authoritative definition of machine, contract, protocol, data, operational, or product behavior. A Specification MUST conform to canon and is authoritative only within its stated scope. |
 
-- One important concept has one canonical home.
+Everything else is supporting material rather than a third authority class. Notes, proposals, decision records, research plans, run records, evidence, reports, external references, and superseded versions MAY exist when useful, but they do not acquire institutional authority merely by being written or retained.
 
-- A new document is not created merely to avoid editing an existing one.
+- One important concept has one authoritative home.
 
-- PF-06 records possible future document types and candidates. Listing a document there creates no obligation to write it.
+- A new Specification is not created merely to avoid editing an existing one.
 
-- The default response to a new documentation need is: can the existing canon or an existing standard instance absorb this cleanly?
+- PF-06 governs Specification creation, lifecycle, naming, and supporting record forms. Listing a possible Specification creates no obligation or identifier reservation.
 
-- A document without an owner, reader, decision, or maintenance reason SHOULD be archived or deleted rather than kept "just in case."
+- The default response to a new durable documentation need is: can the existing canon or an existing Specification absorb this cleanly?
 
-- The Powerfarm Architecture Model is maintained inside PF-03 rather than as a sixth canonical document.
+- Supporting material without an owner, reader, evidentiary purpose, or historical value SHOULD be archived or deleted rather than kept "just in case."
+
+- The Powerfarm Architecture Model remains inside PF-03. PF-06 is the sixth canonical document and owns the document authority system.
 
 # 14. Change and history
 
@@ -819,7 +823,7 @@ No meeting, report, review, or recurring ritual is canonical by default. A caden
 
 ---
 
-# Appendix A. Formal Executability Model v0.1
+# Appendix A. Formal Executability Model
 
 This appendix is normative for the conceptual separation of responsibilities. Concrete implementation mechanisms belong in PF-04 or subordinate technical specifications so long as they preserve these semantics.
 

@@ -7,8 +7,8 @@ Identity, purpose, permanent principles, and institutional boundaries
 | **DOCUMENT**  | PF-01             |
 |---------------|-------------------|
 | **STATUS**    | **CANONICAL**     |
-| **VERSION**   | 1.0               |
-| **EFFECTIVE** | 15 September 2026 |
+| **VERSION**   | 1.1               |
+| **EFFECTIVE** | 27 September 2026 |
 
 > **Permanent question**
 >
@@ -96,7 +96,7 @@ Powerfarm may eventually create software or data products built on its evidence 
 
 # 9. The canonical system
 
-Powerfarm keeps institutional truth deliberately small. The active canon contains five documents:
+Powerfarm keeps institutional truth deliberately small. The active canon contains six documents:
 
 1.  PF-01 Powerfarm Charter: identity and permanent commitments.
 
@@ -108,11 +108,13 @@ Powerfarm keeps institutional truth deliberately small. The active canon contain
 
 5.  PF-05 Products and Business System: how knowledge becomes products, customer value, publication, and revenue.
 
-PF-06 Standard Documents Catalog is not a sixth source of institutional truth. It is the registry of document types and dormant future documents that may be instantiated if operational need appears.
+6.  PF-06 Specifications and Records Catalog: how authoritative Specifications are created, governed, superseded, and kept subordinate to canon; and how supporting records are kept non-authoritative.
+
+Below the six-document canon, Powerfarm has one authoritative subordinate document form: the **Specification**. Specifications define bounded machine, contract, protocol, data, operational, or product behavior and MUST conform to the canon. Notes, decisions, research records, evidence, reports, drafts, and historical material may exist as supporting records, but they do not form a third authority layer.
 
 > **One-home rule**
 >
-> Every important concept has one canonical home. Other documents reference that home instead of restating a competing version.
+> Every durable concept has one authoritative home. Canon owns durable institutional truth; Specifications own bounded implementation truth. Supporting records reference those homes instead of creating competing authority.
 
 # 10. Change rule
 
