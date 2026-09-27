@@ -13,9 +13,3 @@
 | [PF-05 Products and Business System](PF-05_Products_and_Business_System.md) | Products, publication, business |
 | [PF-06 Standard Documents Catalog](PF-06_Standard_Documents_Catalog.md) | Document types (not canon) |
 
-## Folders
-
-| Folder | Contents |
-|---|---|
-| [`v0/`](v0/README.md) | Current materialization: target, delta, plan |
-| [`research/`](research/) | Research notes |
