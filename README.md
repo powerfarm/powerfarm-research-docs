@@ -1,4 +1,4 @@
-# Powerfarm
+# Powerfarm Docs
 
 > What is the best available way today to turn human intent into correct, verifiable, useful software?
 
