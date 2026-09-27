@@ -43,8 +43,8 @@ At birth, the script writes `story/` into the act log, one act at a time, throug
 | chapter | acts |
 |---|---|
 | **1. Identity** | the substrate answers; sign-in, gates and the OAuth server are configured |
-| **2. Registry** | the Foundation Act: *Contract Type*, *Entity Type*, the contract types, the entity types person and office, the Director's action types, `powerfarm.app/office/director`, the first person, the mandate, the admission. Then the other types, the Engineer office and its matrix, machines, agents, Host Runners, stores, apps, services and secret references |
-| **3. Minivault** | `powerfarm.app/app/minivault-web` and its store-authority contract; every Minivault kind recognized as an Artifact Type contract with its schema |
+| **2. Registry** | the Foundation Act: *Contract Type*, *Entity Type*, *Object Type*, *Action Type*, the contract types office and mandate, the entity type person, the Director's action types, the office `powerfarm.app/contract/director`, the first person, the mandate, the admission. Then the other types, the Engineer office and its matrix, machines, agents, Host Runners, stores, apps, services and secret references |
+| **3. Minivault** | `powerfarm.app/app/minivault-web` and its store-authority contract; every Minivault kind recognized as an Object Type contract with its schema |
 | **4. Research** | the book as a Research reference; the canon files as `powerfarm.app/document/*` versions |
 
 No entity, contract or grant is ever created by a seed. The migration creates empty tables; the story fills them.
@@ -93,7 +93,7 @@ Because every step describes itself, a guided onboarding interface can later pre
 | 8 | **Minivault chapter.** Same | script |
 | 9 | **Research chapter.** Same | script |
 | 10 | **Secrets.** For each reference, in the recorded order, the Director issues a new value in the provider's dashboard; the script binds it and verifies it works | the Director, then the script |
-| 11 | **Prove.** The checks of §6. The receipt is an act and a Content Store object | script |
+| 11 | **Prove.** The checks of §6. The receipt is an act, and its content is in the Content Store | script |
 
 ---
 
@@ -103,7 +103,7 @@ Because every step describes itself, a guided onboarding interface can later pre
 - Signs up at the Foundation Act (step 6).
 - Issues new secret values (step 10).
 - Approves what the contracts gate, and drops earlier state (step 1).
-- **Uses the offline signing key.** The Director's signing key lives on offline media in a safe. A step that needs it waits; the Director inserts the media, confirms, and removes it. The script never reads, copies or transmits the key, and no LLM ever sees it. Its public half is a recognized artifact, so anyone can verify what it signed.
+- **Uses the offline signing key.** The Director's signing key lives on offline media in a safe. A step that needs it waits; the Director inserts the media, confirms, and removes it. The script never reads, copies or transmits the key, and no LLM ever sees it. Its public half is a recognized object, so anyone can verify what it signed.
 
 ---
 
@@ -112,7 +112,7 @@ Because every step describes itself, a guided onboarding interface can later pre
 The drill rebuilds Powerfarm into an empty project from the copies alone, and checks:
 
 1. the act log's hash chain verifies from act 1 to the last act;
-2. every Content Store object re-hashes to its name;
+2. all content in the Content Store re-hashes to its name;
 3. Registry names and counts match the source;
 4. `may()` gives the same answers to a fixed set of questions;
 5. Minivault's current versions match, digest for digest;

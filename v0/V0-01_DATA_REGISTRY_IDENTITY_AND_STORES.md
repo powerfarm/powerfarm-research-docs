@@ -14,8 +14,8 @@ Target for Powerfarm data: where each kind of state lives, who owns it, how thin
 
 1. **Institutional and operational state live in different databases.** What Powerfarm *recognizes* (who exists, which contracts are current, who may do what) lives in the Identity substrate. What agents *observe* (signals, inventories, conversations) lives in the Antenna observation store.
 2. **Entities are governed by contracts.** No entity gives itself a type. Types are established by contracts, so the contracts table exists before any entity.
-3. **Everything has an id:** types, contracts, entities, offices, mandates, secret references, stores and objects.
-4. **Nothing is silently erased.** Contracts change by new generation, and earlier generations stay. Entities are retired. Grants are revoked. Stored bytes are never overwritten.
+3. **Everything has a name:** entities, objects and contracts, including every type. Exact bytes have a digest.
+4. **Nothing is silently erased.** Contracts change by new generation, and earlier generations stay. Entities, objects and contracts are retired. Stored bytes are never overwritten.
 5. **Authority is computed at request time from current contracts.** Holding a login grants nothing. When a contract generation changes, everyone it covers gains or loses the corresponding authority immediately. Nowhere is a copy of permissions kept.
 6. **There is one list of people and agents: the entities.** Logins and machine credentials are *bindings* (keys) to entities, never a second list.
 7. **One fingerprint: SHA-256.** Exact bytes, contract documents and Minivault revisions are all named by the SHA-256 of their bytes. A digest identifies content. It is not a capability.
@@ -31,11 +31,11 @@ Target for Powerfarm data: where each kind of state lives, who owns it, how thin
 ┌────────────── Identity substrate: powerfarm.app/store/company ───────────────┐
 │  (Supabase project powerfarm.kernal, ref ekjlmclhqnsstfjzuabz, eu-west-1)    │
 │                                                                              │
-│  Registry        types, contracts (generations), entities, artifacts, grants │
+│  Registry        entities, objects, versions, contracts (by generation)      │
 │  Identity        OAuth 2.1 server, bindings (keys → entities), admissions,   │
 │                  acceptances                                                 │
 │  Content Store   exact bytes by SHA-256 + manifests (private Storage bucket) │
-│  Minivault       promoted semantic objects over the same Content Store       │
+│  Minivault       promoted meaning over the same Content Store                │
 │  Act log         every act, in order, hash-chained: the story (V0-03)        │
 │  API             the only door in and out (api.powerfarm.app)                │
 └───────────────┬───────────────────────────────────────────▲──────────────────┘
@@ -59,40 +59,61 @@ Outside these databases (§9): GitHub, Google Drive, CloudKit (per V0-02) and th
 
 ## 2. Registry
 
-### 2.1 The five concepts
+### 2.1 The four basics
 
-The Registry keeps the minimal ontology of Registry Core v0. Tables may carry supporting columns, but no new durable concept is added. Every write to these tables also appends one act to the act log (§6.1).
+The Registry keeps the four basics of Registry Core v0. Tables may carry supporting columns, but no new basic is added. Every write to these tables also appends one act to the act log (§6.1).
 
 | table | meaning | main columns |
 |---|---|---|
-| contracts | recognized relationships and definitions, by generation | id, generation, **type**, name, subject, provider, consumer, document digest, effective from/until, recognized at/by, acceptance receipt digest, superseded at/by, retired at |
-| entities | what Powerfarm recognizes as existing | id, **type**, name, summary, created at/by, retired at |
-| artifacts | things that have exact versions | id, **type**, name, publisher, created at/by, retired at |
-| artifact_versions | one exact version | artifact, version, content (digest or manifest digest), source (repository, revision, path), recognized at/by, superseded at/by, retired at |
-| grants | explicit authority assigned to one entity | id, subject, **action**, resource, granted by, basis contract, valid from/until, revoked at, reason |
+| entities | things that act | name, **type**, title, summary, created at/by, retired at, reason |
+| objects | things that are acted on | name, **type**, title, summary, created at/by, retired at |
+| versions | exact bytes of an object | object, version, content (digest or manifest digest), source (repository, revision, path), recognized at/by, superseded at/by, retired at |
+| contracts | recognized definitions and relationships, by generation | name, generation, **type**, subject, provider, consumer, holds, document digest, effective from/until, recognized at/by, acceptance receipt digest, superseded at/by, retired at |
+
+**Entities act; objects are acted on.** An entity holds keys, signs in and is the one whose authority is computed. An object never acts: it is owned, placed, versioned and referred to. Entities and objects share one space of names.
+
+Permissions, offices, placements and store authority are all **contracts**. The Registry has no other kind of record.
 
 ### 2.2 Types come from contracts
 
 **Every type column points to a current contract:**
-- contract.type,
-- entity.type,
-- artifact.type,
-- grant.action.
+- contract.type → a Contract Type;
+- entity.type → an Entity Type;
+- object.type → an Object Type;
+- every action → an Action Type.
 
-A type exists only while a contract defining it is current. The single exception is the first contract of the Foundation Act, *Contract Type*, which is its own type. Adding a type is one API call that recognizes one contract. It needs no deploy.
+These four are the **type roots**: the only contract types the Registry knows by name. The first contract of the Foundation Act, *Contract Type*, is its own type. Every other type, including every other contract type, is recognized through the API, one contract at a time, with no deploy.
 
-Contracts that define types have no subject entity: the definition exists before any entity of that type. Every other contract must name its participants. For example, a mandate names an office and a holder.
+A type exists only while a contract defining it is current.
+
+A Contract Type document states which **participants** its contracts name. Definitions (types, offices) name none: a definition exists before anything it defines. Relationships name at least a subject, and a provider and consumer where the relationship has those roles. Participants are entities or objects.
 
 ### 2.3 Birth order
 
 | phase | what is recognized | table |
 |---|---|---|
 | **A. First two contracts of the Foundation Act** | 1. *Contract Type* (type: itself) · 2. *Entity Type* (type: Contract Type) | contracts |
-| **B. Contract types** | *Artifact Type*, *Action Type*, *Office*, *Mandate*, and the V0 contract families: app-contract, engine-capability, store-authority, search-contract, host-runner, machine-placement, secret-consumer, execution-approval, backup-custody | contracts |
-| **C. Enumerations** | entity types · artifact types · action types (below) | contracts |
-| **D. Entities** | each entity references the contract of its type; then offices and mandates | entities, contracts |
+| **B. Contract types** | *Object Type*, *Action Type*, then the contract types V0 uses (below) | contracts |
+| **C. Enumerations** | entity types · object types · action types (below) | contracts |
+| **D. Things** | entities and objects, each referencing the contract of its type; then the contracts between them | entities, objects, contracts |
 
 The birth order is the first chapter of the story (V0-03). Every later act follows it in the act log.
+
+**V0 contract types** (recognized in the story; the Registry knows none of them by name):
+
+| contract type | a contract of this type… | participants |
+|---|---|---|
+| office | defines a seat: who may hold it and the powers it gives its holders | none |
+| mandate | puts one holder in one office for an effective interval | subject: the holder; holds: the office |
+| permission | gives powers to its subject | subject |
+| app-contract | admits an app (V0-02) | subject: the app |
+| engine-capability | declares what an engine provides (V0-02) | subject: the engine |
+| store-authority | declares a store's owner and what it is authoritative for | subject: the store; provider: the owner |
+| search-contract | declares a Search source or projection (V0-06) | subject |
+| machine-placement | places an agent, Host Runner, app or engine on a machine | subject: the placed entity; provider: the machine |
+| secret-consumer | lets an entity use a secret reference (§2.10) | subject: the consumer; provider: the secret |
+| execution-approval | approves one exact plan or effect by digest (§2.7) | subject |
+| backup-custody | declares a copy and its custodian (§9) | subject |
 
 **V0 entity types** (names follow V0-07):
 
@@ -100,49 +121,52 @@ The birth order is the first chapter of the story (V0-03). Every later act follo
 |---|---|---|
 | person | `powerfarm.app/person/*` | the Director's holder |
 | agent | `powerfarm.app/agent/*` | LLM occupants: the local agents (`powerfarm.app/agent/lab-8gb`), and LLM sessions acting through a bound credential |
-| office | `powerfarm.app/office/*` | `powerfarm.app/office/director` |
-| sector | `powerfarm.app/sector/<sector>` | `powerfarm.app/sector/identity`, `powerfarm.app/sector/continuity`, `powerfarm.app/sector/research` |
-| machine | `powerfarm.app/machine/*` | `powerfarm.app/machine/lab-8gb`, `powerfarm.app/machine/lab-512` |
+| app | `powerfarm.app/app/*` | `powerfarm.app/app/coloured-places`, `powerfarm.app/app/minivault-web` |
 | service | `powerfarm.app/service/<service>` | `powerfarm.app/service/antenna`, `powerfarm.app/service/heartime`, `powerfarm.app/service/search` |
 | host-runner | `powerfarm.app/host-runner/*` | `powerfarm.app/host-runner/lab-8gb` |
-| process | `powerfarm.app/process/*` | `powerfarm.app/process/manhattan` |
-| app | `powerfarm.app/app/*` | `powerfarm.app/app/coloured-places`, `powerfarm.app/app/minivault-web` |
 | engine | `powerfarm.app/engine/*` | `powerfarm.app/engine/google-adk` |
 | mcp | `powerfarm.app/mcp/*` | MCP servers admitted by contract |
+
+**V0 object types:**
+
+| type | name form | examples |
+|---|---|---|
+| sector | `powerfarm.app/sector/<sector>` | `powerfarm.app/sector/identity`, `powerfarm.app/sector/continuity`, `powerfarm.app/sector/research` |
+| machine | `powerfarm.app/machine/*` | `powerfarm.app/machine/lab-8gb`, `powerfarm.app/machine/lab-512` |
+| process | `powerfarm.app/process/*` | `powerfarm.app/process/manhattan` |
 | store | `powerfarm.app/store/*` | `powerfarm.app/store/company`, `powerfarm.app/store/antenna` |
 | repository | `powerfarm.app/repository/*` | Powerfarm-native repositories |
 | secret | `powerfarm.app/secret/*` | secret references (§2.10) |
 | search-source | `powerfarm.app/search-source/*` | per V0-06 |
 | projection | `powerfarm.app/projection/*` | Search projections (V0-06) |
 
-**V0 artifact types:**
+and, **with versions**:
 - institutional: document, software, schema, dataset, prompt, capability, execution-bundle, migration-evidence;
 - Minivault kinds (§5): program, component, knowledge, idea, decision, trajectory, unknown.
 
-**V0 action types:** view, converse, propose, publish, release, approve, admit-person, recognize-contract, inscribe-entity, grant, store-content, read-content, write-observation.
+**V0 action types:** view, converse, propose, publish, release, approve, admit-person, recognize-contract, inscribe, grant, store-content, read-content, write-observation.
 
-Each Action Type contract names exactly one **authority** from the institutional vocabulary (OBSERVE · JUDGE · PROPOSE · GENERATE · EXECUTE · ORCHESTRATE · PERSIST · AUTHORIZE), so grants and offices speak one language:
+Each Action Type contract names exactly one **authority** from the institutional vocabulary (OBSERVE · JUDGE · PROPOSE · GENERATE · EXECUTE · ORCHESTRATE · PERSIST · AUTHORIZE), so types, offices and permissions speak one language:
 
 | action types | authority |
 |---|---|
 | view, read-content | OBSERVE |
 | converse, propose | PROPOSE |
-| write-observation, store-content, inscribe-entity, publish | PERSIST |
+| write-observation, store-content, inscribe, publish | PERSIST |
 | approve, release, admit-person, recognize-contract, grant | AUTHORIZE |
 
 ### 2.4 Machine-readable contract documents
 
 Each contract generation points to exactly one document: JSON bytes in the Content Store. The Registry verifies the digest before recognizing the generation. The human-readable text and the executable terms live in the same document.
 
-- A **Contract Type** document carries the JSON Schema that documents of that type must satisfy. Creating a new contract type therefore means recognizing one contract that contains its schema.
+- A **Contract Type** document carries the JSON Schema that documents of that type must satisfy, and the participants its contracts name.
 - An **Entity Type** document declares:
-  - the id pattern;
+  - the name pattern;
   - **rights** (what every entity of the type may do);
-  - **duties** (what it must do);
-  - **prerogatives**, such as `hold-mandate`.
-- An **Artifact Type** document carries the JSON Schema that content of that type must satisfy, and names the kernel validator that checks what a schema alone cannot. Minivault kinds are artifact types (§5), so adding a kind is recognizing one contract.
-- An **Office** document declares which entity types may hold the office and which **powers** it confers.
-- A **Mandate** binds one holder to one office for an effective interval. Its id derives from both: `powerfarm.app/contract/mandate.<office>.<holder>`.
+  - **duties** (what it must do).
+- An **Object Type** document declares the name pattern and whether objects of the type have **versions**. For those that do, it carries the JSON Schema their content must satisfy and names the kernel validator that checks what a schema alone cannot. Minivault kinds are object types with versions (§5), so adding a kind is recognizing one contract.
+- An **Action Type** document names its authority.
+- Any other contract's document carries its own terms. The Registry reads two of them: **powers** (what may be done, on what) and **holders** (the entity types that may hold the contract).
 
 Example: the Entity Type document for *agent*.
 
@@ -151,7 +175,6 @@ Example: the Entity Type document for *agent*.
   "name": "Agent",
   "text": "An agent is a program that observes and acts for Powerfarm at a declared place.",
   "ids": "powerfarm.app/agent/*",
-  "prerogatives": ["hold-mandate"],
   "rights": [{ "may": "write-observation", "resource": "self" }],
   "duties": [
     { "must": "send-signals", "every": "PT1M" },
@@ -164,12 +187,19 @@ Example: the Entity Type document for *agent*.
 
 ```text
 may(entity, action, resource) =
-    rights of the entity's type                        (current Entity Type contract)
-  + powers of offices the entity holds                 (current Mandate, only if its type has "hold-mandate")
-  + current grants of the entity
+    rights of the entity's type                         (its current Entity Type contract)
+  + powers of current contracts that name it as subject (a permission)
+  + powers of current contracts it holds                (through a current contract that names it
+                                                         as subject and holds that contract, when
+                                                         the held contract accepts its type as holder)
 ```
 
-Mandates are prerogatives of persons and agents in V0. For an office governed by an autonomy matrix (§2.8), what a mandate lets its holder do *without asking* is capped by the rung of each operation class.
+- A contract that declares **holders** gives its powers only to those who hold it. Any other contract gives its powers to its subject.
+- The answer is `true`, `false` or `unknown`. Only `true` passes; `unknown` carries its reason.
+- An agent acting for a person never exceeds that person: the effective rights are the intersection of both.
+- **Authority never widens:** recognizing a contract that gives powers requires *grant* for its subject, and the one recognizing it must hold every power it gives.
+
+For an office governed by an autonomy matrix (§2.8), what a mandate lets its holder do *without asking* is capped by the rung of each operation class.
 
 Duties are queryable in the same way. The Antenna store compares them with observed facts (§7.3).
 
@@ -183,7 +213,7 @@ Persons accept their Entity Type contract and their mandates. Each acceptance re
 
 ### 2.7 Approval
 
-Consequential effects require explicit authorization under the governing contract. They include destructive machine change, grant issuance, and adoption of a registry target.
+Consequential effects require explicit authorization under the governing contract. They include destructive machine change, giving powers, and adoption of a registry target.
 
 Where practical, an approval binds to the exact immutable plan or effect by digest. A materially changed plan requires a new approval.
 
@@ -191,14 +221,16 @@ A Minivault publication that changes an item's effects needs this approval befor
 
 ### 2.8 Offices and the autonomy matrix
 
+An **office** is a contract whose powers go to whoever holds it. A **mandate** is a contract whose subject is the holder and which holds the office, for an effective interval. By convention a mandate is named after both: `powerfarm.app/contract/mandate.<office>.<holder>`.
+
 V0 has two offices:
 
 | office | held by | meaning |
 |---|---|---|
-| `powerfarm.app/office/director` | a person (the owner) | decides, adopts contracts, approves effects |
-| `powerfarm.app/office/engineer` | agents (LLM occupants) | builds, observes, diagnoses, proposes; gains autonomy with time and knowledge |
+| `powerfarm.app/contract/director` | a person (the owner) | decides, adopts contracts, approves effects |
+| `powerfarm.app/contract/engineer` | agents (LLM occupants) | builds, observes, diagnoses, proposes; gains autonomy with time and knowledge |
 
-The Engineer office's charter carries, in machine-readable terms, the **autonomy matrix**: for each **operation class**, the rung at which engineers may act.
+The Engineer office's document carries, in machine-readable terms, the **autonomy matrix**: for each **operation class**, the rung at which engineers may act.
 
 | rung | meaning |
 |---|---|
@@ -214,18 +246,18 @@ The Engineer office's charter carries, in machine-readable terms, the **autonomy
 3. **Precedent is indexed by input, not by operation type.** A young institution sees only small cases; a matrix keyed by operation type learns "this is safe" and then auto-resolves the first large case. Recorded decisions therefore keep the relevant input dimensions.
 4. **Regressible.** A rung is lost when the evidence that earned it ages out, when risk changes, or when rollback stops being demonstrably reliable. Descent is normal operation, not an incident.
 5. **Authority survives autonomy.** Autonomy governs how much a proven mechanism may do without asking; it never removes the need for authority. Protected destructive operations and external effects keep a human gate at every rung.
-6. **Evidence is never authored by its subject.** An engineer cannot produce the evidence that promotes it. A rise is a new generation of the Engineer charter, recognized by the Director; a regression may be computed automatically.
+6. **Evidence is never authored by its subject.** An engineer cannot produce the evidence that promotes it. A rise is a new generation of the Engineer office, recognized by the Director; a regression may be computed automatically.
 7. **The matrix is a resolver, not a rewrite.** It plugs into the runtime's existing approval seam (the agent asks, the resolver answers from the matrix or routes to the Director). Deterministic hand-written rules may exist before any learned rung; evaluations detect when a rung starts deciding wrongly.
 
 **Two edges carry this:**
-- **Authority descends:** mandate → grant → run → effect, and never widens.
+- **Authority descends:** mandate → permission → run → effect, and never widens.
 - **Evidence ascends:** act → receipt → evidence → promotion, and is never authored by its subject.
 
 **The precedent ledger already exists.** The agents' runtime durably records its events, including requests for actions, approval requests and decisions, and results. Every one of these events is copied to the Antenna store with the tool input, the deciding principal and the agent version. The matrix reads that ledger; nothing new has to be invented to feed it.
 
 In V0 every operation class starts at OBSERVE or SUGGEST.
 
-Example (terms of the Engineer charter):
+Example (terms of the Engineer office):
 
 ```json
 {
@@ -258,7 +290,7 @@ The name is the identity, the address and the link.
 
 ### 2.10 Secrets
 
-The Registry stores **secret references**, never values. A reference is an entity of type *secret*. A contract of family *secret-consumer* declares who may use it. A reference records:
+The Registry stores **secret references**, never values. A reference is an object of type *secret*. A *secret-consumer* contract declares who may use it. A reference records:
 - owner;
 - provider or system;
 - allowed consumers;
@@ -318,17 +350,17 @@ A rebuild never restores secret values: it issues new ones, in the order recorde
 
 ## 4. Content Store
 
-- **Object:** exact bytes, named `sha256:<hex>`. An object never changes and is never overwritten.
-- **Objects table:** digest, size, media type, stored at, stored by (entity).
-- **Manifest:** a JSON object listing other objects (`{path, digest, size}`). Compound values (software trees, evidence sets, releases) are manifests. The Registry recognizes the manifest.
-- **Storing:** the caller sends bytes, and the API computes the digest and records the object only if it matches.
-- **Reading:** a digest is not a capability. Reads go through the API, which asks the Registry whether the caller may read that object, through the artifact or contract that references it, or because it is public.
-- **Storing is not recognizing.** An object means nothing institutionally until the Registry recognizes it as an artifact version or a contract document.
-- **Where:** a private Supabase Storage bucket owned by `powerfarm.app/store/company`. An object's key is its digest.
+- **Content:** exact bytes, named `sha256:<hex>`. Content never changes and is never overwritten.
+- **Content table:** digest, size, media type, stored at, stored by (entity).
+- **Manifest:** JSON listing other content (`{path, digest, size}`). Compound values (software trees, evidence sets, releases) are manifests. The Registry recognizes the manifest.
+- **Storing:** the caller sends bytes, and the API computes the digest and records the content only if it matches.
+- **Reading:** a digest is not a capability. Reads go through the API, which asks the Registry whether the caller may read that content, through the version, contract or act that references it, or because it is public.
+- **Storing is not recognizing.** Content means nothing institutionally until the Registry recognizes it as a version or a contract document.
+- **Where:** a private Supabase Storage bucket owned by `powerfarm.app/store/company`. The key of stored content is its digest.
 - **Integrity:**
   - the bucket's access rules allow **insert only**: no update, no delete, so nothing is overwritten;
-  - Supabase does not verify content digests, so the API computes SHA-256 server-side before recording an object;
-  - a periodic sweep re-hashes stored objects and reports any mismatch.
+  - Supabase does not verify content digests, so the API computes SHA-256 server-side before recording content;
+  - a periodic sweep re-hashes stored content and reports any mismatch.
 
 **Custody:**
 - promoted immutable bytes must be addressable and independently verifiable;
@@ -342,24 +374,24 @@ The copies that satisfy these rules are listed in §9.
 
 ## 5. Minivault
 
-Minivault preserves what promoted things **mean** (PF-03 §3.5): typed, immutable revisions of semantic objects (programs, components, knowledge, decisions, open questions), with provenance and relations. The Registry decides who exists and who may act; Minivault never keeps its own people or permissions.
+Minivault preserves what promoted things **mean** (PF-03 §3.5): typed, immutable revisions of meaning (programs, components, knowledge, decisions, open questions), with provenance and relations. The Registry decides who exists and who may act; Minivault never keeps its own people or permissions.
 
 ### 5.1 Items, kinds and revisions
 
-- **An item is an artifact.** Its name is `powerfarm.app/<kind>/<name>`, for example `powerfarm.app/program/intake.review` (V0-07).
-- **A kind is an artifact type.** Each kind is an Artifact Type contract whose document holds the kind's JSON Schema and names the kernel validator (§2.4). Adding a kind is recognizing one contract; no deploy.
-- **A revision is canonical bytes.** The kernel canonicalizes the object (RFC 8785) and stores the bytes in the Content Store. The revision's id is the `sha256:` of those bytes, the same fingerprint as every other object (§0, principle 7).
-- **Identity and authority are not kinds.** People, agents and grants live in the Registry. A Minivault object refers to them by name.
-- **The `unknown` kind** records an open question as an object: the question, why it matters, the evidence that would answer it, and its resolution. Not knowing is an answer Powerfarm records.
+- **An item is an object with versions.** Its name is `powerfarm.app/<kind>/<name>`, for example `powerfarm.app/program/intake.review` (V0-07).
+- **A kind is an object type.** Each kind is an Object Type contract whose document holds the kind's JSON Schema and names the kernel validator (§2.4). Adding a kind is recognizing one contract; no deploy.
+- **A revision is canonical bytes.** The kernel canonicalizes the item's value (RFC 8785) and stores the bytes in the Content Store. The revision's id is the `sha256:` of those bytes, the same fingerprint as every other object (§0, principle 7).
+- **Identity and authority are not kinds.** People, agents and their permissions live in the Registry. A Minivault item refers to them by name.
+- **The `unknown` kind** records an open question as an item: the question, why it matters, the evidence that would answer it, and its resolution. Not knowing is an answer Powerfarm records.
 
 ### 5.2 Publication is recognition
 
 | Minivault act | What happens in the Registry |
 |---|---|
-| publish | a new artifact version is recognized and the current one is superseded; the database guarantees one current version, and the publish carries the version it expects to replace |
+| publish | a new version is recognized and the current one is superseded; the database guarantees one current version, and the publish carries the version it expects to replace |
 | undo (revert) | the earlier bytes are **published again as a new version**, naming the version they restore and the reason; history only moves forward |
 | deprecate | a reversible flag on the item; the item stays readable |
-| retire | the artifact is retired in the Registry; final |
+| retire | the object is retired in the Registry; final |
 | release | anyone may read that version (`release`, AUTHORIZE) |
 
 ### 5.3 Who may do what
@@ -375,7 +407,7 @@ Minivault asks the Registry `may(entity, action, resource)` for every operation.
 | make a version public | release |
 | change who may act on an item | grant |
 
-An agent acting for a person never exceeds that person: its effective rights are the intersection of both. An agent's own grants are its scope.
+An agent acting for a person never exceeds that person: its effective rights are the intersection of both. An agent's own permissions are its scope.
 
 When an engineer must ask before publishing is decided by the Engineer autonomy matrix (§2.8).
 
@@ -398,20 +430,21 @@ The API is the only door, at `api.powerfarm.app`. Every call follows the same pa
 |---|---|
 | Foundation Act | nobody: it runs once on an empty Registry and then closes forever |
 | recognize a contract or a new generation | holders of *recognize-contract* |
-| retire a contract or entity | the same |
-| inscribe an entity | holders of *inscribe-entity* for that entity type |
+| retire a contract, entity or object | the same |
+| inscribe an entity or an object | holders of *inscribe* for its name |
 | admit a person | holders of *admit-person* |
 | accept a contract | the person concerned |
-| grant or revoke | holders of *grant* |
+| give powers (a permission or a mandate), or retire them | holders of *grant*, who hold those powers themselves |
 | store and read content | per contract |
 | propose, publish, release in Minivault | per §5.3 |
 | "who am I" and "may I?" | any valid key |
 
 **Foundation Act.** It recognizes the minimum needed for someone to hold authority:
 - phases A and B;
-- the entity types *person* and *office*;
+- the contract types *office* and *mandate*;
+- the entity type *person*;
 - the Director's action types;
-- the office `powerfarm.app/office/director`;
+- the office `powerfarm.app/contract/director`;
 - the first person;
 - that person's Director mandate;
 - that person's admission.
@@ -429,7 +462,7 @@ Every successful write through the API appends one act:
 | actor | the entity that acted, and the person it acted for, if any |
 | action | the action type |
 | target | the name of the thing acted on |
-| content | the SHA-256 of the act's content (the contract document, the version, the grant…) |
+| content | the SHA-256 of the act's payload: the terms of the operation, kept in the Content Store |
 | previous | the hash of the previous act |
 | hash | this act's hash, over a fixed encoding of the fields above, computed by the database |
 
@@ -463,7 +496,7 @@ Each agent has its own database role, and that role can write only its own machi
 
 ### 7.2 Registry projection
 
-- A read-only projection of types, entities and current contracts with their documents. The principal agent refreshes it through the Registry API; the reserve takes over if the principal is silent.
+- A read-only projection of types, entities, objects and current contracts with their documents. The principal agent refreshes it through the Registry API; the reserve takes over if the principal is silent.
 - V0 does **not** use database-to-database logical replication. It would require Supabase's IPv4 add-on, an allowlist of Neon's egress addresses and replication slots, and it does not carry schema changes.
 - The projection never writes back and can be rebuilt from scratch at any time.
 
@@ -498,7 +531,7 @@ Each agent has its own database role, and that role can write only its own machi
 
 ## 8. Agents and Host Runners
 
-- **Agents** (`powerfarm.app/agent/*`) observe, converse and propose. They may hold mandates.
+- **Agents** (`powerfarm.app/agent/*`) observe, converse and propose. They may hold the Engineer office.
 - **Host Runners** (`powerfarm.app/host-runner/*`) remain the deterministic, allow-listed effect boundary of V0-02, and never treat LLM output as approval.
 - An agent and the Host Runner on the same LAB are different entities.
 - **LAB 256** is outside the expected ecosystem population (V0-02). An agent may run there, but nothing may depend on it.
@@ -520,7 +553,7 @@ Each agent has its own database role, and that role can write only its own machi
 | what | copy | check |
 |---|---|---|
 | act log | exported nightly and pulled by LAB 8GB | the hash chain verifies |
-| Content Store bytes | full copy on LAB 8GB, refreshed at least monthly; snapshots in Google Drive; a third copy on Cloudflare R2 if its cost stays negligible | every object re-hashed against its name |
+| Content Store bytes | full copy on LAB 8GB, refreshed at least monthly; snapshots in Google Drive; a third copy on Cloudflare R2 if its cost stays negligible | all content re-hashed against its name |
 | Identity substrate database | the provider's own backups | restore tested in the rebuild drill (V0-03) |
 | Antenna store | point-in-time restore | operational: restored, or its loss declared |
 
@@ -534,7 +567,7 @@ A thing belongs in the Registry only when it has an institutional purpose expres
 - identity;
 - recognized version;
 - contract;
-- grant;
+- contract giving powers;
 - declared store and owner;
 - placement or capability;
 - Search source or projection;
@@ -547,10 +580,10 @@ The Registry must answer mechanically:
 - who owns it, and which contract governs it;
 - where an admitted app or engine is placed;
 - which store it owns, and what that store is authoritative for;
-- which grants and mandates permit protected actions;
+- which contracts permit protected actions;
 - which secret reference a consumer requires;
 - how it is onboarded, verified, retired and recovered;
-- where a promoted object can be resolved and verified;
+- where promoted content can be resolved and verified;
 - which Search sources expose it.
 
 No authority may be inferred from physical presence, provider accounts or connectivity.
@@ -578,7 +611,7 @@ Where each part lives on the current provider. Every surface has a portable equi
 | the API | Postgres functions, plus Edge Functions for the Minivault kernel and uploads, at `api.powerfarm.app` |
 | sign-in and gates | Supabase Auth: passwordless; Before User Created hook (admission); Custom Access Token hook (current contract) |
 | apps signing in with Powerfarm | the OAuth 2.1 server |
-| Content Store bytes | a private Storage bucket, insert only; the object key is the digest |
+| Content Store bytes | a private Storage bucket, insert only; the key is the digest |
 | integrity sweep, external observer | scheduled jobs (`pg_cron`, with `pg_net` for e-mail) |
 | later | queues for workers (`pgmq`), Realtime notifications, the MCP door |
 

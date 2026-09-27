@@ -92,7 +92,7 @@ ExecutableGraph
 └── references
     ├── contracts
     ├── Registry identities / capabilities
-    └── content-addressed objects
+    └── content-addressed values
 ```
 
 The physical representation MAY be JSON, YAML, protobuf, relational rows, content-addressed manifests, in-memory structures, or another suitable form. The durable requirement is that nodes, edges, dependencies, causal ordering, conditions, capabilities, effects, and verification remain explicit and inspectable.
@@ -123,7 +123,7 @@ Powerfarm SHOULD use established workflow and interface standards before inventi
 
 The Content Store described by PF-03 is Powerfarm's immutable content plane.
 
-Content-addressed objects MAY be addressed, preserved, transported, composed, cached, resolved remotely, loaded lazily, and independently verified without changing their content identity.
+Content-addressed values MAY be addressed, preserved, transported, composed, cached, resolved remotely, loaded lazily, and independently verified without changing their content identity.
 
 A small content reference SHOULD be sufficient to identify a durable immutable value when the surrounding contract or schema supplies the required meaning. A minimal reference may contain:
 
@@ -135,9 +135,9 @@ size
 
 Only the digest establishes material identity. Other fields describe the value or assist resolution.
 
-Objects MAY reference other content-addressed objects, allowing immutable manifests and object graphs to represent source trees, datasets, prompts, schemas, evidence sets, execution inputs, capability definitions, and compound artifacts without copying all underlying bytes into every consumer.
+Content MAY reference other content by digest, allowing immutable manifests and content graphs to represent source trees, datasets, prompts, schemas, evidence sets, execution inputs, capability definitions, and compound artifacts without copying all underlying bytes into every consumer.
 
-Knowing a digest does not itself grant permission to resolve the object. Content identity is not a capability. Identity, contracts, grants, and Registry recognition remain responsible for meaning and authority.
+Knowing a digest does not itself give permission to resolve the content. Content identity is not a capability. Identity, contracts, and Registry recognition remain responsible for meaning and authority.
 
 ## 1.5 Context is a working set, not a warehouse
 
@@ -160,7 +160,7 @@ inspect structure
         ↓
 resolve only what reasoning requires
         ↓
-produce new immutable objects
+produce new immutable content
         ↓
 verify
         ↓
@@ -169,7 +169,7 @@ Registry recognition when institutionally relevant
 
 Powerfarm SHOULD prefer references over replication and loading over inlining for large, stable, or reusable immutable content when doing so improves context efficiency, composability, verification, transport, or caching.
 
-The existence of a content-addressed object does not imply institutional promotion. Intelligent systems and experiments MAY produce many immutable objects; only objects with institutional significance need become Registry-recognized artifact versions.
+The existence of content does not imply institutional promotion. Intelligent systems and experiments MAY produce much immutable content; only content with institutional significance needs to become a Registry-recognized version of an object.
 
 # 2. Language and Toolchain Policy
 
