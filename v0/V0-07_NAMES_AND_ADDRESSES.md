@@ -45,26 +45,26 @@ Contracts define the types, so they form one family:
 powerfarm.app/contract/contract-type        the first contract; its type is itself
 powerfarm.app/contract/entity-type          the second
 powerfarm.app/contract/person               defines the entity type "person"
-powerfarm.app/contract/program              defines the artifact type "program"
+powerfarm.app/contract/program              defines the object type "program"
+powerfarm.app/contract/director             the Director's office
 powerfarm.app/contract/mandate.director.<holder>
 powerfarm.app/contract/entity-type@2        a generation
 ```
 
-Every entity and artifact lives under the **type its contract defines**. The type segment is the name of that contract:
+Every entity and object lives under the **type its contract defines**. The type segment is the name of that contract:
 
 ```text
 powerfarm.app/person/<holder>        its type is defined at powerfarm.app/contract/person
 powerfarm.app/agent/lab-8gb          …at powerfarm.app/contract/agent
 powerfarm.app/machine/lab-8gb        …at powerfarm.app/contract/machine
-powerfarm.app/office/director        …at powerfarm.app/contract/office
 powerfarm.app/store/company          …at powerfarm.app/contract/store
-powerfarm.app/program/intake.review  a Minivault item; "program" is an artifact type
+powerfarm.app/program/intake.review  a Minivault item; "program" is an object type
 powerfarm.app/document/pf-03@1.3     a canon document at an exact version
 ```
 
 **Asking "what is a person?"** means opening `powerfarm.app/contract/person`.
 
-Type names are unique across all families (entity, artifact and action types), because each is one contract.
+Type names are unique across all families (contract, entity, object and action types), because each is one contract. The segments `contract`, `act` and `content` name other families of names and are never types of entities or objects.
 
 ### 1.3 Names say *what*, never *where*
 
@@ -75,14 +75,11 @@ Example: the Identity substrate is `powerfarm.app/store/company`, whichever prov
 ### 1.4 Names are forever
 
 - A name is never reused, even after the thing is retired.
-- A name is never changed. If a thing truly needs a different name, it becomes a new entity, and the old one is retired with a pointer to the new one.
+- A name is never changed. If a thing truly needs a different name, it becomes a new thing, and the old one is retired with a pointer to the new one.
 
 ### 1.5 Other named records
 
-- Grants: `powerfarm.app/grant/<uuid>`
-- Acts in the act log: `powerfarm.app/act/<sequence>`
-
-Both are resolvable, for receipts and links.
+- Acts in the act log: `powerfarm.app/act/<sequence>`, resolvable for receipts and links.
 
 ### 1.6 People and provider identities
 
@@ -129,17 +126,22 @@ A hostname not in this table has no place in V0.
 
 ## 4. Type names used in V0
 
-**Entity types:**
-- `person`, `agent`, `office`, `sector`, `machine`, `service`, `host-runner`, `process`, `app`, `engine`, `mcp`, `store`, `repository`, `secret`, `search-source`, `projection`
+**Entity types** (they act):
+- `person`, `agent`, `app`, `service`, `host-runner`, `engine`, `mcp`
 
-**Artifact types:**
-- from V0-01: `document`, `software`, `schema`, `dataset`, `prompt`, `capability`, `execution-bundle`, `migration-evidence`
-- from Minivault: `program`, `component`, `knowledge`, `idea`, `decision`, `trajectory`, `unknown`
+**Object types** (they are acted on):
+- `sector`, `machine`, `process`, `store`, `repository`, `secret`, `search-source`, `projection`
+- with versions, from V0-01: `document`, `software`, `schema`, `dataset`, `prompt`, `capability`, `execution-bundle`, `migration-evidence`
+- with versions, from Minivault: `program`, `component`, `knowledge`, `idea`, `decision`, `trajectory`, `unknown`
+
+**Contract types:**
+- the type roots: `contract-type`, `entity-type`, `object-type`, `action-type`
+- recognized in the story: `office`, `mandate`, `permission`, `app-contract`, `engine-capability`, `store-authority`, `search-contract`, `machine-placement`, `secret-consumer`, `execution-approval`, `backup-custody`
 
 **Action types:**
-- `view`, `converse`, `propose`, `publish`, `release`, `approve`, `admit-person`, `recognize-contract`, `inscribe-entity`, `grant`, `store-content`, `read-content`, `write-observation`
+- `view`, `converse`, `propose`, `publish`, `release`, `approve`, `admit-person`, `recognize-contract`, `inscribe`, `grant`, `store-content`, `read-content`, `write-observation`
 
 **How Minivault's kinds map to the Registry:**
-- `contract` becomes the artifact type `schema`;
-- `repository` is the entity type `repository`;
-- `identity` and `authority` are Registry entities and grants, not artifact types.
+- `contract` becomes the object type `schema`;
+- `repository` is the object type `repository`;
+- `identity` and `authority` are Registry entities and contracts, not object types.

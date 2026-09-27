@@ -40,7 +40,7 @@ What exists (**C**), what the target adds (**I − C**), what must go (**C − I
 | +2 | **Identity:** bindings, admissions, acceptances; passwordless sign-in; the two gates; the OAuth 2.1 server | V0-01 §3 |
 | +3 | **Content Store:** insert-only bucket, digest as key, server-side SHA-256, manifests, integrity sweep | V0-01 §4 |
 | +4 | **The rebuild script and the story:** `tools/rebuild` and `story/` in `powerfarm/minivault`; the Identity, Registry, Minivault and Research chapters | V0-03 |
-| +5 | **Minivault under the Registry:** the Registry as its authority; kinds as Artifact Type contracts; SHA-256 revision ids; undo as a new publication; on the substrate over the Content Store | V0-01 §5 |
+| +5 | **Minivault under the Registry:** the Registry as its authority; kinds as Object Type contracts; SHA-256 revision ids; undo as a new publication; on the substrate over the Content Store | V0-01 §5 |
 | +6 | **Copies:** act log nightly and Content Store bytes on LAB 8GB; snapshots in Google Drive | V0-01 §9 |
 | +7 | **External observer:** alive marks, a change-only e-mail, a weekly "still watching" | V0-01 §7.5 |
 | +8 | **Antenna store** (Neon) with the Registry projection and the two views | V0-01 §7 |

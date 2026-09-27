@@ -81,7 +81,7 @@ Physical presence does not create membership. A directory, process, package, run
 An App or Engine contract must identify enough to materialize and recover the resident, including:
 
 - stable identity and owner/principal;
-- recognized source/artifact version;
+- recognized source and version;
 - placement;
 - lifecycle state;
 - capabilities provided/consumed;
@@ -207,7 +207,7 @@ A required resident is not complete until:
 
 1. its Registry identity and recognized version exist;
 2. its contract is adopted;
-3. placement and required grants/secret references are declared;
+3. placement, required permissions and secret references are declared;
 4. Continuity materializes it;
 5. required stores/relationships are provisioned;
 6. verification passes;

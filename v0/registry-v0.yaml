@@ -72,7 +72,6 @@ names:
   service: <service>.powerfarm.app
   bytes: sha256:<hex>
   act: powerfarm.app/act/<sequence>
-  grant: powerfarm.app/grant/<uuid>
   type_segment: name-of-the-contract-that-defines-the-type
   stored_without_scheme: true
   resolvable_with_https_prefix: true
@@ -117,6 +116,24 @@ hostnames:
       entity: powerfarm.app/service/search
       stage: later
 
+registry:
+  basics:
+    entities: things-that-act
+    objects: things-that-are-acted-on
+    versions: exact-bytes-of-an-object
+    contracts: every-recognized-definition-and-relationship
+  entity_or_object: entities-act-objects-are-acted-on
+  type_roots:
+    - powerfarm.app/contract/contract-type
+    - powerfarm.app/contract/entity-type
+    - powerfarm.app/contract/object-type
+    - powerfarm.app/contract/action-type
+  contract_type_declares_participants: true
+  may: type-rights + powers-of-contracts-naming-it-as-subject + powers-of-contracts-it-holds
+  holders_receive_powers_only_by_holding: true
+  agent_for_person: intersection
+  authority_never_widens: true
+
 bootstrap:
   first_two_contracts:
     - name: powerfarm.app/contract/contract-type
@@ -124,54 +141,57 @@ bootstrap:
     - name: powerfarm.app/contract/entity-type
       type: powerfarm.app/contract/contract-type
   contract_types:
-    - artifact-type
-    - action-type
-    - office
-    - mandate
-    - app-contract
-    - engine-capability
-    - store-authority
-    - search-contract
-    - host-runner
-    - machine-placement
-    - secret-consumer
-    - execution-approval
-    - backup-custody
+    roots:
+      - object-type
+      - action-type
+    recognized_in_the_story:
+      - office
+      - mandate
+      - permission
+      - app-contract
+      - engine-capability
+      - store-authority
+      - search-contract
+      - machine-placement
+      - secret-consumer
+      - execution-approval
+      - backup-custody
   entity_types:
     person: powerfarm.app/person/*
     agent: powerfarm.app/agent/*
-    office: powerfarm.app/office/*
-    sector: powerfarm.app/sector/*
-    machine: powerfarm.app/machine/*
+    app: powerfarm.app/app/*
     service: powerfarm.app/service/*
     host-runner: powerfarm.app/host-runner/*
-    process: powerfarm.app/process/*
-    app: powerfarm.app/app/*
     engine: powerfarm.app/engine/*
     mcp: powerfarm.app/mcp/*
-    store: powerfarm.app/store/*
-    repository: powerfarm.app/repository/*
-    secret: powerfarm.app/secret/*
-    search-source: powerfarm.app/search-source/*
-    projection: powerfarm.app/projection/*
-  artifact_types:
-    institutional:
-      - document
-      - software
-      - schema
-      - dataset
-      - prompt
-      - capability
-      - execution-bundle
-      - migration-evidence
-    minivault_kinds:
-      - program
-      - component
-      - knowledge
-      - idea
-      - decision
-      - trajectory
-      - unknown
+  object_types:
+    without_versions:
+      sector: powerfarm.app/sector/*
+      machine: powerfarm.app/machine/*
+      process: powerfarm.app/process/*
+      store: powerfarm.app/store/*
+      repository: powerfarm.app/repository/*
+      secret: powerfarm.app/secret/*
+      search-source: powerfarm.app/search-source/*
+      projection: powerfarm.app/projection/*
+    with_versions:
+      institutional:
+        - document
+        - software
+        - schema
+        - dataset
+        - prompt
+        - capability
+        - execution-bundle
+        - migration-evidence
+      minivault_kinds:
+        - program
+        - component
+        - knowledge
+        - idea
+        - decision
+        - trajectory
+        - unknown
   action_types:
     view: OBSERVE
     read-content: OBSERVE
@@ -179,17 +199,13 @@ bootstrap:
     propose: PROPOSE
     write-observation: PERSIST
     store-content: PERSIST
-    inscribe-entity: PERSIST
+    inscribe: PERSIST
     publish: PERSIST
     approve: AUTHORIZE
     release: AUTHORIZE
     admit-person: AUTHORIZE
     recognize-contract: AUTHORIZE
     grant: AUTHORIZE
-  mandate_prerogative:
-    holder_types:
-      - person
-      - agent
 
 foundation_act:
   act: 1
@@ -198,14 +214,16 @@ foundation_act:
   after: closed-forever
   recognizes:
     - first_two_contracts
-    - contract_types
+    - contract_types.roots
+    - contract_type.office
+    - contract_type.mandate
     - entity_type.person
-    - entity_type.office
     - director_action_types
-    - powerfarm.app/office/director
+    - powerfarm.app/contract/director
     - first_person
-    - mandate.director.first_person
+    - powerfarm.app/contract/mandate.director.first_person
     - admission.first_person
+  must_leave_the_founder_holding_authority: true
 
 act_log:
   fields:
@@ -261,23 +279,23 @@ copies:
   content_store:
     - where: powerfarm.app/machine/lab-8gb
       when: at-least-monthly
-      check: every-object-re-hashed
+      check: all-content-re-hashed
     - where: google-drive-powerfarm-backup
       when: snapshot
-      check: every-object-re-hashed
+      check: all-content-re-hashed
     - where: cloudflare-r2
       when: if-cost-stays-negligible
-      check: every-object-re-hashed
+      check: all-content-re-hashed
   identity_substrate_database: provider-backups
   antenna_store: point-in-time-restore-or-declared-loss
 
 required:
   offices:
-    - name: powerfarm.app/office/director
-      eligible_holder_types:
+    - name: powerfarm.app/contract/director
+      holders:
         - person
-    - name: powerfarm.app/office/engineer
-      eligible_holder_types:
+    - name: powerfarm.app/contract/engineer
+      holders:
         - agent
       autonomy_matrix:
         rungs:
@@ -295,7 +313,7 @@ required:
         precedent_ledger: agent-runtime-events-in-powerfarm.app/store/antenna
 
   persons:
-    - role: holder-of-powerfarm.app/office/director
+    - role: holder-of-powerfarm.app/contract/director
       name: chosen-at-foundation
       mandate: powerfarm.app/contract/mandate.director.<holder>
 
@@ -429,8 +447,8 @@ required:
     minivault:
       repository: powerfarm/minivault
       authority: registry
-      item: artifact
-      kind: artifact-type-contract
+      item: object-with-versions
+      kind: object-type-contract
       revision_id: sha256-of-canonical-bytes
       canonicalization: rfc8785
       publish: recognize-new-version-supersede-current

@@ -120,7 +120,7 @@ Research answers:
 
 Research includes experiments, evidence, software produced by experiments, capabilities, datasets, comparisons, findings, conclusions, and recommendations.
 
-Most research MAY remain local to a project or workspace. Only results with institutional significance need promotion into Registry-recognized artifacts or contracts.
+Most research MAY remain local to a project or workspace. Only results with institutional significance need promotion into Registry-recognized objects, versions or contracts.
 
 ## 3.3 Foundational architectural principles
 
@@ -136,7 +136,7 @@ Powerfarm does not require one global operational database in order to remain in
 
 Physical possession, filesystem location, repository presence, database presence, or Park placement does not by itself confer institutional authority.
 
-Authority derives from explicit recognized relationships, including entities, artifact versions, contracts, and grants.
+Authority derives from explicit recognized contracts between recognized entities and objects.
 
 ### Execution is causal
 
@@ -162,9 +162,9 @@ verification
 
 ### Preserved bytes are immutable
 
-Mutable operational state remains mutable. When an exact historical object must be preserved, it SHOULD be represented immutably and content-addressed.
+Mutable operational state remains mutable. When an exact historical value must be preserved, it SHOULD be represented immutably and content-addressed.
 
-Content-addressed objects are also reusable immutable values. They MAY be referenced, transported, cached, resolved remotely, composed into manifests or object graphs, and loaded on demand without changing their content identity.
+Content-addressed values are also reusable. They MAY be referenced, transported, cached, resolved remotely, composed into manifests or content graphs, and loaded on demand without changing their content identity.
 
 Content identity does not imply institutional authority.
 
@@ -202,7 +202,7 @@ Powerfarm separates editable software work, immutable content, institutional rec
 
 ### Repositories and source-control projections
 
-A Powerfarm Repository is an institutional software object whose native representation is not defined by any external source-control provider.
+A Powerfarm Repository is an institutional object whose native representation is not defined by any external source-control provider.
 
 Source-control systems such as GitHub MAY provide collaboration, editable projections, publication, interoperability and change history. They do not define the institutional repository identity or native repository format.
 
@@ -214,27 +214,27 @@ It answers:
 
 > Given this digest, what are the exact bytes, independent of their current location?
 
-It MAY preserve datasets, experiment outputs, software snapshots, builds, ExecutionBundles, evidence, receipts, capability definitions, prompts, manifests, source trees, and other immutable objects.
+It MAY preserve datasets, experiment outputs, software snapshots, builds, ExecutionBundles, evidence, receipts, capability definitions, prompts, manifests, source trees, and other immutable content.
 
-Its role is not limited to archival preservation. Content-addressed objects MAY be:
+Its role is not limited to archival preservation. Content-addressed values MAY be:
 
 - referenced without copying their bytes into every consumer;
 - resolved from local or remote storage;
 - cached locally and independently re-verified by digest;
 - transported without changing identity;
 - loaded lazily by software or intelligent systems;
-- composed through references into immutable manifests and object graphs.
+- composed through references into immutable manifests and content graphs.
 
-Powerfarm SHOULD prefer stable content references over repeated embedding or replication of large immutable objects where doing so improves context efficiency, composability, transport, caching, or verification.
+Powerfarm SHOULD prefer stable content references over repeated embedding or replication of large immutable content where doing so improves context efficiency, composability, transport, caching, or verification.
 
-Objects MAY reference other content-addressed objects. This allows compound immutable values such as software trees, evidence sets, execution inputs, datasets, and bundles to be represented without requiring every consumer to load every underlying byte eagerly.
+Content MAY reference other content by digest. This allows compound immutable values such as software trees, evidence sets, execution inputs, datasets, and bundles to be represented without requiring every consumer to load every underlying byte eagerly.
 
-Content identity establishes exact bytes only. Meaning, institutional recognition, permissions, authority, and legitimate relationships remain responsibilities of Registry, contracts, grants, and Identity.
+Content identity establishes exact bytes only. Meaning, institutional recognition, permissions, authority, and legitimate relationships remain responsibilities of the Registry, its contracts, and Identity.
 
 The durable separation is:
 
 ```text
-repository     → institutional software object and trajectory
+repository     → institutional software object and its trajectory
 source control → editable/collaborative projection when used
 content store  → exact immutable values, composition and transport
 Registry       → institutional recognition and structural relationships
@@ -256,53 +256,59 @@ Concrete V0 storage choices belong in versioned architecture/materialization spe
 
 The Registry records institutionally recognized assertions. It does not possess an omniscient global truth and SHOULD NOT become the operational state store for Powerfarm.
 
-A minimal conceptual model is:
+It has four basics:
 
 ```text
-entities
-artifacts
-artifact_versions
-contracts
-grants
+entities     things that act
+objects      things that are acted on
+versions     exact bytes of an object
+contracts    every recognized definition and relationship
 ```
+
+Whether a thing is an entity or an object follows one rule: **entities act; objects are acted on.**
+
+Every recognized change is an act, recorded in order. The acts are the history of the four basics and add no fifth kind of meaning. Everything else Powerfarm names (offices, permissions, placements, store authority) is a contract of some type, recognized as data, never a new basic.
 
 ### Entities
 
-An entity is a stable institutional identity, for example:
+An entity is a stable institutional identity that can act: it holds keys, signs in, and is the one whose authority is computed. For example:
 
 ```text
-powerfarm.app/sector/identity
-powerfarm.app/sector/continuity
-powerfarm.app/sector/research
+powerfarm.app/person/<name>
+powerfarm.app/agent/lab-8gb
 powerfarm.app/service/antenna
 powerfarm.app/app/coloured-places
-powerfarm.app/machine/lab-8gb
-powerfarm.app/agent/lab-8gb
 ```
 
 An entity record SHOULD identify the thing without absorbing arbitrary operational state belonging to it.
 
-### Artifacts and versions
+### Objects and versions
 
-An artifact is a semantically versionable object such as software, a capability, experiment, dataset, document, schema, prompt, policy, contract document, or ExecutionBundle.
+An object is a stable institutional identity for something that is acted on and never acts: a machine, a store, a sector, a repository, software, a capability, a dataset, a document, a schema, a prompt, an ExecutionBundle. For example:
 
-An artifact version identifies an exact version and MAY reference repository, commit, path, SHA-256, content-addressed digest, media type, or equivalent integrity metadata.
+```text
+powerfarm.app/sector/research
+powerfarm.app/machine/lab-8gb
+powerfarm.app/document/pf-03
+```
+
+Some kinds of object have versions. A version identifies exact bytes by SHA-256 (of the content, or of a manifest) and MAY reference repository, commit, path, media type, or equivalent integrity metadata. At most one version of an object is current.
 
 Software therefore has distinct institutional homes:
 
 ```text
 repository     → software trajectory and native institutional object
 source control → optional collaboration/publication projection
-Minivault      → promoted durable objects and provenance
+Minivault      → promoted durable meaning and provenance
 content store  → exact immutable bytes and referenced composition
 Registry       → recognized identity, version and relationships
 ```
 
 ## 3.6 Contracts
 
-A contract describes a legitimate relationship between Powerfarm entities.
+A contract records one recognized definition or relationship. Contracts define the types of entities, objects, actions and contracts; they relate entities and objects to each other; and they are the only source of authority beyond what a type gives every entity of that type. A permission is a contract that gives powers to its subject. An office is a contract whose powers go to whoever holds it, and holding it is another contract.
 
-Contracts are structural objects, not merely documentation. They define the institutionally recognized topology through which distributed state remains coherent.
+Contracts are structural, not merely documentation. They define the institutionally recognized topology through which distributed state remains coherent.
 
 Powerfarm is therefore federated in state and centralized in contracts.
 
@@ -313,13 +319,13 @@ The App Contract is the root institutional contract of an application.
 It MAY declare:
 
 - identity, owner, principal, and lifecycle status;
-- source, revision, and recognized artifact version;
+- source, revision, and recognized version;
 - integrity hashes;
 - placement and logical location;
 - runtime expectations and health interface;
 - owned state stores and their authority;
-- immutable objects produced or consumed;
-- authentication relationships and grants;
+- immutable content produced or consumed;
+- authentication relationships and permissions;
 - capabilities provided and consumed;
 - required Antenna, Heartime, Continuity, and Search relationships;
 - observability and freshness expectations;
@@ -581,9 +587,9 @@ Powerfarm SHOULD implement and test the existing model before expanding it.
 
 The first three specifications are:
 
-1. **App Contract v0**: identity, source, artifact version, placement, state stores, authority, capabilities, relationships, lifecycle, and admission evidence.
+1. **App Contract v0**: identity, source, version, placement, state stores, authority, capabilities, relationships, lifecycle, and admission evidence.
 2. **Executability Contract v0**: temporal and observational predicates, policy, generation, trigger semantics, claim semantics, idempotency, expiration, cancellation, retries, effects, verification, and uncertainty.
-3. **Registry Core v0**: the smallest durable institutional model around entities, artifacts, artifact versions, contracts, and grants.
+3. **Registry Core v0**: the smallest durable institutional model: entities, objects, versions and contracts, and the acts that change them.
 
 Search, a full Heartime implementation, broader onboarding automation, Parks evolution, Registry/Minivault substrates, and other concrete materialization choices SHOULD be specified in versioned architecture/materialization documents and revised from evidence rather than promoted into canon by implementation inertia.
 
